@@ -12,33 +12,33 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = false
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = freshie_app
-build_property.ProjectDir = C:\Users\Patrycja\Desktop\freshie-app\freshie-app\
+build_property.ProjectDir = C:\Users\Patrycja\Desktop\freshie-app-repo\freshie-app\
 
-[C:/Users/Patrycja/Desktop/freshie-app/freshie-app/App.xaml]
+[C:/Users/Patrycja/Desktop/freshie-app-repo/freshie-app/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = freshie_app.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/Users/Patrycja/Desktop/freshie-app/freshie-app/AppShell.xaml]
+[C:/Users/Patrycja/Desktop/freshie-app-repo/freshie-app/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = freshie_app.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[C:/Users/Patrycja/Desktop/freshie-app/freshie-app/MainPage.xaml]
+[C:/Users/Patrycja/Desktop/freshie-app-repo/freshie-app/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = freshie_app.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
-[C:/Users/Patrycja/Desktop/freshie-app/freshie-app/Resources/Styles/Colors.xaml]
+[C:/Users/Patrycja/Desktop/freshie-app-repo/freshie-app/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = freshie_app.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/Users/Patrycja/Desktop/freshie-app/freshie-app/Resources/Styles/Styles.xaml]
+[C:/Users/Patrycja/Desktop/freshie-app-repo/freshie-app/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = freshie_app.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml

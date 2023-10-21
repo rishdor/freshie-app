@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Patrycja\\Desktop\\freshie-app\\freshie-app\\freshie-app.csproj": {}
+    "C:\\Users\\Patrycja\\Desktop\\freshie-app-repo\\freshie-app\\freshie-app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Patrycja\\Desktop\\freshie-app\\freshie-app\\freshie-app.csproj": {
+    "C:\\Users\\Patrycja\\Desktop\\freshie-app-repo\\freshie-app\\freshie-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Patrycja\\Desktop\\freshie-app\\freshie-app\\freshie-app.csproj",
+        "projectUniqueName": "C:\\Users\\Patrycja\\Desktop\\freshie-app-repo\\freshie-app\\freshie-app.csproj",
         "projectName": "freshie-app",
-        "projectPath": "C:\\Users\\Patrycja\\Desktop\\freshie-app\\freshie-app\\freshie-app.csproj",
+        "projectPath": "C:\\Users\\Patrycja\\Desktop\\freshie-app-repo\\freshie-app\\freshie-app.csproj",
         "packagesPath": "C:\\Users\\Patrycja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Patrycja\\Desktop\\freshie-app\\freshie-app\\obj\\",
+        "outputPath": "C:\\Users\\Patrycja\\Desktop\\freshie-app-repo\\freshie-app\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -61,6 +61,10 @@
         "net7.0-android33.0": {
           "targetAlias": "net7.0-android",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )",
@@ -179,6 +183,10 @@
         "net7.0-ios16.1": {
           "targetAlias": "net7.0-ios",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )",
@@ -242,6 +250,10 @@
         "net7.0-maccatalyst16.1": {
           "targetAlias": "net7.0-maccatalyst",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )",
@@ -306,6 +318,10 @@
         "net7.0-windows10.0.19041": {
           "targetAlias": "net7.0-windows10.0.19041.0",
           "dependencies": {
+            "CommunityToolkit.Maui": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )",
