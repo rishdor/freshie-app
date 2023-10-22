@@ -4,11 +4,15 @@
              x:Class="freshie_app.MainPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-        <Label Text="Witaj!" FontSize="45"
-                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  />
+        <!--Label Text="Witaj!" FontSize="45"
+                VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  /-->
+        
+        <Image Source="logo.png"
+               HeightRequest="200"
+               HorizontalOptions="Center"/>
 
         <StackLayout Padding="20" VerticalOptions="CenterAndExpand" Grid.Row="1">
             <Entry x:Name="LoginEntry" Placeholder="Login" />
