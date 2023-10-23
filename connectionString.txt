@@ -1,0 +1,1 @@
+Server=tcp:emilia.database.windows.net,1433;Initial Catalog=Freshie;Persist Security Info=False;User ID=connector;Password=SuperNowa;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
