@@ -1,4 +1,4 @@
 ﻿CREATE TABLE Shelves (
-shelf_id INT PRIMARY KEY,
-shelf_name VARCHAR(100) NOT NULL
+shelf_id INT IDENTITY(1,1) PRIMARY KEY,
+shelf_name NVARCHAR(100) NOT NULL
 );

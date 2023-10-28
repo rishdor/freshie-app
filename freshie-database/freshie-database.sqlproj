@@ -57,6 +57,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Initialize database" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -66,5 +67,8 @@
     <Build Include="Tables\FridgeItems.sql" />
     <Build Include="Tables\GroceriesList.sql" />
     <Build Include="Tables\GroceriesHistory.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Initialize database\InitializeCategories.sql" />
   </ItemGroup>
 </Project>
