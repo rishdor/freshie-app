@@ -6,7 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
        
         <Image Source="logo.png"
@@ -17,20 +17,8 @@
             <Entry x:Name="EmailEntry" Placeholder="E-mail" />
             <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
             <Button Text="Sign in" Clicked="OnLoginButtonClicked" />
+            <Button Text="Sign up" Clicked="OnRegisterButtonClicked"/>
         </StackLayout>
-        <Label HorizontalOptions="CenterAndExpand" Grid.Row="2">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="Still aren't with us yet? " />
-                    <Span Text="Sign up here"
-                          TextDecorations="Underline"
-                          TextColor="Blue">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnRegisterTapped" />
-                        </Span.GestureRecognizers>
-                    </Span>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
+        
     </Grid>
 </ContentPage>

@@ -13,15 +13,13 @@ namespace freshie_app
         {
             string login = EmailEntry.Text;
             string password = PasswordEntry.Text;
-
-            
         }
-        private void OnRegisterTapped(object sender, EventArgs e)
+
+        private async void OnRegisterButtonClicked(object sender, EventArgs e)
         {
-            // Obsługa kliknięcia - przenieś użytkownika do strony rejestracji
-            // Możesz tutaj użyć nawigacji do przekierowania użytkownika.
-            // Przykład:
-            // Navigation.PushAsync(new RegistrationPage());
+            await Navigation.PushAsync(new RegisterPage());
+            //await Shell.Current.GoToAsync(nameof(RegisterPage)); - inna metoda, może zmienię, jak poznam bliżej Data Binding
+            
         }
     }
 }
