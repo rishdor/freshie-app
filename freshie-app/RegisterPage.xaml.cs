@@ -8,7 +8,15 @@ public partial class RegisterPage : ContentPage
 	}
     private async void SignUpButtonClicked(object sender, EventArgs e)
     {
-        if (!PrivacyPolicy.IsChecked) 
+        if (PrivacyPolicy.IsChecked && Password.Text == Password2.Text) // jesli uzytkownik wszystko zaznaczyl dobrze
+        {
+            string name = Name.Text;
+            string email = Email.Text;
+            string password = Password.Text;
+
+            // ...
+        }
+        else if (!PrivacyPolicy.IsChecked) 
         {
             await DisplayAlert("Terms of Use", "Please make sure you checked all required fields.", "OK");
         }
@@ -16,6 +24,6 @@ public partial class RegisterPage : ContentPage
         {
             await DisplayAlert("Incorrect password", "Please make sure you entered the same password twice.", "OK");
         }
-        else if (PrivacyPolicy.IsChecked && Password.Text==Password2.Text) { }
+        
     }
 }

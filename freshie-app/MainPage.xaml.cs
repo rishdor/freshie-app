@@ -9,10 +9,12 @@ namespace freshie_app
             InitializeComponent();
         }
 
-        private void OnLoginButtonClicked(object sender, EventArgs e)
+        private void OnLoginButtonClicked(object sender, EventArgs e) // jesli uzytkownik sie zaloguje
         {
             string login = EmailEntry.Text;
             string password = PasswordEntry.Text;
+
+            // ...
         }
 
         private async void OnRegisterButtonClicked(object sender, EventArgs e)
