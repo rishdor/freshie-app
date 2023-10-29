@@ -1,12 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="freshie_app.RegisterPage"
-             Title="Sign up">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="freshie_app.RegisterPage">
+    
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+                Text="Your name:"
+                VerticalOptions="Center"
+                Margin="10,45,10,0"/>
+            
+            <Entry x:Name="Name" 
+                    Placeholder="Name" 
+                    Margin="10,5,10,5"/>
+            <Label 
+                Text="Your e-mail:"
+                VerticalOptions="Center"
+                Margin="10,0,10,0"/>
+            
+            <Entry x:Name="Email" 
+                Placeholder="E-mail" 
+                Margin="10,5,10,5"/>
+
+            <Label 
+                Text="Enter password:"
+                VerticalOptions="Center"
+                Margin="10,0,10,0"/>
+
+            <Entry x:Name="Password" 
+                Placeholder="Password" 
+                IsPassword="true"
+                Margin="10,5,10,5"/>
+
+            <Label 
+                 Text="Enter password again:"
+                 VerticalOptions="Center"
+                 Margin="10,0,10,0"/>
+
+            <Entry x:Name="Password2" 
+                Placeholder="Password" 
+                IsPassword="true"
+                Margin="10,5,10,5"/>
+            
+            <HorizontalStackLayout Margin="10,5,10,5">
+                <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
+                <Label Text="I agree to Terms of Use."/>
+            </HorizontalStackLayout>
+
+            <Button Text="Sign up" 
+                Clicked="SignUpButtonClicked" 
+                 Margin="50,5"/>
+            
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
