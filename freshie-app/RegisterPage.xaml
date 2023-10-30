@@ -44,12 +44,12 @@
             
             <HorizontalStackLayout Margin="10,5,10,5">
                 <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
-                <Label Text="I agree to Terms of Use."/>
+                <Label Text="I agree to Terms of Use." VerticalOptions="Center"/>
             </HorizontalStackLayout>
 
             <Button Text="Sign up" 
                 Clicked="SignUpButtonClicked" 
-                 Margin="50,5"/>
+                 Margin="20,5"/>
             
         </VerticalStackLayout>
     </ScrollView>
