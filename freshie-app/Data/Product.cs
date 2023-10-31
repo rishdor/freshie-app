@@ -12,8 +12,7 @@ namespace freshie_app.Data
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public int ShelfId { get; set; }
-        public static int currentId = 10000;
         [Key]
-        public int Id { get; private set; } = currentId++;
+        public int Id { get; set; }
     }
 }

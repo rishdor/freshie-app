@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Serialization;
 
 namespace freshie_app.Data
 {
@@ -12,8 +13,7 @@ namespace freshie_app.Data
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public static int currentId = 10000;
         [Key]
-        public int Id { get; private set; } = currentId++;
+        public int Id { get; set; }
     }
 }

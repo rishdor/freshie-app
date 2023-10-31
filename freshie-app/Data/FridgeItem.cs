@@ -12,8 +12,7 @@ namespace freshie_app.Data
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public static int currentId = 1;
         [Key]
-        public int Id { get; private set; } = currentId++;
+        public int Id { get; set; }
     }
 }

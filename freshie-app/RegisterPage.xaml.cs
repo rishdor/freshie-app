@@ -25,10 +25,10 @@ public partial class RegisterPage : ContentPage
         {
             await DisplayAlert("Incorrect password", "Please make sure you entered the same password twice.", "OK");
         }
-        else if (!CheckPasswordCriteria(Password.Text))
-        {
-            PasswordCheck.IsVisible = true;
-        }
+        //else if (!CheckPasswordCriteria(Password.Text))
+        //{
+        //    PasswordCheck.IsVisible = true;
+        //}
         else
         {
             PasswordCheck.IsVisible = false;
@@ -37,11 +37,8 @@ public partial class RegisterPage : ContentPage
             string name = Name.Text;
 
             var user = new User { Email = email, Password = password, Name = name};
-            using (_context)
-            {
-                _context.Users.Add(user);
-                _context.SaveChanges();
-            }
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
             await DisplayAlert("Successful registration!", "Proceed with login.", "OK");
         }

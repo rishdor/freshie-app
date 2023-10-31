@@ -15,10 +15,8 @@ namespace freshie_app
         }
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            string email = EmailEntry.Text;
-            string password = PasswordEntry.Text;
 
-            var user = _context.Users.SingleOrDefault(u => u.Email == email);
+            var user = _context.Users.FirstOrDefault(u => u.Email == EmailEntry.Text);
 
             if (user != null)
             {
