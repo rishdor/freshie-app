@@ -16,7 +16,7 @@ namespace freshie_app
 
             window.Title = "freshie";
             const int newWidth = 400;
-            const int newHeight = 600;
+            const int newHeight = 800;
 
             window.Width = newWidth;
             window.Height = newHeight;

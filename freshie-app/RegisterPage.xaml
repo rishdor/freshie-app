@@ -41,6 +41,14 @@
                 Placeholder="Password" 
                 IsPassword="true"
                 Margin="10,5,10,5"/>
+
+            <Label
+                x:Name="PasswordCheck"
+                Text="Password must be:\n-at least 8 characters\n-at least one capital letter\n-at least one number"
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
             
             <HorizontalStackLayout Margin="10,5,10,5">
                 <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
@@ -49,7 +57,7 @@
 
             <Button Text="Sign up" 
                 Clicked="SignUpButtonClicked" 
-                 Margin="50,5"/>
+                Margin="50,5"/>
             
         </VerticalStackLayout>
     </ScrollView>
