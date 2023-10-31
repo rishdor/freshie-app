@@ -1,9 +1,10 @@
 using System.Text.RegularExpressions;
-
+using freshie_app.Data;
 namespace freshie_app;
 
 public partial class RegisterPage : ContentPage
 {
+    private MyDbContext _context = MyDbContext.Instance;
     public static bool CheckPasswordCriteria(string password)
     {
         string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
@@ -35,9 +36,13 @@ public partial class RegisterPage : ContentPage
             string password = Password.Text;
             string name = Name.Text;
 
-            var user = new MainPage.User { Email = email, Password = password, Name = name };
+            var user = new User { Email = email, Password = password, Name = name};
+            using (_context)
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
 
-            //database.AddUser(user);
             await DisplayAlert("Successful registration!", "Proceed with login.", "OK");
         }
 

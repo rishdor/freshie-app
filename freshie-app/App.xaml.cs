@@ -1,5 +1,5 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-
+using freshie_app.Data;
 namespace freshie_app
 {
     public partial class App : Application
@@ -7,7 +7,6 @@ namespace freshie_app
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
         protected override Window CreateWindow(IActivationState activationState)
