@@ -5,23 +5,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:freshie_app"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="True">
 
-    <ShellContent
+    <!--<ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
+        Route="MainPage"/>-->
     <TabBar> 
         <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" 
+            ContentTemplate="{DataTemplate local:RecipiesPage}"
+            Route="RecipiesPage" 
             Icon="plate.png"/>
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" 
             Icon="home.png"/>
         <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" 
+            ContentTemplate="{DataTemplate local:GroceriesPage}"
+            Route="GroceriesPage" 
             Icon="list.png"/>
     </TabBar>
         
