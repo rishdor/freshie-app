@@ -365,3 +365,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/freshie-app/Data/fridgeitems.xml
+/freshie-app/Data/products.xml
+/freshie-app/Data/users.xml
