@@ -33,7 +33,7 @@ namespace freshie_app.Data
                     {
                         var predefinedProducts = new List<Product>
                         {
-                            new Product { Name = "Apple" },
+                            new Product { Name = "Apple"},
                             new Product { Name = "Pasta" },
                             new Product { Name = "Milk" },
                             new Product { Name = "Eggs" },
@@ -46,12 +46,27 @@ namespace freshie_app.Data
                     }
                     if (!_instance.Users.Any())
                     {
-                        var predefinedUser = new List<User>
+                        var predefinedUsers = new List<User>
                         {
-                            new User { Name = "admin", Email = "1", Password= "1"}
+                            new User { Name = "admin", Email = "1", Password= "1"},
+                            new User { Name = "admin", Email = "2", Password= "2"}
                         };
 
-                        _instance.Users.AddRange(predefinedUser);
+                        _instance.Users.AddRange(predefinedUsers);
+                        _instance.SaveChanges();
+                    }
+                    if (!_instance.FridgeItems.Any())
+                    {
+                        var predefinedItems = new List<FridgeItem>
+                        {
+                            new FridgeItem {ProductId = 10040, UserId= 10025, ExpirationDate = DateTime.Now},
+                            new FridgeItem {ProductId = 10041, UserId = 10025, ExpirationDate = DateTime.Now },
+                            new FridgeItem {ProductId = 10042, UserId = 10025, ExpirationDate = DateTime.Now },
+                            new FridgeItem {ProductId = 10043, UserId = 10026, ExpirationDate = DateTime.Now},
+                            new FridgeItem {ProductId = 10044, UserId = 10026, ExpirationDate = DateTime.Now}
+                    };
+
+                        _instance.FridgeItems.AddRange(predefinedItems);
                         _instance.SaveChanges();
                     }
                 }
@@ -102,7 +117,8 @@ namespace freshie_app.Data
         //        entities = (List<T>)serializer.Deserialize(reader);
         //    }
 
-        //    var newEntities = entities.Select(e => {
+        //    var newEntities = entities.Select(e =>
+        //    {
         //        var newEntity = new T();
         //        var properties = typeof(T).GetProperties().Where(p => p.Name != "Id");
         //        foreach (var property in properties)

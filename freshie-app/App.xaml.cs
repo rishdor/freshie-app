@@ -10,13 +10,11 @@ namespace freshie_app
             InitializeComponent();
             MainPage = new AppShell();
 
+            //_context.ClearDatabase();
+
             var users = _context.Users.ToList();
             var products = _context.Products.ToList();
             var fridgeItems = _context.FridgeItems.ToList();
-
-
-            //XML.ImportXml<Product>(@"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\products.xml");
-            //XML.ImportXml<FridgeItem>(@"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\fridgeitems.xml");
 
             XML.ExportXml(users, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\users.xml");
             XML.ExportXml(products, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\products.xml");
