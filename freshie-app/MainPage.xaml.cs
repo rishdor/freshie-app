@@ -11,11 +11,9 @@ namespace freshie_app
         public MainPage()
         {
             InitializeComponent();
-
         }
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-
             var user = _context.Users.FirstOrDefault(u => u.Email == EmailEntry.Text);
 
             if (user != null)
