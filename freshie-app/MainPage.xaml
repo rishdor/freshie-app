@@ -25,7 +25,20 @@
             <Button Text="Sign up" 
                     Clicked="OnRegisterButtonClicked" 
                     Margin="0,5,0,0" />
-            
+            <Label
+                    x:Name="PasswordCheck"
+                    Text="Icorrect password."
+                    VerticalOptions="Center"
+                    Margin="10,0,10,0"
+                    IsVisible="False"
+                    TextColor="#AF7070"/>       
+            <Label
+                    x:Name="UserCheck"
+                    Text="User doesn't exist."
+                    VerticalOptions="Center"
+                    Margin="10,0,10,0"
+                    IsVisible="False"
+                    TextColor="#AF7070"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

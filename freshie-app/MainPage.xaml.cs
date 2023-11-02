@@ -16,13 +16,19 @@ namespace freshie_app
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == EmailEntry.Text);
 
-            if (user != null)
+            if (user == null)
             {
-                await Navigation.PushAsync(new HomePage(user));
+                UserCheck.IsVisible = true;
+                PasswordCheck.IsVisible = false;
+            }
+            else if (PasswordEntry.Text != user.Password)
+            {
+                PasswordCheck.IsVisible = true;
+                UserCheck.IsVisible = false;
             }
             else
             {
-                await DisplayAlert("Error", "Invalid email or password.", "OK");
+                await Navigation.PushAsync(new HomePage(user));
             }
         }
         private async void OnRegisterButtonClicked(object sender, EventArgs e)
