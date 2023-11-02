@@ -76,7 +76,7 @@ public partial class RegisterPage : ContentPage
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        await DisplayAlert("Successful registration!", "Proceed with login.", "OK");
+        await Navigation.PushAsync(new HomePage(user));
     }
 
 }
