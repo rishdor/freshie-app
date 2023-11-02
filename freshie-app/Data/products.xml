@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <Name>Apple</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10028</Id>
+  </Product>
+  <Product>
+    <Name>Pasta</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10029</Id>
+  </Product>
+  <Product>
+    <Name>Milk</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10030</Id>
+  </Product>
+  <Product>
+    <Name>Eggs</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10031</Id>
+  </Product>
+  <Product>
+    <Name>Cheese</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10032</Id>
+  </Product>
+  <Product>
+    <Name>Carrot</Name>
+    <CategoryId>0</CategoryId>
+    <ShelfId>0</ShelfId>
+    <Id>10033</Id>
+  </Product>
+</ArrayOfProduct>
