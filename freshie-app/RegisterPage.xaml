@@ -41,19 +41,54 @@
                 Placeholder="Password" 
                 IsPassword="true"
                 Margin="10,5,10,5"/>
-
-            <Label
-                x:Name="PasswordCheck"
-                Text="Password must be:\n-at least 8 characters\n-at least one capital letter\n-at least one number"
-                VerticalOptions="Center"
-                Margin="10,0,10,0"
-                IsVisible="False"
-                TextColor="#AF7070"/>
             
             <HorizontalStackLayout Margin="10,5,10,5">
                 <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
                 <Label Text="I agree to Terms of Use." VerticalOptions="Center"/>
             </HorizontalStackLayout>
+            
+            <Label
+                x:Name="PasswordCheck"
+                Text="-Password must be: at least 8 characters, at least one capital letter, at least one number"
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
+            <Label
+                x:Name="EmailCheckDB"
+                Text="-Account with this email already exists."
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
+            <Label
+                x:Name="EmailWrongFormat"
+                Text="-Email is in the wrong format."
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
+            <Label
+                x:Name="TermsOfUse"
+                Text="-Agree to Terms of Use."
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
+            <Label
+                x:Name="EmptyField"
+                Text="-Make sure you filled out all the information."
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
+            <Label
+                x:Name="UnmatchingPasswords"
+                Text="-Passwords don't match."
+                VerticalOptions="Center"
+                Margin="10,0,10,0"
+                IsVisible="False"
+                TextColor="#AF7070"/>
 
             <Button Text="Sign up" 
                 Clicked="SignUpButtonClicked"

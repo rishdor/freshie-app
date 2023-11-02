@@ -91,7 +91,6 @@ namespace freshie_app.Data
 
     public class XML
     {
-        //private static MyDbContext _context = MyDbContext.Instance;
         public static void ExportXml<T>(T obj, string file)
         {
             if (string.IsNullOrEmpty(file))
@@ -107,29 +106,5 @@ namespace freshie_app.Data
                 ser.Serialize(fs, obj);
             }
         }
-        //public static void ImportXml<T>(string file) where T : class, new()
-        //{
-        //    var serializer = new XmlSerializer(typeof(List<T>));
-
-        //    List<T> entities;
-        //    using (var reader = new StreamReader(file))
-        //    {
-        //        entities = (List<T>)serializer.Deserialize(reader);
-        //    }
-
-        //    var newEntities = entities.Select(e =>
-        //    {
-        //        var newEntity = new T();
-        //        var properties = typeof(T).GetProperties().Where(p => p.Name != "Id");
-        //        foreach (var property in properties)
-        //        {
-        //            property.SetValue(newEntity, property.GetValue(e));
-        //        }
-        //        return newEntity;
-        //    }).ToList();
-
-        //    _context.Set<T>().AddRange(newEntities);
-        //    _context.SaveChanges();
-        //}
     }
 }

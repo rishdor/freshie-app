@@ -8,8 +8,17 @@ public partial class RegisterPage : ContentPage
     public static bool CheckPasswordCriteria(string password)
     {
         string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
-        Regex regex = new Regex(pattern);
-        return regex.IsMatch(password);
+        return Regex.IsMatch(password, pattern);
+    }
+    public static bool ValidateEmailPattern(string email)
+    {
+        string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        return Regex.IsMatch(email, pattern);
+    }
+    public bool CheckEmail(string email)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Email == email);
+        return user != null;
     }
     public RegisterPage()
 	{
@@ -17,30 +26,57 @@ public partial class RegisterPage : ContentPage
 	}
     private async void SignUpButtonClicked(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(Password.Text) || string.IsNullOrWhiteSpace(Email.Text) || string.IsNullOrWhiteSpace(Name.Text) || string.IsNullOrWhiteSpace(Password2.Text))
+        {
+            EmptyField.IsVisible = true;
+            return;
+        }
+        EmptyField.IsVisible = false;
+
+        if (Password.Text != Password2.Text)
+        {
+            UnmatchingPasswords.IsVisible = true;
+            return;
+        }
+        UnmatchingPasswords.IsVisible = false;
+
+        if (!ValidateEmailPattern(Email.Text))
+        {
+            EmailWrongFormat.IsVisible = true;
+            return;
+        }
+        EmailWrongFormat.IsVisible = false;
+
+        if (CheckEmail(Email.Text))
+        {
+            EmailCheckDB.IsVisible = true;
+            return;
+        }
+        EmailCheckDB.IsVisible = false;
+
+        if (!CheckPasswordCriteria(Password.Text))
+        {
+            PasswordCheck.IsVisible = true;
+            return;
+        }
+        PasswordCheck.IsVisible = false;
+
         if (!PrivacyPolicy.IsChecked)
         {
-            await DisplayAlert("Terms of Use", "Please make sure you checked all required fields.", "OK");
+            TermsOfUse.IsVisible = true;
+            return;
         }
-        else if (Password.Text != Password2.Text)
-        {
-            await DisplayAlert("Incorrect password", "Please make sure you entered the same password twice.", "OK");
-        }
-        //else if (!CheckPasswordCriteria(Password.Text))
-        //{
-        //    PasswordCheck.IsVisible = true;
-        //}
-        else
-        {
-            PasswordCheck.IsVisible = false;
-            string email = Email.Text;
-            string password = Password.Text;
-            string name = Name.Text;
+        TermsOfUse.IsVisible = false;
 
-            var user = new User { Email = email, Password = password, Name = name};
-            _context.Users.Add(user);
-            _context.SaveChanges();
+        string email = Email.Text;
+        string password = Password.Text;
+        string name = Name.Text;
 
-            await DisplayAlert("Successful registration!", "Proceed with login.", "OK");
-        }
+        var user = new User { Email = email, Password = password, Name = name };
+        _context.Users.Add(user);
+        _context.SaveChanges();
+
+        await DisplayAlert("Successful registration!", "Proceed with login.", "OK");
     }
+
 }
