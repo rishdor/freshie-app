@@ -7,7 +7,8 @@ namespace freshie_app
     {
         private MyDbContext _context = MyDbContext.Instance;
         private User _user;
-        private List<Product> products;
+        private List<Product> userProducts;
+        private List<Product> allProducts;
         public HomePage(User user)
         {
             InitializeComponent();
@@ -18,34 +19,28 @@ namespace freshie_app
 
         private void LoadUserProducts(User user)
         {
-            products = (from p in _context.Products
+            userProducts = (from p in _context.Products
                            join f in _context.FridgeItems on p.Id equals f.ProductId
                            where f.UserId == user.Id
                            select p).ToList();
-            UserProductsListView.ItemsSource = products;
+            UserProductsListView.ItemsSource = userProducts;
+
+            allProducts = _context.Products.ToList();            
+            AllProductsListView.ItemsSource = allProducts.Except(userProducts).ToList();
         }
-
-        //void OnShowProductsButtonClicked(object sender, EventArgs e)
-        //{
-        //    AvailableProductsListView.IsVisible = true;
-        //    //AvailableProductsListView.ItemsSource = _context.Products.ToList();
-
-        //    //create a list of available products (that user doesnd have)
-        //    var availableproducts = _context.Products.ToList();
-                
-        //        //from p in _context.Products
-        //        //           join f in _context.FridgeItems on p.Id equals f.ProductId //fix this so it shows all the products and not
-        //        //           //only those users have
-        //        //           where f.UserId != _user.Id
-        //        //           select p;
-        //    AvailableProductsListView.ItemsSource = products.ToList();
-        //}
-
+        private bool isButtonClicked = false;
         private void OnShowAllProductsButtonClicked(object sender, EventArgs e)
         {
-            var products = _context.Products.ToList();
-            AllProductsListView.ItemsSource = products;
-            AllProductsListView.IsVisible = true;
+            if (!isButtonClicked)
+            {
+                AllProductsListView.IsVisible = true;
+                isButtonClicked = true;
+            }
+            else
+            {
+                AllProductsListView.IsVisible = false;
+                isButtonClicked = false;
+            }
         }
 
         private async void OnProductTapped(object sender, ItemTappedEventArgs e)
@@ -63,10 +58,10 @@ namespace freshie_app
                         ExpirationDate = DateTime.Parse(expirationDate)
                     };
                     _context.FridgeItems.Add(fridgeItem);
+                    
                     _context.SaveChanges();
                 }
                 LoadUserProducts(_user);
-                AllProductsListView.IsVisible = false;
             }
         }
     }

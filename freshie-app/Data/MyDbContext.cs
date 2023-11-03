@@ -38,7 +38,9 @@ namespace freshie_app.Data
                             new Product { Name = "Milk" },
                             new Product { Name = "Eggs" },
                             new Product { Name = "Cheese"},
-                            new Product { Name = "Carrot"}
+                            new Product { Name = "Carrot"},
+                            new Product {Name = "Bread"},
+                            new Product {Name = "Banana"}
                         };
 
                         _instance.Products.AddRange(predefinedProducts);
@@ -49,7 +51,8 @@ namespace freshie_app.Data
                         var predefinedUsers = new List<User>
                         {
                             new User { Name = "admin", Email = "1", Password= "1"},
-                            new User { Name = "admin", Email = "2", Password= "2"}
+                            new User { Name = "user1", Email = "2", Password= "2"},
+                            new User {Name = "user2", Email = "3", Password= "3"},
                         };
 
                         _instance.Users.AddRange(predefinedUsers);
@@ -59,12 +62,12 @@ namespace freshie_app.Data
                     {
                         var predefinedItems = new List<FridgeItem>
                         {
-                            new FridgeItem {ProductId = 10040, UserId= 10025, ExpirationDate = DateTime.Now},
-                            new FridgeItem {ProductId = 10041, UserId = 10025, ExpirationDate = DateTime.Now },
-                            new FridgeItem {ProductId = 10042, UserId = 10025, ExpirationDate = DateTime.Now },
-                            new FridgeItem {ProductId = 10043, UserId = 10026, ExpirationDate = DateTime.Now},
-                            new FridgeItem {ProductId = 10044, UserId = 10026, ExpirationDate = DateTime.Now}
-                    };
+                            new FridgeItem {ProductId = 1, UserId= 1, ExpirationDate = DateTime.Now},
+                            new FridgeItem {ProductId = 2, UserId = 1, ExpirationDate = DateTime.Now },
+                            new FridgeItem {ProductId = 3, UserId = 1, ExpirationDate = DateTime.Now },
+                            new FridgeItem {ProductId = 4, UserId = 2, ExpirationDate = DateTime.Now},
+                            new FridgeItem {ProductId = 5, UserId = 2, ExpirationDate = DateTime.Now}
+                        };
 
                         _instance.FridgeItems.AddRange(predefinedItems);
                         _instance.SaveChanges();
@@ -85,6 +88,18 @@ namespace freshie_app.Data
             _instance.FridgeItems.RemoveRange(_instance.FridgeItems);
 
             _instance.SaveChanges();
+            var tableNames = new List<string> { "Users", "Products", "FridgeItems" };
+
+            foreach (var tableName in tableNames)
+            {
+                using (var command = _instance.Database.GetDbConnection().CreateCommand())
+                {
+                    command.CommandText = $"DELETE FROM sqlite_sequence WHERE name = '{tableName}';";
+                    _instance.Database.OpenConnection();
+                    command.ExecuteNonQuery();
+                    _instance.Database.CloseConnection();
+                }
+            }
         }
 
     }
