@@ -12,6 +12,7 @@ namespace freshie_app
         {
             InitializeComponent();
         }
+
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == EmailEntry.Text);
