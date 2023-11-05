@@ -16,9 +16,9 @@ namespace freshie_app
             var products = _context.Products.ToList();
             var fridgeItems = _context.FridgeItems.ToList();
 
-            XML.ExportXml(users, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\users.xml");
-            XML.ExportXml(products, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\products.xml");
-            XML.ExportXml(fridgeItems, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\fridgeitems.xml");
+            //XML.ExportXml(users, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\users.xml");
+            //XML.ExportXml(products, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\products.xml");
+            //XML.ExportXml(fridgeItems, @"C:\Users\mdoro\alltheshit\Practice\project\freshie-app-repo\freshie-app\Data\fridgeitems.xml");
         }
         protected override Window CreateWindow(IActivationState activationState)
         {
@@ -26,7 +26,7 @@ namespace freshie_app
 
             window.Title = "freshie";
             const int newWidth = 400;
-            const int newHeight = 800;
+            const int newHeight = 700;
 
             window.Width = newWidth;
             window.Height = newHeight;
