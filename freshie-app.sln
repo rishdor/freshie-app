@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "freshie-app", "freshie-app\freshie-app.csproj", "{ED1B86B8-1437-41E0-8090-517809AB97E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freshie-app", "freshie-app\freshie-app.csproj", "{ED1B86B8-1437-41E0-8090-517809AB97E9}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "freshie-database", "freshie-database\freshie-database.sqlproj", "{CD764C67-3649-47C3-8BD1-B59E29D7D698}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freshie-DTO", "freshie-DTO\freshie-DTO.csproj", "{1B2DCBAC-F592-4485-AAB3-D7E5330A34D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "freshie-webAPI", "freshie-webAPI\freshie-webAPI.csproj", "{C2BECC7B-7845-4CB2-A494-B9F321B7E276}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +23,20 @@ Global
 		{ED1B86B8-1437-41E0-8090-517809AB97E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED1B86B8-1437-41E0-8090-517809AB97E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED1B86B8-1437-41E0-8090-517809AB97E9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD764C67-3649-47C3-8BD1-B59E29D7D698}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1B2DCBAC-F592-4485-AAB3-D7E5330A34D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2DCBAC-F592-4485-AAB3-D7E5330A34D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2DCBAC-F592-4485-AAB3-D7E5330A34D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2DCBAC-F592-4485-AAB3-D7E5330A34D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2BECC7B-7845-4CB2-A494-B9F321B7E276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2BECC7B-7845-4CB2-A494-B9F321B7E276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2BECC7B-7845-4CB2-A494-B9F321B7E276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2BECC7B-7845-4CB2-A494-B9F321B7E276}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
