@@ -23,6 +23,14 @@ namespace freshie_webAPI.Controllers
         {
             return _context.Users.FirstOrDefault(u=>u.user_id==id);
         }
+        // GET api/<UserController>/5
+        // api/user/10000001
+        [HttpGet]
+        [Route("login/{email}/{password}")]
+        public User Login(string email, string password)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email && u.Password==password);
+        }
 
         // POST api/<UserController>
         [HttpPost]
