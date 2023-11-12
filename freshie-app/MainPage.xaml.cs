@@ -10,24 +10,20 @@ namespace freshie_app
         {
             InitializeComponent();
         }
-
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             string email = EmailEntry.Text;
             string password = PasswordEntry.Text;
+            WrongDetails.IsVisible = false;
 
             User user = await ApiClient.LoginUser(email, password);
 
             if (user == null)
             {
-                //FIX THIS SO IT SHOWS TYPE OF ERROR (wrong email or wrong password)
-                await DisplayAlert("failed to log in", "try again", "ok");
+                WrongDetails.IsVisible = true;
             }
             else
             {
-                //await DisplayAlert("SUCCESS", "YAAAAAY", "ok");
-
-                //FIGURE OUT REDIRECTION
                 await Navigation.PushAsync(new HomePage(user));
             }
         }
