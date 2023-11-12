@@ -18,7 +18,7 @@ namespace freshie_app.DTO
             _client = new HttpClient { BaseAddress = new Uri("https://freshie-fridgehub-api.azurewebsites.net/") };
         }
 
-        public async Task<bool> RegisterUser(User user)
+        public static async Task<bool> RegisterUser(User user)
         {
             HttpResponseMessage response = await _client.PostAsJsonAsync("api/Users/register", user);
             response.EnsureSuccessStatusCode();
