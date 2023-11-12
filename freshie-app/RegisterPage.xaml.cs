@@ -72,8 +72,15 @@ public partial class RegisterPage : ContentPage
         string name = Name.Text;
 
         var user = new User { Email = email, Password = password, Name = name };
-        //_context.Users.Add(user);
-        //_context.SaveChanges();
+        bool registration = await ApiClient.RegisterUser(user);
+        if (registration)
+        {
+            await DisplayAlert("successful registration", "yay", "ok");
+        }
+        else
+        {
+            await DisplayAlert("nope", "something went wrong", "ok");
+        }
 
         //await Navigation.PushAsync(new HomePage(user));
     }
