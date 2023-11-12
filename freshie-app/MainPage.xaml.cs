@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls;
-using freshie_app.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace freshie_app
