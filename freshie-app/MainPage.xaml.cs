@@ -20,12 +20,15 @@ namespace freshie_app
 
             if (user == null)
             {
+                //FIX THIS SO IT SHOWS TYPE OF ERROR (wrong email or wrong password)
                 await DisplayAlert("failed to log in", "try again", "ok");
             }
             else
             {
-                await DisplayAlert("SUCCESS", "YAAAAAY", "ok");
-                //await Navigation.PushAsync(new HomePage(user));
+                //await DisplayAlert("SUCCESS", "YAAAAAY", "ok");
+
+                //FIGURE OUT REDIRECTION
+                await Navigation.PushAsync(new HomePage(user));
             }
         }
         private async void OnRegisterButtonClicked(object sender, EventArgs e)
