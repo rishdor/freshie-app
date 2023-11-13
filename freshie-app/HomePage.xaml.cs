@@ -1,11 +1,10 @@
-using freshie_app.Data;
+using freshie_app.DTO;
 using System.Xml;
 
 namespace freshie_app
 {
     public partial class HomePage : ContentPage
     {
-        private MyDbContext _context = MyDbContext.Instance;
         private User _user;
         private List<Product> userProducts;
         private List<Product> allProducts;
@@ -13,56 +12,56 @@ namespace freshie_app
         {
             InitializeComponent();
             WelcomeLabel.Text = $"Hello {user.Name}!";
-            LoadUserProducts(user);
+            //LoadUserProducts(user);
             _user = user;
         }
 
-        private void LoadUserProducts(User user)
-        {
-            userProducts = (from p in _context.Products
-                           join f in _context.FridgeItems on p.Id equals f.ProductId
-                           where f.UserId == user.Id
-                           select p).ToList();
-            UserProductsListView.ItemsSource = userProducts;
+        //private void LoadUserProducts(User user)
+        //{
+        //    //userProducts = (from p in _context.Products
+        //    //               join f in _context.FridgeItems on p.Id equals f.ProductId
+        //    //               where f.UserId == user.Id
+        //    //               select p).ToList();
+        //    //UserProductsListView.ItemsSource = userProducts;
 
-            allProducts = _context.Products.ToList();            
-            AllProductsListView.ItemsSource = allProducts.Except(userProducts).ToList();
-        }
-        private bool isButtonClicked = false;
-        private void OnShowAllProductsButtonClicked(object sender, EventArgs e)
-        {
-            if (!isButtonClicked)
-            {
-                AllProductsListView.IsVisible = true;
-                isButtonClicked = true;
-            }
-            else
-            {
-                AllProductsListView.IsVisible = false;
-                isButtonClicked = false;
-            }
-        }
+        //    //allProducts = _context.Products.ToList();            
+        //    //AllProductsListView.ItemsSource = allProducts.Except(userProducts).ToList();
+        //}
+        //private bool isButtonClicked = false;
+        //private void OnShowAllProductsButtonClicked(object sender, EventArgs e)
+        //{
+        //    if (!isButtonClicked)
+        //    {
+        //        AllProductsListView.IsVisible = true;
+        //        isButtonClicked = true;
+        //    }
+        //    else
+        //    {
+        //        AllProductsListView.IsVisible = false;
+        //        isButtonClicked = false;
+        //    }
+        //}
 
-        private async void OnProductTapped(object sender, ItemTappedEventArgs e)
-        {
-            var selectedProduct = (Product)e.Item;
-            if (selectedProduct != null)
-            {
-                string expirationDate = await DisplayPromptAsync("Expiration Date", "Please enter the expiration date:");
-                if (!string.IsNullOrEmpty(expirationDate))
-                {
-                    var fridgeItem = new FridgeItem
-                    {
-                        UserId = _user.Id,
-                        ProductId = selectedProduct.Id,
-                        ExpirationDate = DateTime.Parse(expirationDate)
-                    };
-                    _context.FridgeItems.Add(fridgeItem);
+        //private async void OnProductTapped(object sender, ItemTappedEventArgs e)
+        //{
+        //    var selectedProduct = (Product)e.Item;
+        //    if (selectedProduct != null)
+        //    {
+        //        //string expirationDate = await DisplayPromptAsync("Expiration Date", "Please enter the expiration date:");
+        //        //if (!string.IsNullOrEmpty(expirationDate))
+        //        //{
+        //        //    var fridgeItem = new FridgeItem
+        //        //    {
+        //        //        UserId = _user.Id,
+        //        //        ProductId = selectedProduct.Id,
+        //        //        ExpirationDate = DateTime.Parse(expirationDate)
+        //        //    };
+        //        //    _context.FridgeItems.Add(fridgeItem);
                     
-                    _context.SaveChanges();
-                }
-                LoadUserProducts(_user);
-            }
-        }
+        //        //    _context.SaveChanges();
+        //        //}
+        //        LoadUserProducts(_user);
+        //    }
+        //}
     }
 }

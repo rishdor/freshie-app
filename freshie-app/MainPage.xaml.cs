@@ -1,31 +1,26 @@
 ﻿using Microsoft.Maui.Controls;
-using freshie_app.Data;
 using Microsoft.EntityFrameworkCore;
-
+using freshie_app.DTO;
 namespace freshie_app
 {
     public partial class MainPage : ContentPage
     {
-        private MyDbContext _context = MyDbContext.Instance;
 
         public MainPage()
         {
             InitializeComponent();
         }
-
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == EmailEntry.Text);
+            string email = EmailEntry.Text;
+            string password = PasswordEntry.Text;
+            WrongDetails.IsVisible = false;
+
+            User user = await ApiClient.LoginUser(email, password);
 
             if (user == null)
             {
-                UserCheck.IsVisible = true;
-                PasswordCheck.IsVisible = false;
-            }
-            else if (PasswordEntry.Text != user.Password)
-            {
-                PasswordCheck.IsVisible = true;
-                UserCheck.IsVisible = false;
+                WrongDetails.IsVisible = true;
             }
             else
             {
