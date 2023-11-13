@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using freshie_webAPI.Models;
 
 namespace freshie_webAPI
 {

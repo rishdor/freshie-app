@@ -9,5 +9,5 @@ public partial class Shelf
 
     public string ShelfName { get; set; } = null!;
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    //public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

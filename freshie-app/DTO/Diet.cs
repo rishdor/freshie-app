@@ -9,5 +9,5 @@ public partial class Diet
 
     public string DietName { get; set; } = null!;
 
-    //public virtual ICollection<ProductDiet> ProductDiets { get; set; } = new List<ProductDiet>();
+    public virtual ICollection<ProductDiet> ProductDiets { get; set; } = new List<ProductDiet>();
 }

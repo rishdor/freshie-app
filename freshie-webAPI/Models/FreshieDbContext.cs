@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace freshie_webAPI.Models;
 
-public partial class FreshieContext : DbContext
+public partial class FreshieDbContext : DbContext
 {
-    public FreshieContext()
+    public FreshieDbContext()
     {
     }
 
-    public FreshieContext(DbContextOptions<FreshieContext> options)
+    public FreshieDbContext(DbContextOptions<FreshieDbContext> options)
         : base(options)
     {
     }
@@ -39,9 +39,9 @@ public partial class FreshieContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Password=Karuzela6012;Persist Security Info=True;User ID=emilia;Initial Catalog=Freshie;Data Source=emilia.database.windows.net");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Password=Karuzela6012;Persist Security Info=True;User ID=emilia;Initial Catalog=Freshie;Data Source=emilia.database.windows.net");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -88,14 +88,14 @@ public partial class FreshieContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.FridgeItems)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__FridgeIte__produ__4A8310C6");
+            //entity.HasOne(d => d.Product).WithMany(p => p.FridgeItems)
+            //    .HasForeignKey(d => d.ProductId)
+            //    .HasConstraintName("FK__FridgeIte__produ__4A8310C6");
 
-            entity.HasOne(d => d.User).WithMany(p => p.FridgeItems)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__FridgeIte__user___4B7734FF");
+            //entity.HasOne(d => d.User).WithMany(p => p.FridgeItems)
+            //    .HasForeignKey(d => d.UserId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__FridgeIte__user___4B7734FF");
         });
 
         modelBuilder.Entity<GroceriesHistory>(entity =>
@@ -114,13 +114,13 @@ public partial class FreshieContext : DbContext
             entity.Property(e => e.Purchased).HasColumnName("purchased");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.GroceriesHistories)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Groceries__produ__58D1301D");
+            //entity.HasOne(d => d.Product).WithMany(p => p.GroceriesHistories)
+            //    .HasForeignKey(d => d.ProductId)
+            //    .HasConstraintName("FK__Groceries__produ__58D1301D");
 
-            entity.HasOne(d => d.User).WithMany(p => p.GroceriesHistories)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Groceries__user___59C55456");
+            //entity.HasOne(d => d.User).WithMany(p => p.GroceriesHistories)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__Groceries__user___59C55456");
         });
 
         modelBuilder.Entity<GroceriesList>(entity =>
@@ -135,13 +135,13 @@ public partial class FreshieContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.GroceriesLists)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Groceries__produ__55009F39");
+            //entity.HasOne(d => d.Product).WithMany(p => p.GroceriesLists)
+            //    .HasForeignKey(d => d.ProductId)
+            //    .HasConstraintName("FK__Groceries__produ__55009F39");
 
-            entity.HasOne(d => d.User).WithMany(p => p.GroceriesLists)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Groceries__user___55F4C372");
+            //entity.HasOne(d => d.User).WithMany(p => p.GroceriesLists)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__Groceries__user___55F4C372");
         });
 
         modelBuilder.Entity<IndianFood>(entity =>
@@ -178,13 +178,13 @@ public partial class FreshieContext : DbContext
                 .HasColumnName("product_name");
             entity.Property(e => e.ShelfId).HasColumnName("shelf_id");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__Products__catego__00200768");
+            //entity.HasOne(d => d.Category).WithMany(p => p.Products)
+            //    .HasForeignKey(d => d.CategoryId)
+            //    .HasConstraintName("FK__Products__catego__00200768");
 
-            entity.HasOne(d => d.Shelf).WithMany(p => p.Products)
-                .HasForeignKey(d => d.ShelfId)
-                .HasConstraintName("FK__Products__shelf___01142BA1");
+            //entity.HasOne(d => d.Shelf).WithMany(p => p.Products)
+            //    .HasForeignKey(d => d.ShelfId)
+            //    .HasConstraintName("FK__Products__shelf___01142BA1");
         });
 
         modelBuilder.Entity<ProductDiet>(entity =>
@@ -197,15 +197,15 @@ public partial class FreshieContext : DbContext
             entity.Property(e => e.DietId).HasColumnName("diet_id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
 
-            entity.HasOne(d => d.Diet).WithMany(p => p.ProductDiets)
-                .HasForeignKey(d => d.DietId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ProductDi__diet___04E4BC85");
+            //entity.HasOne(d => d.Diet).WithMany(p => p.ProductDiets)
+            //    .HasForeignKey(d => d.DietId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__ProductDi__diet___04E4BC85");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.ProductDiets)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ProductDi__produ__03F0984C");
+            //entity.HasOne(d => d.Product).WithMany(p => p.ProductDiets)
+            //    .HasForeignKey(d => d.ProductId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__ProductDi__produ__03F0984C");
         });
 
         modelBuilder.Entity<ProductsFromWeb>(entity =>

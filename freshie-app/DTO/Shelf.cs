@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace freshie_app.DTO
+namespace freshie_webAPI.Models;
+
+public partial class Shelf
 {
-    public class Shelf
-    {
-        public int ShelfId { get; set; }
+    public int ShelfId { get; set; }
 
-        public string ShelfName { get; set; } = null!;
+    public string ShelfName { get; set; } = null!;
 
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-
-    }
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

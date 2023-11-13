@@ -1,4 +1,4 @@
-﻿using freshie_DTO;
+﻿using freshie_webAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,7 +21,7 @@ namespace freshie_webAPI.Controllers
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return _context.Users.FirstOrDefault(u=>u.user_id==id);
+            return _context.Users.FirstOrDefault(u=>u.UserId==id);
         }
         // GET api/<UserController>/5
         // api/user/10000001
@@ -38,7 +38,7 @@ namespace freshie_webAPI.Controllers
         public void Post([FromBody] User value, string new_password)
         {
             //ustawiam user id=0, bo kolumna jest identity i sama nada identyfikator
-            Model.User user =new Model.User() {user_id=0,Name=value.Name,Email=value.Email , Password=new_password};
+            Models.User user =new Models.User() {UserId=0,Name=value.Name,Email=value.Email , Password=new_password};
  
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -48,7 +48,7 @@ namespace freshie_webAPI.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] User value)
         {
-            Model.User user = new Model.User() { user_id = id, Name = value.Name, Email = value.Email };
+            Models.User user = new Models.User() { UserId = id, Name = value.Name, Email = value.Email };
 
             _context.Users.Update(user);
             _context.SaveChanges();
@@ -59,7 +59,7 @@ namespace freshie_webAPI.Controllers
         [Route("change-password/{id}/{old_password}/{new_password}")]
         public ActionResult ChangePassword(int id,string old_password, string new_password)
         {
-            Model.User user = _context.Users.FirstOrDefault(u => u.user_id == id);
+            Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
             if (user != null)
             {
                 if (old_password == user.Password)
@@ -81,7 +81,7 @@ namespace freshie_webAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Model.User user =_context.Users.FirstOrDefault(u=>u.user_id==id);
+            Models.User user =_context.Users.FirstOrDefault(u=>u.UserId==id);
 
             if (user != null)
             {

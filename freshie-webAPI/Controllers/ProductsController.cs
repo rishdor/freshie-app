@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using freshie_DTO;
+using freshie_webAPI.Models;
 using freshie_webAPI;
 
 namespace freshie_webAPI.Controllers
@@ -66,7 +66,7 @@ namespace freshie_webAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != product.Id)
+            if (id != product.ProductId)
             {
                 return BadRequest();
             }
@@ -97,7 +97,7 @@ namespace freshie_webAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            product.Id = 0;
+            product.ProductId = 0;
           if (_context.Products == null)
           {
               return Problem("Entity set 'FreshieDbContext.Products'  is null.");
@@ -105,7 +105,7 @@ namespace freshie_webAPI.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
         // DELETE: api/Products/5
@@ -130,7 +130,7 @@ namespace freshie_webAPI.Controllers
 
         private bool ProductExists(int id)
         {
-            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
     }
 }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using freshie_DTO;
 using freshie_webAPI;
+using freshie_webAPI.Models;
 
 namespace freshie_webAPI.Controllers
 {

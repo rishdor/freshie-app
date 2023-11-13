@@ -11,7 +11,7 @@ public partial class ProductDiet
 
     public int DietId { get; set; }
 
-    //public virtual Diet Diet { get; set; } = null!;
+    public virtual Diet Diet { get; set; } = null!;
 
-    //public virtual Product Product { get; set; } = null!;
+    public virtual Product Product { get; set; } = null!;
 }

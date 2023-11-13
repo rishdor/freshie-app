@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using freshie_DTO;
 using freshie_webAPI;
+using freshie_webAPI.Models;
 
 namespace freshie_webAPI.Controllers
 {
@@ -55,7 +55,7 @@ namespace freshie_webAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShelf(int id, Shelf shelf)
         {
-            if (id != shelf.ShellfId)
+            if (id != shelf.ShelfId)
             {
                 return BadRequest();
             }
@@ -86,7 +86,7 @@ namespace freshie_webAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Shelf>> PostShelf(Shelf shelf)
         {
-            shelf.ShellfId = 0;
+            shelf.ShelfId = 0;
           if (_context.Shelves == null)
           {
               return Problem("Entity set 'FreshieDbContext.Shelves'  is null.");
@@ -94,7 +94,7 @@ namespace freshie_webAPI.Controllers
             _context.Shelves.Add(shelf);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShelf", new { id = shelf.ShellfId }, shelf);
+            return CreatedAtAction("GetShelf", new { id = shelf.ShelfId }, shelf);
         }
 
         // DELETE: api/Shelves/5
@@ -119,7 +119,7 @@ namespace freshie_webAPI.Controllers
 
         private bool ShelfExists(int id)
         {
-            return (_context.Shelves?.Any(e => e.ShellfId == id)).GetValueOrDefault();
+            return (_context.Shelves?.Any(e => e.ShelfId == id)).GetValueOrDefault();
         }
     }
 }

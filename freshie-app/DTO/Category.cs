@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace freshie_app.DTO
+namespace freshie_webAPI.Models;
+
+public partial class Category
 {
-    public class Category
-    {
-        public int CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
-        public string CategoryName { get; set; } = null!;
+    public string CategoryName { get; set; } = null!;
 
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-
-    }
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }
