@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace freshie_webAPI.Models;
+namespace freshie_app.DTO;
 
 public partial class Diet
 {
