@@ -2,5 +2,5 @@
 ## A repository for our amazing application!
 ### An uni project for *Programming with using agile* classes.
 
-An application is a **virtual fridge**, but fortunately, you can add also any other places that you keep your edibles!
-You can add products and add a expiration date to them. Thank to this, you will be reminded about what will start to stink in your kitchen :)
+ The application is a **virtual fridge**, but fortunately, you can also add any other places where you store your edibles! 
+ You can add products and assign an expiration date to them. Thanks to this, you will be reminded of what might start to go bad in your kitchen :)
