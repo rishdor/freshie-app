@@ -16,12 +16,12 @@ namespace freshie_app.DTO
 
         static ApiClient()
         {
-            _client = new HttpClient { BaseAddress = new Uri("https://freshie-fridgehub-api.azurewebsites.net/") };
+            _client = new HttpClient { BaseAddress = new Uri("https://freshie-api.azurewebsites.net/") };
         }
 
         public static async Task<string> RegisterUser(User user)
         {
-            HttpResponseMessage response = await _client.PostAsJsonAsync("api/Users/register", user);
+            HttpResponseMessage response = await _client.PostAsJsonAsync("api/User/register", user);
 
             if (response.IsSuccessStatusCode)
             {
@@ -34,10 +34,11 @@ namespace freshie_app.DTO
             }
         }
 
+        //FIX THIS METHOD CAUSE IT'S NOW POST AND NOT GET
         public static async Task<User> LoginUser(string email, string password)
         {
             User user = null;
-            HttpResponseMessage response = await _client.GetAsync($"api/users/login?email={email}&password={password}");
+            HttpResponseMessage response = await _client.GetAsync($"api/users/login");
 
             if (response.IsSuccessStatusCode)
             {

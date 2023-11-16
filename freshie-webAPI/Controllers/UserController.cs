@@ -18,86 +18,87 @@ namespace freshie_webAPI.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            return await _context.Users.ToListAsync();
+        }
 
         // GET api/<UserController>/5
         // api/user/10000001
         [HttpGet("{id}")]
-        public User Get(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.UserId == id);
-        }
-        // GET api/<UserController>/5
-        // api/user/10000001
-        [HttpGet]
-        [Route("login/{email}/{password}")]
-        public User Login(string email, string password)
-        {
-            return _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-        }
+            var user = await _context.Users.FindAsync(id);
 
-        // POST api/<UserController>
-        [HttpPost]
-        [Route("register/{new_password}")]
-        public void Post([FromBody] User value, string new_password)
-        {
-            //ustawiam user id=0, bo kolumna jest identity i sama nada identyfikator
-            Models.User user = new Models.User() { UserId = 0, Name = value.Name, Email = value.Email, Password = new_password };
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-        }
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] User value)
-        {
-            Models.User user = new Models.User() { UserId = id, Name = value.Name, Email = value.Email };
-
-            _context.Users.Update(user);
-            _context.SaveChanges();
-        }
-
-        // PUT api/<UserController>/5
-        [HttpPut]
-        [Route("change-password/{id}/{old_password}/{new_password}")]
-        public ActionResult ChangePassword(int id, string old_password, string new_password)
-        {
-            Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
-            if (user != null)
+            if (user == null)
             {
-                if (old_password == user.Password)
-                {
-                    user.Password = new_password;
-                    _context.Users.Update(user);
-                    _context.SaveChanges();
-
-                    return NoContent();
-                }
-                else
-                    return BadRequest();
+                return NotFound();
             }
 
-            return NotFound();
+            return user;
         }
+
+        // PUT api/<UserController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] User value)
+        //{
+        //    Models.User user = new Models.User() { UserId = id, Name = value.Name, Email = value.Email };
+
+        //    _context.Users.Update(user);
+        //    _context.SaveChanges();
+        //}
+
+
+        //FIX THIS SO THERE IS NO SENSITIVE DATA IN THE URL
+        // PUT api/<UserController>/5
+        //[HttpPut]
+        //[Route("change-password/{id}/{old_password}/{new_password}")]
+        //public ActionResult ChangePassword(int id, string old_password, string new_password)
+        //{
+        //    Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
+        //    if (user != null)
+        //    {
+        //        if (old_password == user.Password)
+        //        {
+        //            user.Password = new_password;
+        //            _context.Users.Update(user);
+        //            _context.SaveChanges();
+
+        //            return NoContent();
+        //        }
+        //        else
+        //            return BadRequest();
+        //    }
+
+        //    return NotFound();
+        //}
 
         // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
 
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-            }
-            else
-                throw new Exception("Given user doesn't exist");
+        //    if (user != null)
+        //    {
+        //        _context.Users.Remove(user);
+        //        _context.SaveChanges();
+        //    }
+        //    else
+        //        throw new Exception("Given user doesn't exist");
 
-        }
+        //}
+
         [HttpPost("register")]
         public async Task<ActionResult<User>> RegisterUser(User user)
         {
+            //maybe input validation (think of it later)
+
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (existingUser != null)
             {
@@ -108,26 +109,41 @@ namespace freshie_webAPI.Controllers
             {
                 return Problem("Entity set 'FridgeHubContext.Users'  is null.");
             }
+
             string password = user.Password;
             user.Password = HashPassword(user.Password, out var salt);
             user.Salt = salt;
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("LoginUser", new { email = user.Email, password }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
-        [HttpGet("login")]
-        public async Task<ActionResult<User>> LoginUser(string email, string password)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
-            if (user == null || !VerifyPassword(password, user.Password, user.Salt))
+        //[HttpGet("login")]
+        //public async Task<ActionResult<User>> LoginUser(string email, string password)
+        //{
+        //    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+        //    if (user == null || !VerifyPassword(password, user.Password, user.Salt))
+        //    {
+        //        return NotFound("Wrong email or password.");
+        //    }
+        //    return user;
+        //}
+
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> LoginUser([FromBody] Login loginModel)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginModel.Email);
+
+            if (user == null || !VerifyPassword(loginModel.Password, user.Password, user.Salt))
             {
                 return NotFound("Wrong email or password.");
             }
             return user;
-
         }
+
         const int keySize = 64;
         const int iterations = 350000;
         static HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
