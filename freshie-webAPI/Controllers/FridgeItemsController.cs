@@ -105,18 +105,18 @@ namespace freshie_webAPI.Controllers
         // POST: api/FridgeItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FridgeItem>> AddProduct(int id, Product product, DateTime? expirationDate = null)
+        public async Task<ActionResult<FridgeItem>> AddProduct([FromBody] AddProductModel model)
         {
             if (_context.FridgeItems == null)
             {
                 return Problem("Entity set 'FreshieDbContext.FridgeItems'  is null.");
             }
-            if (expirationDate.HasValue && expirationDate.Value.Kind != DateTimeKind.Local)
+            if (model.ExpirationDate.HasValue && model.ExpirationDate.Value.Kind != DateTimeKind.Local)
             {
                 return BadRequest("The expiration date is incorrect.");
             }
 
-            FridgeItem item = new FridgeItem { ProductId = product.ProductId, UserId = id, ExpirationDate = expirationDate };
+            FridgeItem item = new FridgeItem { ProductId = model.Product.ProductId, UserId = model.UserId, ExpirationDate = model.ExpirationDate };
             _context.FridgeItems.Add(item);
             await _context.SaveChangesAsync();
 

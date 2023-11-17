@@ -47,7 +47,7 @@ namespace freshie_app.DTO
             }
             return user;
         }
-        public static async Task<List<Product>> GetUsersProducts(int userId)
+        public static async Task<List<Product>> GetUserProducts(int userId)
         {
             List<Product> userProducts = null;
             HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{userId}");
@@ -56,6 +56,21 @@ namespace freshie_app.DTO
                 userProducts = await response.Content.ReadAsAsync<List<Product>>();
             }
             return userProducts;
+        }
+        public static async Task<string> AddProduct(int id, Product product, DateTime? expirationDate = null)
+        {
+            var item = new { UserId = id, Product = product, ExpirationDate = expirationDate };
+            var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("api/fridgeitems", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return "Product added successfully.";
+            }
+            else
+            {
+                return $"Failed to add product. Status code: {response.StatusCode}";
+            }
         }
     }
 }
