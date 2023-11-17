@@ -47,7 +47,15 @@ namespace freshie_app.DTO
             }
             return user;
         }
-        //public static async Task<List<>>
-
+        public static async Task<List<Product>> GetUsersProducts(int userId)
+        {
+            List<Product> userProducts = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                userProducts = await response.Content.ReadAsAsync<List<Product>>();
+            }
+            return userProducts;
+        }
     }
 }

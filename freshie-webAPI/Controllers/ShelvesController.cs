@@ -52,70 +52,70 @@ namespace freshie_webAPI.Controllers
 
         // PUT: api/Shelves/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutShelf(int id, Shelf shelf)
-        {
-            if (id != shelf.ShelfId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutShelf(int id, Shelf shelf)
+        //{
+        //    if (id != shelf.ShelfId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(shelf).State = EntityState.Modified;
+        //    _context.Entry(shelf).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShelfExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ShelfExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Shelves
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Shelf>> PostShelf(Shelf shelf)
-        {
-            shelf.ShelfId = 0;
-          if (_context.Shelves == null)
-          {
-              return Problem("Entity set 'FreshieDbContext.Shelves'  is null.");
-          }
-            _context.Shelves.Add(shelf);
-            await _context.SaveChangesAsync();
+        //// POST: api/Shelves
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Shelf>> PostShelf(Shelf shelf)
+        //{
+        //    shelf.ShelfId = 0;
+        //  if (_context.Shelves == null)
+        //  {
+        //      return Problem("Entity set 'FreshieDbContext.Shelves'  is null.");
+        //  }
+        //    _context.Shelves.Add(shelf);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShelf", new { id = shelf.ShelfId }, shelf);
-        }
+        //    return CreatedAtAction("GetShelf", new { id = shelf.ShelfId }, shelf);
+        //}
 
-        // DELETE: api/Shelves/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteShelf(int id)
-        {
-            if (_context.Shelves == null)
-            {
-                return NotFound();
-            }
-            var shelf = await _context.Shelves.FindAsync(id);
-            if (shelf == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Shelves/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteShelf(int id)
+        //{
+        //    if (_context.Shelves == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var shelf = await _context.Shelves.FindAsync(id);
+        //    if (shelf == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Shelves.Remove(shelf);
-            await _context.SaveChangesAsync();
+        //    _context.Shelves.Remove(shelf);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool ShelfExists(int id)
         {

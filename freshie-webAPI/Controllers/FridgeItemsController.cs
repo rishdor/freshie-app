@@ -31,79 +31,109 @@ namespace freshie_webAPI.Controllers
             return await _context.FridgeItems.ToListAsync();
         }
 
-        // GET: api/FridgeItems/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<FridgeItem>> GetFridgeItem(int id)
-        {
-          if (_context.FridgeItems == null)
-          {
-              return NotFound();
-          }
-            var fridgeItem = await _context.FridgeItems.FindAsync(id);
+        //// GET: api/FridgeItems/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<FridgeItem>> GetFridgeItem(int id)
+        //{
+        //  if (_context.FridgeItems == null)
+        //  {
+        //      return NotFound();
+        //  }
+        //    var fridgeItem = await _context.FridgeItems.FindAsync(id);
 
-            if (fridgeItem == null)
+        //    if (fridgeItem == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return fridgeItem;
+        //}
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetFridgeProducts(int id)
+        {
+            var items = await _context.FridgeItems.Where(u => u.UserId == id).ToListAsync();
+
+            if (items == null || !items.Any())
             {
-                return NotFound();
+                return NotFound("User doesn't have any items.");
             }
 
-            return fridgeItem;
-        }
+            var products = new List<Product>();
+            foreach (var item in items)
+            {
+                var product = await _context.Products.FindAsync(item.ProductId);
+                if (product != null)
+                {
+                    products.Add(product);
+                }
+            }
 
+            return products;
+        }
         // PUT: api/FridgeItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFridgeItem(int id, FridgeItem fridgeItem)
-        {
-            if (id != fridgeItem.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutFridgeItem(int id, FridgeItem fridgeItem)
+        //{
+        //    if (id != fridgeItem.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(fridgeItem).State = EntityState.Modified;
+        //    _context.Entry(fridgeItem).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FridgeItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!FridgeItemExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/FridgeItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FridgeItem>> PostFridgeItem(FridgeItem fridgeItem)
+        public async Task<ActionResult<FridgeItem>> AddProduct(int id, Product product, DateTime? expirationDate = null)
         {
-          if (_context.FridgeItems == null)
-          {
-              return Problem("Entity set 'FreshieDbContext.FridgeItems'  is null.");
-          }
-            _context.FridgeItems.Add(fridgeItem);
+            if (_context.FridgeItems == null)
+            {
+                return Problem("Entity set 'FreshieDbContext.FridgeItems'  is null.");
+            }
+            if (expirationDate.HasValue && expirationDate.Value.Kind != DateTimeKind.Local)
+            {
+                return BadRequest("The expiration date is incorrect.");
+            }
+
+            FridgeItem item = new FridgeItem { ProductId = product.ProductId, UserId = id, ExpirationDate = expirationDate };
+            _context.FridgeItems.Add(item);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFridgeItem", new { id = fridgeItem.Id }, fridgeItem);
+            return Ok("The item was added successfully.");
         }
 
         // DELETE: api/FridgeItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFridgeItem(int id)
+        public async Task<IActionResult> DeleteFridgeItem(int id, Product product)
         {
             if (_context.FridgeItems == null)
             {
                 return NotFound();
             }
-            var fridgeItem = await _context.FridgeItems.FindAsync(id);
+
+            var fridgeItem = await _context.FridgeItems.FirstOrDefaultAsync(u => u.UserId == id && u.ProductId == product.ProductId);
+
             if (fridgeItem == null)
             {
                 return NotFound();
@@ -114,6 +144,7 @@ namespace freshie_webAPI.Controllers
 
             return NoContent();
         }
+
 
         private bool FridgeItemExists(int id)
         {

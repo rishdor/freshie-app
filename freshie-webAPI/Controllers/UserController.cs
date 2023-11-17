@@ -18,6 +18,7 @@ namespace freshie_webAPI.Controllers
             _context = context;
         }
 
+        //DELETE THIS LATER:
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
