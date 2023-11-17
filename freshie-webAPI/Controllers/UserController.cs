@@ -134,7 +134,7 @@ namespace freshie_webAPI.Controllers
         //}
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> LoginUser([FromBody] Login loginModel)
+        public async Task<ActionResult<User>> LoginUser([FromBody] LoginModel loginModel)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginModel.Email);
 

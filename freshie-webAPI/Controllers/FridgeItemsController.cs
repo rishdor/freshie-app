@@ -124,15 +124,15 @@ namespace freshie_webAPI.Controllers
         }
 
         // DELETE: api/FridgeItems/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFridgeItem(int id, Product product)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFridgeItem([FromBody] DeleteProductModel model)
         {
             if (_context.FridgeItems == null)
             {
                 return NotFound();
             }
 
-            var fridgeItem = await _context.FridgeItems.FirstOrDefaultAsync(u => u.UserId == id && u.ProductId == product.ProductId);
+            var fridgeItem = await _context.FridgeItems.FirstOrDefaultAsync(u => u.UserId == model.UserId && u.ProductId == model.Product.ProductId);
 
             if (fridgeItem == null)
             {
@@ -144,6 +144,7 @@ namespace freshie_webAPI.Controllers
 
             return NoContent();
         }
+
 
 
         private bool FridgeItemExists(int id)

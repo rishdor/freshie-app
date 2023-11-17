@@ -72,5 +72,27 @@ namespace freshie_app.DTO
                 return $"Failed to add product. Status code: {response.StatusCode}";
             }
         }
+        public static async Task<string> DeleteProduct(int id, Product product)
+        {
+            var item = new { UserId = id, Product = product };
+            var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("api/fridgeitems", UriKind.Relative),
+                Content = content
+            };
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return "Product deleted successfully.";
+            }
+            else
+            {
+                return $"Failed to delete product. Status code: {response.StatusCode}";
+            }
+        }
     }
 }
