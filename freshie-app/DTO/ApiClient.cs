@@ -34,11 +34,12 @@ namespace freshie_app.DTO
             }
         }
 
-        //FIX THIS METHOD CAUSE IT'S NOW POST AND NOT GET
         public static async Task<User> LoginUser(string email, string password)
         {
             User user = null;
-            HttpResponseMessage response = await _client.GetAsync($"api/users/login");
+            var loginModel = new { Email = email, Password = password };
+            var content = new StringContent(JsonConvert.SerializeObject(loginModel), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("api/user/login", content);
 
             if (response.IsSuccessStatusCode)
             {
