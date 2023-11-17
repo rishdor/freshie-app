@@ -65,6 +65,7 @@ public partial class RegisterPage : ContentPage
         }
         if (registration == "Registration successful.")
         {
+            user = await ApiClient.LoginUser(email, password);
             await Navigation.PushAsync(new HomePage(user));
         }
         else

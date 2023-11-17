@@ -11,7 +11,7 @@ namespace freshie_app
         public HomePage(User user)
         {
             InitializeComponent();
-            WelcomeLabel.Text = $"Hello {user.Name}!";
+            WelcomeLabel.Text = $"Hello {user.Name}!\nuserId: {user.UserId}";
             //LoadUserProducts(user);
             _user = user;
         }
