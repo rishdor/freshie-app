@@ -1,5 +1,5 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-
+using freshie_app.DTO;
 namespace freshie_app
 {
     public partial class App : Application
@@ -7,7 +7,6 @@ namespace freshie_app
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
         protected override Window CreateWindow(IActivationState activationState)
@@ -16,7 +15,7 @@ namespace freshie_app
 
             window.Title = "freshie";
             const int newWidth = 400;
-            const int newHeight = 600;
+            const int newHeight = 700;
 
             window.Width = newWidth;
             window.Height = newHeight;

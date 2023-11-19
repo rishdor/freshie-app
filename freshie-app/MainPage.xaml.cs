@@ -1,27 +1,35 @@
 ﻿using Microsoft.Maui.Controls;
-
+using Microsoft.EntityFrameworkCore;
+using freshie_app.DTO;
 namespace freshie_app
 {
     public partial class MainPage : ContentPage
     {
+
         public MainPage()
         {
             InitializeComponent();
         }
-
-        private void OnLoginButtonClicked(object sender, EventArgs e) // jesli uzytkownik sie zaloguje
+        private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            string login = EmailEntry.Text;
+            string email = EmailEntry.Text;
             string password = PasswordEntry.Text;
+            WrongDetails.IsVisible = false;
 
-            // ...
+            User user = await ApiClient.LoginUser(email, password);
+
+            if (user == null)
+            {
+                WrongDetails.IsVisible = true;
+            }
+            else
+            {
+                await Navigation.PushAsync(new HomePage(user));
+            }
         }
-
         private async void OnRegisterButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage());
-            //await Shell.Current.GoToAsync(nameof(RegisterPage)); - inna metoda, może zmienię, jak poznam bliżej Data Binding
-            
         }
     }
 }

@@ -1,29 +1,77 @@
+using System.Text.RegularExpressions;
 namespace freshie_app;
+using freshie_app.DTO;
 
 public partial class RegisterPage : ContentPage
 {
-	public RegisterPage()
+    public static bool CheckPasswordCriteria(string password)
+    {
+        string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
+        return Regex.IsMatch(password, pattern);
+    }
+    public static bool ValidateEmailPattern(string email)
+    {
+        string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+        return Regex.IsMatch(email, pattern);
+    }
+    public RegisterPage()
 	{
 		InitializeComponent();
 	}
     private async void SignUpButtonClicked(object sender, EventArgs e)
     {
-        if (PrivacyPolicy.IsChecked && Password.Text == Password2.Text) // jesli uzytkownik wszystko zaznaczyl dobrze
-        {
-            string name = Name.Text;
-            string email = Email.Text;
-            string password = Password.Text;
+        EmailCheckDB.IsVisible = false;
+        EmptyField.IsVisible = false;
+        UnmatchingPasswords.IsVisible = false;
+        EmailWrongFormat.IsVisible = false;
+        PasswordCheck.IsVisible = false;
+        TermsOfUse.IsVisible = false;
 
-            // ...
-        }
-        else if (!PrivacyPolicy.IsChecked) 
+        if (string.IsNullOrWhiteSpace(Password.Text) || string.IsNullOrWhiteSpace(Email.Text) || string.IsNullOrWhiteSpace(Name.Text) || string.IsNullOrWhiteSpace(Password2.Text))
         {
-            await DisplayAlert("Terms of Use", "Please make sure you checked all required fields.", "OK");
+            EmptyField.IsVisible = true;
+            return;
         }
-        else if (Password.Text!=Password2.Text)
+        if (Password.Text != Password2.Text)
         {
-            await DisplayAlert("Incorrect password", "Please make sure you entered the same password twice.", "OK");
+            UnmatchingPasswords.IsVisible = true;
+            return;
         }
-        
+        if (!ValidateEmailPattern(Email.Text))
+        {
+            EmailWrongFormat.IsVisible = true;
+            return;
+        }
+        if (!CheckPasswordCriteria(Password.Text))
+        {
+            PasswordCheck.IsVisible = true;
+            return;
+        }
+        if (!PrivacyPolicy.IsChecked)
+        {
+            TermsOfUse.IsVisible = true;
+            return;
+        }
+        string email = Email.Text;
+        string password = Password.Text;
+        string name = Name.Text;
+
+        var user = new User { Email = email, Password = password, Name = name };
+        string registration = await ApiClient.RegisterUser(user);
+        if (registration == "A user with this email already exists.")
+        {
+            EmailCheckDB.IsVisible = true;
+            return;
+        }
+        if (registration == "Registration successful.")
+        {
+            user = await ApiClient.LoginUser(email, password);
+            await Navigation.PushAsync(new HomePage(user));
+        }
+        else
+        {
+            await DisplayAlert("Registration was unsuccessful", "Try again", "OK");
+        }
     }
+
 }
