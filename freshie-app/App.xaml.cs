@@ -12,7 +12,7 @@ namespace freshie_app
         protected override Window CreateWindow(IActivationState activationState)
         {
             var window = base.CreateWindow(activationState);
-
+            
             window.Title = "freshie";
             const int newWidth = 400;
             const int newHeight = 700;

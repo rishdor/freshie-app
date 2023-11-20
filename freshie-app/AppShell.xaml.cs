@@ -10,13 +10,6 @@ namespace freshie_app
             this.user = user;
             InitializeComponent();
             TabBar tabBar = new TabBar();
-            
-            //ShellContent mainPageContent = new ShellContent
-            //{
-            //    ContentTemplate = new DataTemplate(typeof(MainPage)),
-            //    Route = "MainPage"
-            //};
-            //tabBar.Items.Add(mainPageContent);
 
             ShellContent recipiesPageContent = new ShellContent
             {
@@ -47,7 +40,7 @@ namespace freshie_app
             tabBar.Items.Add(groceriesPageContent);
 
             Items.Add(tabBar);
-            //Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage)); - po poznaniu Data Binding
+            
         }
     }
 }
