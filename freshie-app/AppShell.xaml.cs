@@ -1,11 +1,12 @@
 ﻿//using Android.Media;
+using freshie_app.DTO;
 
 namespace freshie_app
 {
     public partial class AppShell : Shell
     {
-        private DTO.User user;
-        public AppShell(DTO.User user)
+        private User user;
+        public AppShell(User user)
         {
             this.user = user;
             InitializeComponent();
@@ -23,7 +24,6 @@ namespace freshie_app
             ShellContent homePageContent = new ShellContent
             {
                 ContentTemplate = new DataTemplate(() => new HomePage(user)),
-                //ContentTemplate = new DataTemplate(typeof(HomePage)),
                 Title = "Home",
                 Route = "HomePage",
                 Icon = "home.png"
