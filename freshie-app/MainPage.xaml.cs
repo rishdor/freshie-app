@@ -29,9 +29,11 @@ namespace freshie_app
                 await Shell.Current.GoToAsync("//HomePage");
             }
         }
-        private async void OnRegisterButtonClicked(object sender, EventArgs e)
+        private void OnRegisterButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RegisterPage());
+            Application.Current.MainPage = new RegisterPage();
+
         }
+
     }
 }

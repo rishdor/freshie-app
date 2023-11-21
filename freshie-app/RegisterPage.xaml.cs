@@ -66,7 +66,9 @@ public partial class RegisterPage : ContentPage
         if (registration == "Registration successful.")
         {
             user = await ApiClient.LoginUser(email, password);
-            await Navigation.PushAsync(new HomePage(user));
+            
+            Application.Current.MainPage = new AppShell(user);
+            await Shell.Current.GoToAsync("//HomePage");
         }
         else
         {
