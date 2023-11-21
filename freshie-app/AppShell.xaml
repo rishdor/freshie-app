@@ -6,5 +6,10 @@
     xmlns:local="clr-namespace:freshie_app"
     Shell.FlyoutBehavior="Disabled">
 
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,*,*">
+            <Label Grid.Column="1" Text="{Binding Path=CurrentPage.Title, Mode=OneWay}" HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </Shell.TitleView>
 
 </Shell>

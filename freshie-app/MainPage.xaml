@@ -6,7 +6,7 @@
         <VerticalStackLayout Padding="20" 
                              VerticalOptions="CenterAndExpand">
             
-            <Image Source="logo.png" 
+            <Image Source="icon2.png" 
                    HeightRequest="200" 
                    HorizontalOptions="Center" />
 

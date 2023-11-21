@@ -6,7 +6,7 @@ namespace freshie_app
     public partial class HomePage : ContentPage
     {
         private User _user;
-        private List<Product> userProducts;
+        private List<Product> _userProducts;
         private List<Product> allProducts;
         public HomePage(User user)
         {
@@ -14,6 +14,7 @@ namespace freshie_app
             WelcomeLabel.Text = $"Hello {user.Name}!\nuserId: {user.UserId}";
             //LoadUserProducts(user);
             _user = user;
+            //_userProducts = userProducts;
         }
 
         //private void LoadUserProducts(User user)
