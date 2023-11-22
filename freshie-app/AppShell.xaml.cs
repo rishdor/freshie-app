@@ -32,7 +32,7 @@ namespace freshie_app
 
             ShellContent groceriesPageContent = new ShellContent
             {
-                ContentTemplate = new DataTemplate(typeof(GroceriesPage)),
+                ContentTemplate = new DataTemplate(() => new GroceriesPage(user)),
                 Title = "Groceries",
                 Route = "GroceriesPage",
                 Icon = "list.png"
