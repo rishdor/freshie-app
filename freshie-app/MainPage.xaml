@@ -27,11 +27,11 @@
                     Margin="0,5,0,0" />
             <Label
                     x:Name="WrongDetails"
-                    Text="Icorrect email or password."
+                    Text="Incorrect email or password."
                     VerticalOptions="Center"
                     Margin="10,0,10,0"
                     IsVisible="False"
-                    TextColor="#AF7070"/> 
+                    TextColor="#FE3100"/> 
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

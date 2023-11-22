@@ -1,4 +1,6 @@
 using freshie_app.DTO;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Xml;
 
 namespace freshie_app
@@ -6,63 +8,107 @@ namespace freshie_app
     public partial class HomePage : ContentPage
     {
         private User _user;
-        private List<Product> _userProducts;
-        private List<Product> allProducts;
+        //private List<Product> _userProducts;
+        //private List<Product> allProducts;
         public HomePage(User user)
         {
             InitializeComponent();
-            WelcomeLabel.Text = $"Hello {user.Name}!\nuserId: {user.UserId}";
-            //LoadUserProducts(user);
+            //WelcomeLabel.Text = $"Hello {user.Name}!\nuserId: {user.UserId}";
             _user = user;
             //_userProducts = userProducts;
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            LoadUserProducts(_user);
+        }
+        public async void LoadUserProducts(User user)
+        {
+            
+            var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
+            if (_userProducts == null)
+            {
+                WelcomeLabel.IsVisible = true;
+                WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
+                WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
 
-        //private void LoadUserProducts(User user)
-        //{
-        //    //userProducts = (from p in _context.Products
-        //    //               join f in _context.FridgeItems on p.Id equals f.ProductId
-        //    //               where f.UserId == user.Id
-        //    //               select p).ToList();
-        //    //UserProductsListView.ItemsSource = userProducts;
+            }
+            else
+            {
+                var grid = new Grid
+                {
+                    RowSpacing = 10,
+                    ColumnSpacing = 10,
+                    Padding = new Thickness(20)
+                };
 
-        //    //allProducts = _context.Products.ToList();            
-        //    //AllProductsListView.ItemsSource = allProducts.Except(userProducts).ToList();
-        //}
-        //private bool isButtonClicked = false;
-        //private void OnShowAllProductsButtonClicked(object sender, EventArgs e)
-        //{
-        //    if (!isButtonClicked)
-        //    {
-        //        AllProductsListView.IsVisible = true;
-        //        isButtonClicked = true;
-        //    }
-        //    else
-        //    {
-        //        AllProductsListView.IsVisible = false;
-        //        isButtonClicked = false;
-        //    }
-        //}
+                int columns = 3; // Maksymalna liczba przycisków w jednym rzêdzie
+                for (int i = 0; i < _userProducts.Count; i++)
+                {
+                    int row = i / columns;
+                    int column = i % columns;
 
-        //private async void OnProductTapped(object sender, ItemTappedEventArgs e)
-        //{
-        //    var selectedProduct = (Product)e.Item;
-        //    if (selectedProduct != null)
-        //    {
-        //        //string expirationDate = await DisplayPromptAsync("Expiration Date", "Please enter the expiration date:");
-        //        //if (!string.IsNullOrEmpty(expirationDate))
-        //        //{
-        //        //    var fridgeItem = new FridgeItem
-        //        //    {
-        //        //        UserId = _user.Id,
-        //        //        ProductId = selectedProduct.Id,
-        //        //        ExpirationDate = DateTime.Parse(expirationDate)
-        //        //    };
-        //        //    _context.FridgeItems.Add(fridgeItem);
-                    
-        //        //    _context.SaveChanges();
-        //        //}
-        //        LoadUserProducts(_user);
-        //    }
-        //}
+                    // Jeœli to jest pierwszy element w rzêdzie, dodaj nowy rz¹d do siatki
+                    if (column == 0)
+                    {
+                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                    }
+
+                    // Jeœli to jest pierwszy element w siatce, dodaj odpowiedni¹ liczbê kolumn
+                    if (i == 0)
+                    {
+                        for (int j = 0; j < columns; j++)
+                        {
+                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                        }
+                    }
+
+                    var button = new Button
+                    {
+                        Text = _userProducts[i].ProductName,
+                        FontSize = 20,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center
+                    };
+                    button.Clicked += (s, e) =>
+                    {
+                        // Tutaj umieœæ kod, który ma siê wykonaæ po klikniêciu przycisku
+                    };
+
+
+                    Grid.SetRow(button, row);
+                    Grid.SetColumn(button, column);
+                    grid.Children.Add(button);
+                }
+                //var grid = new Grid
+                //{
+                //    RowSpacing = 10,
+                //    ColumnSpacing = 10,
+
+                //    Padding = new Thickness(20)
+                //};
+                //for (int i = 0; i < _userProducts.Count; i++)
+                //{
+                //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+
+                //    var label = new Label
+                //    {
+                //        Text = _userProducts[i].ProductName,
+                //        FontSize = 20,
+                //        HorizontalOptions = LayoutOptions.Center,
+                //        VerticalOptions = LayoutOptions.Center
+                //    };
+
+                //    grid.Children.Add(label);
+                //}
+                VSL.Children.Add(grid);
+            }
+        }
+        public void OnAddProductClicked(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
