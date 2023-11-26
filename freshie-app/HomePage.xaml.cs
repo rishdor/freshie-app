@@ -36,10 +36,8 @@ namespace freshie_app
             }
             else
             {
-                var grid = new Grid
-                {
-                    
-                };
+                var grid = new Grid { };
+                
                 int columns = 3;
                 int rows = (_userProducts.Count + columns - 1) / columns;
 
@@ -64,8 +62,6 @@ namespace freshie_app
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center
                     };
-                    //var product = _userProducts[i];
-                    //var productButton = new ProductButton(product);
 
                     int row = i / columns;
                     int column = i % columns;
@@ -73,23 +69,9 @@ namespace freshie_app
                     Grid.SetRow(productButton, row);
                     Grid.SetColumn(productButton, column);
 
-                    
                     grid.Children.Add(productButton);
                 }
                 VSL.Children.Add(grid);
-            }
-        }
-        public class ProductButton : Button
-        {
-            public ProductButton(Product product)
-            {
-                this.Text = product.ProductName;
-                this.BackgroundColor = Color.FromArgb("#F7F2E7");
-                this.WidthRequest = 100;
-                this.HeightRequest = 100;
-                this.VerticalOptions = LayoutOptions.Center;
-                this.HorizontalOptions = LayoutOptions.Center;
-                // Dodaj tutaj dodatkow¹ logikê dla przycisku produktu
             }
         }
         public void OnAddProductClicked(object sender, EventArgs e)
