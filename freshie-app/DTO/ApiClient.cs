@@ -18,7 +18,7 @@ namespace freshie_app.DTO
         {
             _client = new HttpClient { BaseAddress = new Uri("https://freshie-api.azurewebsites.net/") };
         }
-
+        //REGISTATION
         public static async Task<string> RegisterUser(User user)
         {
             HttpResponseMessage response = await _client.PostAsJsonAsync("api/User/register", user);
@@ -33,7 +33,7 @@ namespace freshie_app.DTO
                 return message;
             }
         }
-
+        //LOGIN
         public static async Task<User> LoginUser(string email, string password)
         {
             User user = null;
@@ -47,6 +47,7 @@ namespace freshie_app.DTO
             }
             return user;
         }
+        //FRIDGE ITEMS
         public static async Task<List<Product>> GetUserProducts(int userId)
         {
             List<Product> userProducts = null;
@@ -93,6 +94,65 @@ namespace freshie_app.DTO
             {
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
+        }
+        //GROCERIES LIST
+        public static async Task<List<Product>> GetUserGroceries(int userId)
+        {
+            List<Product> userGroceries = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/GroceriesLists/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                userGroceries = await response.Content.ReadAsAsync<List<Product>>();
+            }
+            return userGroceries;
+        }
+        public static async Task<string> AddGroceriesItem(int id, Product product)
+        {
+            var item = new { UserId = id, Product = product };
+            var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("api/GroceriesLists", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return "Product added successfully.";
+            }
+            else
+            {
+                return $"Failed to add product. Status code: {response.StatusCode}";
+            }
+        }
+        public static async Task<string> DeleteGroceries(int id, Product product)
+        {
+            var item = new { UserId = id, Product = product };
+            var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("api/GroceriesLists", UriKind.Relative),
+                Content = content
+            };
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return "Product deleted successfully.";
+            }
+            else
+            {
+                return $"Failed to delete product. Status code: {response.StatusCode}";
+            }
+        }
+        //PRODUCTS
+        public static async Task<List<Product>> GetAllProducts()
+        {
+            List<Product> allProducts = null;
+            HttpResponseMessage response = await _client.GetAsync("api/Products");
+            if (response.IsSuccessStatusCode)
+            {
+                allProducts = await response.Content.ReadAsAsync<List<Product>>();
+            }
+            return allProducts;
         }
     }
 }

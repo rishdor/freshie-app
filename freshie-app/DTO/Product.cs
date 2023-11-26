@@ -27,3 +27,23 @@ public partial class Product
 
     public virtual Shelf? Shelf { get; set; }
 }
+public class ProductComparer : IEqualityComparer<Product>
+{
+    public bool Equals(Product x, Product y)
+    {
+        if (x == null && y == null)
+            return true;
+        else if (x == null || y == null)
+            return false;
+        else
+            return x.ProductName.Equals(y.ProductName);
+    }
+
+    public int GetHashCode(Product obj)
+    {
+        if (obj == null)
+            return 0;
+        else
+            return obj.ProductName.GetHashCode();
+    }
+}

@@ -100,13 +100,11 @@ public partial class FreshieDbContext : DbContext
 
         modelBuilder.Entity<GroceriesHistory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Grocerie__3213E83F40FF1DCB");
+            entity.HasKey(e => e.Id).HasName("PK__Grocerie__3213E83F521D785A");
 
             entity.ToTable("GroceriesHistory");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Date)
                 .HasColumnType("date")
                 .HasColumnName("date");
@@ -125,13 +123,10 @@ public partial class FreshieDbContext : DbContext
 
         modelBuilder.Entity<GroceriesList>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Grocerie__3213E83F14489EC9");
-
+            entity.HasKey(e => e.Id).HasName("PK__Grocerie__3213E83F9C7D262E");
             entity.ToTable("GroceriesList");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 

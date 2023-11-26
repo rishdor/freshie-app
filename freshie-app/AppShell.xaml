@@ -4,33 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:freshie_app"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarIsVisible="True">
+    Shell.FlyoutBehavior="Disabled">
 
-    <TabBar>
-
-        <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage"/>
-        <ShellContent
-            ContentTemplate="{DataTemplate local:RecipiesPage}"
-            Title="Recipies"
-            Route="RecipiesPage" 
-            Icon="plate.png"/>
-
-        <ShellContent
-            ContentTemplate="{DataTemplate local:HomePage}"
-            Title="Home"
-            Route="HomePage" 
-            Icon="home.png"/>
-
-        <ShellContent
-            ContentTemplate="{DataTemplate local:GroceriesPage}"
-            Title="Groceries"
-            Route="GroceriesPage" 
-            Icon="list.png"/>
-
-    </TabBar>
-
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,*,*">
+            <Label Grid.Column="1" Text="{Binding Path=CurrentPage.Title, Mode=OneWay}" HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </Shell.TitleView>
 
 </Shell>

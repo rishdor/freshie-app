@@ -6,17 +6,18 @@
         <VerticalStackLayout Padding="20" 
                              VerticalOptions="CenterAndExpand">
             
-            <Image Source="logo.png" 
+            <Image Source="icon2.png" 
                    HeightRequest="200" 
                    HorizontalOptions="Center" />
 
             <Entry x:Name="EmailEntry" 
                    Placeholder="E-mail" 
-                   Margin="0,50,0,5"/>
+                   Margin="0,50,0,5" TextColor="#232121"  PlaceholderColor="#232121"/>
             
             <Entry x:Name="PasswordEntry" 
                    Placeholder="Password" 
-                   IsPassword="True" />
+                   IsPassword="True" 
+                   TextColor="#232121" PlaceholderColor="#232121"/>
 
             <Button Text="Sign in" 
                     Clicked="OnLoginButtonClicked" 
@@ -27,11 +28,11 @@
                     Margin="0,5,0,0" />
             <Label
                     x:Name="WrongDetails"
-                    Text="Icorrect email or password."
+                    Text="Incorrect email or password."
                     VerticalOptions="Center"
                     Margin="10,0,10,0"
                     IsVisible="False"
-                    TextColor="#AF7070"/> 
+                    TextColor="#FE3100"/> 
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

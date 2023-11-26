@@ -3,10 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.GroceriesPage"
              Title="GroceriesPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="THIS IS GROCERIES PAGE"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <StackLayout>
+            <Label x:Name="WelcomeLabel" 
+                TextColor="#F7F2E7"
+                HorizontalTextAlignment = "Center"
+                VerticalTextAlignment = "Center"
+                FontSize="11"/>
+            <CollectionView x:Name="ProductsCollectionView" ItemsLayout="VerticalGrid, 3">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5" Margin="5" BorderColor="Black" HasShadow="True">
+                            <StackLayout Spacing="2">
+                                <Button Text="{Binding ProductName}" Clicked="OnAddToGroceriesButtonClicked" FontSize="Micro"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button x:Name="ToggleViewButton" Text="Show All Products" Clicked="OnToggleViewButtonClicked"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
