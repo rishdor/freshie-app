@@ -10,26 +10,15 @@
                HorizontalTextAlignment = "Center"
                VerticalTextAlignment = "Center"
                FontSize="20"/>
-        
+        <Grid x:Name="grid">
+            <!-- Tutaj zostanie dodana siatka produktów -->
+        </Grid>
         <Button x:Name="AddProduct" 
                 Text="Add product" 
                 Clicked="OnAddProductClicked" 
                 Margin="10,5,10,5"/>
-        <!--<ListView x:Name="UserProductsListView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button x:Name="ShowAllProductsButton" Text="Add Products" Clicked="OnShowAllProductsButtonClicked" />
-        <ListView x:Name="AllProductsListView" IsVisible="False" ItemTapped="OnProductTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
+        
+        
     </VerticalStackLayout>
 </ContentPage>
  
