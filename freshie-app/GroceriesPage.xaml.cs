@@ -8,5 +8,8 @@ public partial class GroceriesPage : ContentPage
     {
         InitializeComponent();
         _user = user;
+        WelcomeLabel.IsVisible = true;
+        WelcomeLabel.Text = $"Hello {_user.Name}!\nThis is your groceries list";
+        WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
     }
 }

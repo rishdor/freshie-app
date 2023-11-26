@@ -4,9 +4,10 @@
              x:Class="freshie_app.GroceriesPage"
              Title="GroceriesPage">
     <VerticalStackLayout>
-        <Label 
-            Text="THIS IS GROCERIES PAGE"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label x:Name="WelcomeLabel"
+       IsVisible="false"
+       HorizontalTextAlignment = "Center"
+       VerticalTextAlignment = "Center"
+       FontSize="20"/>
     </VerticalStackLayout>
 </ContentPage>
