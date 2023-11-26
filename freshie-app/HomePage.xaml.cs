@@ -63,10 +63,18 @@ namespace freshie_app
                         }
                     }
 
-                    var button = new Button
+                for (int i = 0; i < _userProducts.Count; i++)
+                {
+                    bool doubleTapped = false;
+                    bool ignoreNextTap = false;
+
+                    var productButton = new Button
                     {
                         Text = _userProducts[i].ProductName,
                         FontSize = 20,
+                        WidthRequest = 115,
+                        HeightRequest = 115,
+                        Margin = new Thickness(10, 5, 10, 5),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center
                     };
@@ -75,23 +83,55 @@ namespace freshie_app
                         // Tutaj umieœæ kod, który ma siê wykonaæ po klikniêciu przycisku
                     };
 
+                    var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
+                    singleTap.Tapped += OnSingleTapped;
+                    productButton.GestureRecognizers.Add(singleTap);
 
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, column);
-                    grid.Children.Add(button);
-                }
-                //var grid = new Grid
-                //{
-                //    RowSpacing = 10,
-                //    ColumnSpacing = 10,
+                    var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
+                    doubleTap.Tapped += OnDoubleTapped;
+                    productButton.GestureRecognizers.Add(doubleTap);
 
-                //    Padding = new Thickness(20)
-                //};
-                //for (int i = 0; i < _userProducts.Count; i++)
-                //{
-                //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    void OnSingleTapped(object sender, EventArgs args)
+                    {
+                        Task.Delay(200).ContinueWith(t =>
+                        {
+                            if (doubleTapped)
+                            {
+                                doubleTapped = false;
+                                ignoreNextTap = true;
+                            }
+                            else if (!ignoreNextTap)
+                            {
+                                productButton.Dispatcher.Dispatch(() =>
+                                {
+                                    DisplayAlert("Single Tap", "Single tap detected", "OK");
+                                });
+                            }
+                            else
+                            {
+                                ignoreNextTap = false;
+                            }
+                        });
+                    }
 
+                    void OnDoubleTapped(object sender, EventArgs args)
+                    {
+                        doubleTapped = true;
+                        Task.Delay(200).ContinueWith(t =>
+                        {
+                            if (doubleTapped)
+                            {
+                                productButton.Dispatcher.Dispatch(() =>
+                                {
+                                    DisplayAlert("Double Tap", "Double tap detected", "OK");
+                                });
+                                doubleTapped = false;
+                            }
+                        });
+                    }
+
+                    int row = i / columns;
+                    int column = i % columns;
 
                 //    var label = new Label
                 //    {
