@@ -143,5 +143,16 @@ namespace freshie_app.DTO
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
         }
+        //PRODUCTS
+        public static async Task<List<Product>> GetAllProducts()
+        {
+            List<Product> allProducts = null;
+            HttpResponseMessage response = await _client.GetAsync("api/Products");
+            if (response.IsSuccessStatusCode)
+            {
+                allProducts = await response.Content.ReadAsAsync<List<Product>>();
+            }
+            return allProducts;
+        }
     }
 }
