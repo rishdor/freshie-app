@@ -21,10 +21,10 @@ namespace freshie_app
         }
         public async void LoadUserProducts(User user)
         {
-            Grid existingGrid = VSL.Children.OfType<Grid>().FirstOrDefault();
+            Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
             if (existingGrid != null)
             {
-                VSL.Children.Remove(existingGrid);
+                MainGrid.Children.Remove(existingGrid);
             }
 
             var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
@@ -57,8 +57,9 @@ namespace freshie_app
                     {
                         Text = _userProducts[i].ProductName,
                         FontSize = 20,
-                        WidthRequest = 100,
-                        HeightRequest = 100,
+                        WidthRequest = 115,
+                        HeightRequest = 115,
+                        Margin = new Thickness(10,5,10,5),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center
                     };
@@ -71,7 +72,9 @@ namespace freshie_app
 
                     grid.Children.Add(productButton);
                 }
-                VSL.Children.Add(grid);
+                ScrollView scrollView = new ScrollView { Content = grid };
+                Grid.SetRow(scrollView, 0);
+                MainGrid.Children.Add(scrollView);
             }
         }
         public void OnAddProductClicked(object sender, EventArgs e)
