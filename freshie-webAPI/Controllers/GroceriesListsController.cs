@@ -112,7 +112,11 @@ namespace freshie_webAPI.Controllers
             {
                 return Problem("Entity set 'FreshieDbContext.FridgeItems'  is null.");
             }
-
+            var existingItem = await _context.GroceriesLists.FirstOrDefaultAsync(i => i.UserId == model.UserId && i.ProductId == model.Product.ProductId);
+            if (existingItem != null)
+            {
+                return BadRequest("The product already exists in the groceries list.");
+            }
             GroceriesList item = new GroceriesList { ProductId = model.Product.ProductId, UserId = model.UserId };
             _context.GroceriesLists.Add(item);
             await _context.SaveChangesAsync();

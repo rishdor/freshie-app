@@ -9,7 +9,7 @@
                 TextColor="#F7F2E7"
                 HorizontalTextAlignment = "Center"
                 VerticalTextAlignment = "Center"
-                FontSize="20"/>
+                FontSize="11"/>
             <CollectionView x:Name="ProductsCollectionView" ItemsLayout="VerticalGrid, 3">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
