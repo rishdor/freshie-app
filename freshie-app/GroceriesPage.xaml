@@ -14,8 +14,12 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="5" Margin="5" BorderColor="Black" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProductTapped" NumberOfTapsRequired="1"/>
+                                <TapGestureRecognizer Tapped="OnProductDoubleTapped" NumberOfTapsRequired="2"/>
+                            </Frame.GestureRecognizers>
                             <StackLayout Spacing="2">
-                                <Button Text="{Binding ProductName}" Clicked="OnAddToGroceriesButtonClicked" FontSize="Micro"/>
+                                <Button Text="{Binding ProductName}" Clicked="OnProductTapped" FontSize="Micro"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

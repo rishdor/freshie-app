@@ -41,27 +41,28 @@ public partial class GroceriesPage : ContentPage
             await LoadGroceries();
         }
     }
-    private async void OnAddToGroceriesButtonClicked(object sender, EventArgs e)
+
+    private async void OnProductTapped(object sender, EventArgs e)
     {
         var button = (Button)sender;
         var product = (Product)button.BindingContext;
-        if (_isShowingAllProducts)
+        if (!_isShowingAllProducts)
         {
-            var response = await ApiClient.AddGroceriesItem(_user.UserId, product);
-            if (response == "Product added successfully.")
-            {
-                var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
-                allProducts.Remove(product);
-                ProductsCollectionView.ItemsSource = null;
-                ProductsCollectionView.ItemsSource = allProducts;
-            }
-        }
-        else
-        {
+            await ApiClient.AddProduct(_user.UserId, product);
             await ApiClient.DeleteGroceries(_user.UserId, product);
             await LoadGroceries();
         }
     }
 
+    private async void OnProductDoubleTapped(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        var product = (Product)button.BindingContext;
+        if (!_isShowingAllProducts)
+        {
+            await ApiClient.DeleteGroceries(_user.UserId, product);
+            await LoadGroceries();
+        }
+    }
 
 }
