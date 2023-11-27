@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.GroceriesPage"
              Title="GroceriesPage">
+    
+    
     <Grid VerticalOptions="FillAndExpand" x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        
         <ScrollView Grid.Row="0">
             <StackLayout>
                 <Label x:Name="WelcomeLabel" 
@@ -15,7 +19,9 @@
                     HorizontalTextAlignment = "Center"
                     VerticalTextAlignment = "Center"
                     FontSize="11"/>
-                <CollectionView x:Name="ProductsCollectionView" ItemsLayout="VerticalGrid, 3">
+                
+                <CollectionView x:Name="ProductsCollectionView" 
+                                ItemsLayout="VerticalGrid, 3">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Spacing="2">
@@ -25,6 +31,7 @@
                                         LineBreakMode="WordWrap"
                                         WidthRequest="110" 
                                         HeightRequest="110">
+                                    
                                     <Button.Triggers>
                                         <Trigger TargetType="Button" Property="IsPressed" Value="True">
                                             <Setter Property="BackgroundColor" Value="#80FFFFFF"/>

@@ -5,10 +5,10 @@ namespace freshie_app
 {
     public partial class AppShell : Shell
     {
-        private User user;
+        private User _user;
         public AppShell(User user)
         {
-            this.user = user;
+            _user = user;
             InitializeComponent();
             TabBar tabBar = new TabBar();
 
@@ -41,6 +41,11 @@ namespace freshie_app
 
             Items.Add(tabBar);
             
+        }
+        public void SettingsClicked(object sender, EventArgs e)
+        {
+            //await Navigation.PushAsync(new SettingsPage(_user));
+            Application.Current.MainPage = new SettingsPage(_user);
         }
     }
 }
