@@ -23,24 +23,31 @@
                             IsVisible="false">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Spacing="2">
-                                <Button  
-                                    Text="{Binding ProductName}" 
-                                    FontSize="Micro"
-                                    WidthRequest="115" 
-                                    HeightRequest="115"
-                                    Margin="5"
-                                    HorizontalOptions ="Center"
-                                    VerticalOptions = "Center">
+                        <StackLayout>
+                            <Button  
+                                Text="{Binding ProductName}" 
+                                FontSize="Micro"
+                                LineBreakMode="WordWrap"
+                                WidthRequest="110" 
+                                HeightRequest="110"
+                                Margin="9,5"
+                                HorizontalOptions ="Center"
+                                VerticalOptions = "Center">
                                     
-                                    <Button.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSingleTapped" 
-                                                          NumberOfTapsRequired="1" />
-                                    <TapGestureRecognizer Tapped="OnDoubleTapped" 
-                                                          NumberOfTapsRequired="2" />
-                                    </Button.GestureRecognizers>
-                                </Button>
-                            </StackLayout>
+                                <Button.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSingleTapped" 
+                                                        NumberOfTapsRequired="1" />
+                                <TapGestureRecognizer Tapped="OnDoubleTapped" 
+                                                        NumberOfTapsRequired="2" />
+                                </Button.GestureRecognizers>
+                                
+                                <Button.Triggers>
+                                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#80FFFFFF"/>
+                                        </Trigger>
+                                </Button.Triggers>
+                            </Button>
+                        </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -52,7 +59,7 @@
             Text="Add product" 
             FontSize="20"
             Clicked="OnAddProductClicked" 
-            Margin="10,5,10,30"
+            Margin="30,5,30,30"
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"/>
     </Grid>
