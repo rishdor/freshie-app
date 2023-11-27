@@ -24,14 +24,14 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Spacing="2">
-                                <Button Text="{Binding ProductName}" 
-                                        FontSize="Micro"
-                                        WidthRequest="115" 
-                                        HeightRequest="115"
-                                        
-                                        HorizontalOptions ="Center"
-                                        VerticalOptions = "Center">
-                                        
+                                <Button  
+                                    Text="{Binding ProductName}" 
+                                    FontSize="Micro"
+                                    WidthRequest="115" 
+                                    HeightRequest="115"
+                                    Margin="5"
+                                    HorizontalOptions ="Center"
+                                    VerticalOptions = "Center">
                                     
                                     <Button.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnSingleTapped" 
