@@ -3,10 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.SettingsPage"
              Title="SettingsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    
+    
+    <VerticalStackLayout Padding="20">
+        <Label  Margin="0,30"/>
+        
+        <Label x:Name="WelcomeLabel" 
+                TextColor="#F7F2E7"
+                HorizontalTextAlignment = "Center"
+                VerticalTextAlignment = "Center"
+                FontSize="20"/>
+
+        <Label  Text="Your name:"/>
+        <Entry x:Name="NameEntry" 
+                Placeholder="Name" 
+                Text="{Binding Name}"
+                Margin="0,5,0,5" />
+        
+        <Label Text="Your e-mail:"/>
+        <Entry x:Name="Email" 
+                Placeholder="E-mail" 
+                Text="{Binding Email}"
+                Margin="0,5" />
+        <Label Text="Change password:"/>
+        <Button x:Name="Password" 
+                Text="Change password" 
+                Margin="0,5"/>
+        
     </VerticalStackLayout>
 </ContentPage>
