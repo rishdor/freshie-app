@@ -7,8 +7,10 @@
     Shell.FlyoutBehavior="Disabled">
 
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,*,*">
-            <Label Grid.Column="1" Text="{Binding Path=CurrentPage.Title, Mode=OneWay}" HorizontalOptions="CenterAndExpand" />
+        <Grid ColumnDefinitions="*"
+              RowDefinitions="*">
+            <Label Grid.Row="0" Text="{Binding Path=CurrentPage.Title, Mode=OneWay}" HorizontalOptions="CenterAndExpand" />
+            <ImageButton BackgroundColor="Transparent" Source="settings.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="End" />
         </Grid>
     </Shell.TitleView>
 
