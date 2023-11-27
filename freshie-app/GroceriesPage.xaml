@@ -13,11 +13,10 @@
             <CollectionView x:Name="ProductsCollectionView" ItemsLayout="VerticalGrid, 3">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="5" Margin="5" BorderColor="Black" HasShadow="True">
-                            <StackLayout Spacing="2">
-                                <Button Text="{Binding ProductName}" Clicked="OnAddToGroceriesButtonClicked" FontSize="Micro"/>
-                            </StackLayout>
-                        </Frame>
+                        <StackLayout Spacing="2">
+                            <Button Text="{Binding ProductName}" Clicked="OnAddToGroceriesButtonClicked" FontSize="Micro"
+                                        WidthRequest="115" HeightRequest="115"/>
+                        </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

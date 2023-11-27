@@ -14,18 +14,34 @@ namespace freshie_app
             InitializeComponent();
             _user = user;
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
-            LoadUserProducts(_user);
+            await LoadUserProducts();
+        }
+        private async Task LoadUserProducts()
+        {
+            var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
+            ProductsCollectionView.ItemsSource = _userProducts;
+            if (_userProducts == null)
+            {
+                WelcomeLabel.IsVisible = true;
+                WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
+                WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
+            }
+            else
+            {
+                ProductsCollectionView.IsVisible = true;
+            }
+            
         }
         public async void LoadUserProducts(User user)
         {
-            Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
-            if (existingGrid != null)
-            {
-                MainGrid.Children.Remove(existingGrid);
-            }
+            //Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
+            //if (existingGrid != null)
+            //{
+            //    MainGrid.Children.Remove(existingGrid);
+            //}
 
             var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
             if (_userProducts == null)
@@ -36,96 +52,179 @@ namespace freshie_app
             }
             else
             {
-                var grid = new Grid { };
+                ProductsCollectionView.IsVisible = true;
+                //bool doubleTapped = false;
+                //bool ignoreNextTap = false;
+
+                //void OnSingleTapped(object sender, EventArgs args)
+                //{
+                //    Task.Delay(200).ContinueWith(t =>
+                //    {
+                //        if (doubleTapped)
+                //        {
+                //            doubleTapped = false;
+                //            ignoreNextTap = true;
+                //        }
+                //        else if (!ignoreNextTap)
+                //        {
+                //            productButton.Dispatcher.Dispatch(() =>
+                //            {
+                //                DisplayAlert("Single Tap", "Single tap detected", "OK");
+                //            });
+                //        }
+                //        else
+                //        {
+                //            ignoreNextTap = false;
+                //        }
+                //    });
+                //}
+
+                //void OnDoubleTapped(object sender, EventArgs args)
+                //{
+                //    doubleTapped = true;
+                //    Task.Delay(200).ContinueWith(t =>
+                //    {
+                //        if (doubleTapped)
+                //        {
+                //            productButton.Dispatcher.Dispatch(() =>
+                //            {
+                //                DisplayAlert("Double Tap", "Double tap detected", "OK");
+                //            });
+                //            doubleTapped = false;
+                //        }
+                //    });
+                //}
+                //var grid = new Grid { };
                 
-                int columns = 3;
-                int rows = (_userProducts.Count + columns - 1) / columns;
+                //int columns = 3;
+                //int rows = (_userProducts.Count + columns - 1) / columns;
 
-                for (int i = 0; i < columns; i++)
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                }
+                //for (int i = 0; i < columns; i++)
+                //{
+                //    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                //}
 
-                for (int i = 0; i < rows; i++)
-                {
-                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                }
+                //for (int i = 0; i < rows; i++)
+                //{
+                //    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                //}
 
-                for (int i = 0; i < _userProducts.Count; i++)
-                {
-                    bool doubleTapped = false;
-                    bool ignoreNextTap = false;
+                //for (int i = 0; i < _userProducts.Count; i++)
+                //{
+                //    bool doubleTapped = false;
+                //    bool ignoreNextTap = false;
 
-                    var productButton = new Button
-                    {
-                        Text = _userProducts[i].ProductName,
-                        FontSize = 20,
-                        WidthRequest = 115,
-                        HeightRequest = 115,
-                        Margin = new Thickness(10, 5, 10, 5),
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center
-                    };
+                //    var productButton = new Button
+                //    {
+                //        Text = _userProducts[i].ProductName,
+                //        FontSize = 20,
+                //        WidthRequest = 115,
+                //        HeightRequest = 115,
+                //        Margin = new Thickness(10, 5, 10, 5),
+                //        HorizontalOptions = LayoutOptions.Center,
+                //        VerticalOptions = LayoutOptions.Center
+                //    };
 
-                    var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
-                    singleTap.Tapped += OnSingleTapped;
-                    productButton.GestureRecognizers.Add(singleTap);
+                //    var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
+                //    singleTap.Tapped += OnSingleTapped;
+                //    productButton.GestureRecognizers.Add(singleTap);
 
-                    var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
-                    doubleTap.Tapped += OnDoubleTapped;
-                    productButton.GestureRecognizers.Add(doubleTap);
+                //    var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
+                //    doubleTap.Tapped += OnDoubleTapped;
+                //    productButton.GestureRecognizers.Add(doubleTap);
 
-                    void OnSingleTapped(object sender, EventArgs args)
-                    {
-                        Task.Delay(200).ContinueWith(t =>
-                        {
-                            if (doubleTapped)
-                            {
-                                doubleTapped = false;
-                                ignoreNextTap = true;
-                            }
-                            else if (!ignoreNextTap)
-                            {
-                                productButton.Dispatcher.Dispatch(() =>
-                                {
-                                    DisplayAlert("Single Tap", "Single tap detected", "OK");
-                                });
-                            }
-                            else
-                            {
-                                ignoreNextTap = false;
-                            }
-                        });
-                    }
+                //    void OnSingleTapped(object sender, EventArgs args)
+                //    {
+                //        Task.Delay(200).ContinueWith(t =>
+                //        {
+                //            if (doubleTapped)
+                //            {
+                //                doubleTapped = false;
+                //                ignoreNextTap = true;
+                //            }
+                //            else if (!ignoreNextTap)
+                //            {
+                //                productButton.Dispatcher.Dispatch(() =>
+                //                {
+                //                    DisplayAlert("Single Tap", "Single tap detected", "OK");
+                //                });
+                //            }
+                //            else
+                //            {
+                //                ignoreNextTap = false;
+                //            }
+                //        });
+                //    }
 
-                    void OnDoubleTapped(object sender, EventArgs args)
-                    {
-                        doubleTapped = true;
-                        Task.Delay(200).ContinueWith(t =>
-                        {
-                            if (doubleTapped)
-                            {
-                                productButton.Dispatcher.Dispatch(() =>
-                                {
-                                    DisplayAlert("Double Tap", "Double tap detected", "OK");
-                                });
-                                doubleTapped = false;
-                            }
-                        });
-                    }
+                //    void OnDoubleTapped(object sender, EventArgs args)
+                //    {
+                //        doubleTapped = true;
+                //        Task.Delay(200).ContinueWith(t =>
+                //        {
+                //            if (doubleTapped)
+                //            {
+                //                productButton.Dispatcher.Dispatch(() =>
+                //                {
+                //                    DisplayAlert("Double Tap", "Double tap detected", "OK");
+                //                });
+                //                doubleTapped = false;
+                //            }
+                //        });
+                //    }
 
-                    int row = i / columns;
-                    int column = i % columns;
+                //    int row = i / columns;
+                //    int column = i % columns;
 
-                    Grid.SetRow(productButton, row);
-                    Grid.SetColumn(productButton, column);
+                //    Grid.SetRow(productButton, row);
+                //    Grid.SetColumn(productButton, column);
 
-                    grid.Children.Add(productButton);
-                }
-                ScrollView scrollView = new ScrollView { Content = grid };
-                Grid.SetRow(scrollView, 0);
-                MainGrid.Children.Add(scrollView);
+                //    grid.Children.Add(productButton);
+                //}
+                //ScrollView scrollView = new ScrollView { Content = grid };
+                //Grid.SetRow(scrollView, 0);
+                //MainGrid.Children.Add(scrollView);
             }
+        }
+        bool doubleTapped = false;
+        bool ignoreNextTap = false;
+
+        void OnSingleTapped(object sender, EventArgs args)
+        {
+            //Task.Delay(200).ContinueWith(t =>
+            //{
+            //    if (doubleTapped)
+            //    {
+            //        doubleTapped = false;
+            //        ignoreNextTap = true;
+            //    }
+            //    else if (!ignoreNextTap)
+            //    {
+            //        productButton.Dispatcher.Dispatch(() =>
+            //        {
+            //            DisplayAlert("Single Tap", "Single tap detected", "OK");
+            //        });
+            //    }
+            //    else
+            //    {
+            //        ignoreNextTap = false;
+            //    }
+            //});
+        }
+
+        void OnDoubleTapped(object sender, EventArgs args)
+        {
+            
+            //Task.Delay(200).ContinueWith(t =>
+            //{
+            //    if (doubleTapped)
+            //    {
+            //        productButton.Dispatcher.Dispatch(() =>
+            //        {
+            //            DisplayAlert("Double Tap", "Double tap detected", "OK");
+            //        });
+            //        doubleTapped = false;
+            //    }
+            //});
         }
         public void OnAddProductClicked(object sender, EventArgs e)
         {

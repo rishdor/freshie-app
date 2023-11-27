@@ -12,12 +12,11 @@
 
             <Entry x:Name="EmailEntry" 
                    Placeholder="E-mail" 
-                   Margin="0,50,0,5" TextColor="#232121"  PlaceholderColor="#232121"/>
+                   Margin="0,50,0,5" />
             
             <Entry x:Name="PasswordEntry" 
                    Placeholder="Password" 
-                   IsPassword="True" 
-                   TextColor="#232121" PlaceholderColor="#232121"/>
+                   IsPassword="True" />
 
             <Button Text="Sign in" 
                     Clicked="OnLoginButtonClicked" 

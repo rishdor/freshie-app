@@ -10,19 +10,49 @@
         </Grid.RowDefinitions>
 
         <ScrollView Grid.Row="0">
-            
+            <StackLayout>
+                
             <Label x:Name="WelcomeLabel"
                     IsVisible="false"
                     HorizontalTextAlignment = "Center"
                     VerticalTextAlignment = "Center"
                     FontSize="20"/>
+            
+            <CollectionView x:Name="ProductsCollectionView" 
+                            ItemsLayout="VerticalGrid, 3"
+                            IsVisible="false">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Spacing="2">
+                                <Button Text="{Binding ProductName}" 
+                                        FontSize="Micro"
+                                        WidthRequest="115" 
+                                        HeightRequest="115"
+                                        
+                                        HorizontalOptions ="Center"
+                                        VerticalOptions = "Center">
+                                        
+                                    
+                                    <Button.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSingleTapped" 
+                                                          NumberOfTapsRequired="1" />
+                                    <TapGestureRecognizer Tapped="OnDoubleTapped" 
+                                                          NumberOfTapsRequired="2" />
+                                    </Button.GestureRecognizers>
+                                </Button>
+                            </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </StackLayout>
         </ScrollView>
+        
 
         <Button x:Name="AddProduct" 
             Text="Add product" 
             FontSize="20"
             Clicked="OnAddProductClicked" 
-            Margin="10,5,10,40"
+            Margin="10,5,10,30"
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"/>
     </Grid>
