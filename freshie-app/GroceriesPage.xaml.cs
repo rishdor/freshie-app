@@ -33,8 +33,15 @@ public partial class GroceriesPage : ContentPage
         {
             var allProducts = await ApiClient.GetAllProducts();
             var groceries = await ApiClient.GetUserGroceries(_user.UserId);
-            var availableProducts = allProducts.Except(groceries, new ProductComparer()).ToList();
-            ProductsCollectionView.ItemsSource = availableProducts;
+            if (groceries != null)
+            {
+                var availableProducts = allProducts.Except(groceries, new ProductComparer()).ToList();
+                ProductsCollectionView.ItemsSource = availableProducts;
+            }
+            else
+            {
+                ProductsCollectionView.ItemsSource = allProducts;
+            }
         }
         else
         {

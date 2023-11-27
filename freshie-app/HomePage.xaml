@@ -2,34 +2,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.HomePage">
-    
-    <VerticalStackLayout x:Name="VSL" VerticalOptions="Center" HorizontalOptions="Center">
 
-        <Label x:Name="WelcomeLabel"
-               IsVisible="false"
-               HorizontalTextAlignment = "Center"
-               VerticalTextAlignment = "Center"
-               FontSize="20"/>
-        
+    <Grid VerticalOptions="FillAndExpand" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            
+            <Label x:Name="WelcomeLabel"
+                    IsVisible="false"
+                    HorizontalTextAlignment = "Center"
+                    VerticalTextAlignment = "Center"
+                    FontSize="20"/>
+        </ScrollView>
+
         <Button x:Name="AddProduct" 
-                Text="Add product" 
-                Clicked="OnAddProductClicked" 
-                Margin="10,5,10,5"/>
-        <!--<ListView x:Name="UserProductsListView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button x:Name="ShowAllProductsButton" Text="Add Products" Clicked="OnShowAllProductsButtonClicked" />
-        <ListView x:Name="AllProductsListView" IsVisible="False" ItemTapped="OnProductTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-    </VerticalStackLayout>
+            Text="Add product" 
+            FontSize="20"
+            Clicked="OnAddProductClicked" 
+            Margin="10,5,10,40"
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"/>
+    </Grid>
+
+   
 </ContentPage>
  
