@@ -8,14 +8,11 @@ namespace freshie_app
     public partial class HomePage : ContentPage
     {
         private User _user;
-        //private List<Product> _userProducts;
-        //private List<Product> allProducts;
+
         public HomePage(User user)
         {
             InitializeComponent();
-            //WelcomeLabel.Text = $"Hello {user.Name}!\nuserId: {user.UserId}";
             _user = user;
-            //_userProducts = userProducts;
         }
         protected override void OnAppearing()
         {
@@ -24,44 +21,35 @@ namespace freshie_app
         }
         public async void LoadUserProducts(User user)
         {
-            
+            Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
+            if (existingGrid != null)
+            {
+                MainGrid.Children.Remove(existingGrid);
+            }
+
             var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
             if (_userProducts == null)
             {
                 WelcomeLabel.IsVisible = true;
                 WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
                 WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
-
             }
             else
             {
-                var grid = new Grid
+                var grid = new Grid { };
+                
+                int columns = 3;
+                int rows = (_userProducts.Count + columns - 1) / columns;
+
+                for (int i = 0; i < columns; i++)
                 {
-                    RowSpacing = 10,
-                    ColumnSpacing = 10,
-                    Padding = new Thickness(20)
-                };
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                }
 
-                int columns = 3; // Maksymalna liczba przycisków w jednym rzêdzie
-                for (int i = 0; i < _userProducts.Count; i++)
+                for (int i = 0; i < rows; i++)
                 {
-                    int row = i / columns;
-                    int column = i % columns;
-
-                    // Jeœli to jest pierwszy element w rzêdzie, dodaj nowy rz¹d do siatki
-                    if (column == 0)
-                    {
-                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                    }
-
-                    // Jeœli to jest pierwszy element w siatce, dodaj odpowiedni¹ liczbê kolumn
-                    if (i == 0)
-                    {
-                        for (int j = 0; j < columns; j++)
-                        {
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                        }
-                    }
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                }
 
                 for (int i = 0; i < _userProducts.Count; i++)
                 {
@@ -77,10 +65,6 @@ namespace freshie_app
                         Margin = new Thickness(10, 5, 10, 5),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center
-                    };
-                    button.Clicked += (s, e) =>
-                    {
-                        // Tutaj umieœæ kod, który ma siê wykonaæ po klikniêciu przycisku
                     };
 
                     var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
@@ -133,17 +117,14 @@ namespace freshie_app
                     int row = i / columns;
                     int column = i % columns;
 
-                //    var label = new Label
-                //    {
-                //        Text = _userProducts[i].ProductName,
-                //        FontSize = 20,
-                //        HorizontalOptions = LayoutOptions.Center,
-                //        VerticalOptions = LayoutOptions.Center
-                //    };
+                    Grid.SetRow(productButton, row);
+                    Grid.SetColumn(productButton, column);
 
-                //    grid.Children.Add(label);
-                //}
-                VSL.Children.Add(grid);
+                    grid.Children.Add(productButton);
+                }
+                ScrollView scrollView = new ScrollView { Content = grid };
+                Grid.SetRow(scrollView, 0);
+                MainGrid.Children.Add(scrollView);
             }
         }
         public void OnAddProductClicked(object sender, EventArgs e)
