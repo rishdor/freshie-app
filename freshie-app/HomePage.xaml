@@ -9,48 +9,48 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        
         <ScrollView Grid.Row="0">
             <StackLayout>
-                
-            <Label x:Name="WelcomeLabel"
+                <Label x:Name="WelcomeLabel"
                     IsVisible="false"
                     HorizontalTextAlignment = "Center"
                     VerticalTextAlignment = "Center"
                     FontSize="20"/>
-            
-            <CollectionView x:Name="ProductsCollectionView" 
-                            ItemsLayout="VerticalGrid, 3"
-                            IsVisible="false">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Button  
-                                Text="{Binding ProductName}" 
-                                FontSize="Micro"
-                                LineBreakMode="WordWrap"
-                                WidthRequest="110" 
-                                HeightRequest="110"
-                                Margin="9,5"
-                                HorizontalOptions ="Center"
-                                VerticalOptions = "Center">
-                                    
-                                <Button.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSingleTapped" 
-                                                        NumberOfTapsRequired="1" />
-                                <TapGestureRecognizer Tapped="OnDoubleTapped" 
-                                                        NumberOfTapsRequired="2" />
-                                </Button.GestureRecognizers>
-                                
-                                <Button.Triggers>
-                                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+
+                <CollectionView x:Name="ProductsCollectionView" 
+                                ItemsLayout="VerticalGrid, 3"
+                                IsVisible="false">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Button  
+                                    Text="{Binding ProductName}" 
+                                    FontSize="Micro"
+                                    LineBreakMode="WordWrap"
+                                    WidthRequest="110" 
+                                    HeightRequest="110"
+                                    Margin="9,5"
+                                    HorizontalOptions ="Center"
+                                    VerticalOptions = "Center">
+
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSingleTapped" 
+                                                            NumberOfTapsRequired="1" />
+                                        <TapGestureRecognizer Tapped="OnDoubleTapped" 
+                                                            NumberOfTapsRequired="2" />
+                                    </Button.GestureRecognizers>
+
+                                    <Button.Triggers>
+                                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
                                             <Setter Property="BackgroundColor" Value="#80FFFFFF"/>
                                         </Trigger>
-                                </Button.Triggers>
-                            </Button>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    </Button.Triggers>
+                                </Button>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
         </ScrollView>
         
