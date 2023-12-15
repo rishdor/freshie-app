@@ -16,7 +16,7 @@ namespace freshie_app.DTO
 
         static ApiClient()
         {
-            _client = new HttpClient { BaseAddress = new Uri("https://freshie-api.azurewebsites.net/") };
+            _client = new HttpClient { BaseAddress = new Uri("https://freshiehub.azurewebsites.net/") };
         }
         //REGISTATION
         public static async Task<string> RegisterUser(User user)

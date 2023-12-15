@@ -14,20 +14,23 @@ namespace freshie_app
             InitializeComponent();
             _user = user;
         }
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
-            LoadUserProducts(_user);
+            await LoadUserProducts();
         }
-        public async void LoadUserProducts(User user)
+        private async Task LoadUserProducts()
         {
+
             Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
             if (existingGrid != null)
             {
                 MainGrid.Children.Remove(existingGrid);
             }
 
+
             var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
+            ProductsCollectionView.ItemsSource = _userProducts;
             if (_userProducts == null)
             {
                 WelcomeLabel.IsVisible = true;
@@ -36,6 +39,7 @@ namespace freshie_app
             }
             else
             {
+
                 var grid = new Grid { };
                 
                 int columns = 3;
@@ -126,7 +130,9 @@ namespace freshie_app
                 Grid.SetRow(scrollView, 0);
                 MainGrid.Children.Add(scrollView);
             }
+
         }
+
         public void OnAddProductClicked(object sender, EventArgs e)
         {
             
