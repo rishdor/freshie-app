@@ -176,5 +176,20 @@ namespace freshie_app
                 });
             }
         }
+        private async void OnAddProductClicked(object sender, EventArgs e)
+        {
+            _isShowingAllProducts = !_isShowingAllProducts;
+            AddProduct.Text = _isShowingAllProducts ? "Show inventory" : "Add new products";
+            if (_isShowingAllProducts)
+            {
+                var allProducts = await ApiClient.GetAllProducts();
+                ProductsCollectionView.ItemsSource = allProducts;
+                DisplayProducts(allProducts);
+            }
+            else
+            {
+                await LoadUserProducts();
+            }
+        }
     }
 }
