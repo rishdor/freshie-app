@@ -9,16 +9,19 @@ namespace freshie_app
     {
         private User _user;
         private bool _isShowingAllProducts;
+
         public HomePage(User user)
         {
             InitializeComponent();
             _user = user;
         }
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             await LoadUserProducts();
         }
+
         private async Task LoadUserProducts()
         {
             ClearExistingGrid();
@@ -66,8 +69,6 @@ namespace freshie_app
             Grid.SetRow(scrollView, 0);
             MainGrid.Children.Add(scrollView);
         }
-
-
 
         private Grid CreateGridForProducts(List<Product> Products)
         {
@@ -131,6 +132,7 @@ namespace freshie_app
         }
         private bool doubleTapped = false;
         private bool ignoreNextTap = false;
+
         private void AddTapGesturesToButton(Button button)
         {
             var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
@@ -154,7 +156,14 @@ namespace freshie_app
                     {
                         button.Dispatcher.Dispatch(() =>
                         {
-                            DisplayAlert("Single Tap", "Single tap detected", "OK");
+                            if (_isShowingAllProducts)
+                            {
+                                // Add to fridge items
+                            }
+                            else
+                            {
+                                //Show product details (expiration date)
+                            }
                         });
                     }
                     else
@@ -173,13 +182,21 @@ namespace freshie_app
                     {
                         button.Dispatcher.Dispatch(() =>
                         {
-                            DisplayAlert("Double Tap", "Double tap detected", "OK");
+                            if (_isShowingAllProducts)
+                            {
+                                // ask for expiration date
+                            }
+                            else
+                            {
+                                //remove from the fridge items
+                            }
                         });
                         doubleTapped = false;
                     }
                 });
             }
         }
+
         private async void OnAddProductClicked(object sender, EventArgs e)
         {
             _isShowingAllProducts = !_isShowingAllProducts;
@@ -187,7 +204,16 @@ namespace freshie_app
             if (_isShowingAllProducts)
             {
                 var allProducts = await ApiClient.GetAllProducts();
-                DisplayProducts(allProducts);
+                var usersProdutct = await ApiClient.GetUserProducts(_user.UserId);
+                if (usersProdutct != null)
+                {
+                    var availableProducts = allProducts.Except(usersProdutct, new ProductComparer()).ToList();
+                    DisplayProducts(availableProducts);
+                }
+                else
+                {
+                    DisplayProducts(allProducts);
+                }
             }
             else
             {
