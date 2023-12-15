@@ -24,7 +24,6 @@ namespace freshie_app
             ClearExistingGrid();
 
             var userProducts = await GetUserProducts();
-            ProductsCollectionView.ItemsSource = userProducts;
 
             if (userProducts == null)
             {
@@ -38,10 +37,10 @@ namespace freshie_app
 
         private void ClearExistingGrid()
         {
-            Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
-            if (existingGrid != null)
+            ScrollView existingScrollView = MainGrid.Children.OfType<ScrollView>().FirstOrDefault();
+            if (existingScrollView != null)
             {
-                MainGrid.Children.Remove(existingGrid);
+                MainGrid.Children.Remove(existingScrollView);
             }
         }
 
@@ -58,12 +57,17 @@ namespace freshie_app
 
         private void DisplayProducts(List<Product> Products)
         {
+            ClearExistingGrid();
+
+            ProductsCollectionView.ItemsSource = Products;
             var grid = CreateGridForProducts(Products);
 
             ScrollView scrollView = new ScrollView { Content = grid };
             Grid.SetRow(scrollView, 0);
             MainGrid.Children.Add(scrollView);
         }
+
+
 
         private Grid CreateGridForProducts(List<Product> Products)
         {
@@ -183,7 +187,6 @@ namespace freshie_app
             if (_isShowingAllProducts)
             {
                 var allProducts = await ApiClient.GetAllProducts();
-                ProductsCollectionView.ItemsSource = allProducts;
                 DisplayProducts(allProducts);
             }
             else
