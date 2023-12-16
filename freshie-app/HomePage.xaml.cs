@@ -1,9 +1,7 @@
 using freshie_app.DTO;
-using Kotlin.Jvm;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Xml;
-using static Android.Content.ClipData;
 
 namespace freshie_app
 {
