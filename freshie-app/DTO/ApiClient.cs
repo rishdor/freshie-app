@@ -95,6 +95,19 @@ namespace freshie_app.DTO
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
         }
+        //TODO: add to api method to get actual fridge items without converting them to products or going through all the fridge items of all users
+        public static async Task<DateOnly> GetExpirationDate(int id, Product product)
+        {
+            DateOnly? expirationDate = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var fridgeItems = await response.Content.ReadAsAsync<List<FridgeItem>>();
+                var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
+                expirationDate = item.ExpirationDate;
+            }
+            return (DateOnly)expirationDate;
+        }
         //GROCERIES LIST
         public static async Task<List<Product>> GetUserGroceries(int userId)
         {

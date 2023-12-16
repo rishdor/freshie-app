@@ -1,7 +1,9 @@
 using freshie_app.DTO;
+using Kotlin.Jvm;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Xml;
+using static Android.Content.ClipData;
 
 namespace freshie_app
 {
@@ -145,6 +147,8 @@ namespace freshie_app
 
             void OnSingleTapped(object sender, EventArgs args)
             {
+                var button = (Button)sender;
+                var product = (Product)button.BindingContext;
                 Task.Delay(200).ContinueWith(t =>
                 {
                     if (doubleTapped)
@@ -154,15 +158,24 @@ namespace freshie_app
                     }
                     else if (!ignoreNextTap)
                     {
-                        button.Dispatcher.Dispatch(() =>
+                        button.Dispatcher.Dispatch(async () =>
                         {
                             if (_isShowingAllProducts)
                             {
-                                // Add to fridge items
+                                await ApiClient.AddProduct(_user.UserId, product);
                             }
                             else
                             {
-                                //Show product details (expiration date)
+                                var expirationDate = ApiClient.GetExpirationDate(_user.UserId, product);
+                                if (expirationDate!=null)
+                                {
+                                    DisplayAlert("Expiration date", $"Product expires on{expirationDate}", "OK");
+                                }
+                                else
+                                {
+                                    DisplayAlert("Expiration date", "Product doesn't have an expiration date", "OK");
+                                }
+                                
                             }
                         });
                     }
