@@ -30,45 +30,49 @@ namespace freshie_webAPI.Controllers
             return await _context.FridgeItems.ToListAsync();
         }
 
-        //// GET: api/FridgeItems/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<FridgeItem>> GetFridgeItem(int id)
-        //{
-        //  if (_context.FridgeItems == null)
-        //  {
-        //      return NotFound();
-        //  }
-        //    var fridgeItem = await _context.FridgeItems.FindAsync(id);
-
-        //    if (fridgeItem == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return fridgeItem;
-        //}
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetFridgeProducts(int id)
+        // GET: api/FridgeItems/10000001
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<FridgeItem>>> GetFridgeItem(int userId)
         {
-            var items = await _context.FridgeItems.Where(u => u.UserId == id).ToListAsync();
+            if (_context.FridgeItems == null)
+            {
+                return NotFound();
+            }
+            var fridgeItems = await _context.FridgeItems.Where(u => u.UserId == userId).ToListAsync();
 
-            if (items == null || !items.Any())
+            if (fridgeItems == null || !fridgeItems.Any())
             {
                 return NotFound("User doesn't have any items.");
             }
 
-            var products = new List<Product>();
-            foreach (var item in items)
+            return fridgeItems;
+        }
+        // GET: api/FridgeItems/products/10000001
+        [HttpGet("products/{userId}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetFridgeProducts(int userId)
+        {
+            if (_context.FridgeItems == null)
+            {
+                return NotFound();
+            }
+            var fridgeItems = await _context.FridgeItems.Where(u => u.UserId == userId).ToListAsync();
+
+            if (fridgeItems == null || !fridgeItems.Any())
+            {
+                return NotFound("User doesn't have any items.");
+            }
+
+            var userProducts = new List<Product>();
+            foreach (var item in fridgeItems)
             {
                 var product = await _context.Products.FindAsync(item.ProductId);
                 if (product != null)
                 {
-                    products.Add(product);
+                    userProducts.Add(product);
                 }
             }
 
-            return products;
+            return userProducts;
         }
         // PUT: api/FridgeItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
