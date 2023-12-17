@@ -77,13 +77,8 @@ namespace freshie_webAPI.Controllers
         // PUT: api/FridgeItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
-        public async Task<IActionResult> PutFridgeItem(FridgeItem fridgeItem, DateOnly? newExpirationDate)
+        public async Task<IActionResult> PutFridgeItem(FridgeItem fridgeItem)
         {
-            if (newExpirationDate.HasValue)
-            {
-                fridgeItem.ExpirationDate = newExpirationDate.Value;
-            }
-
             _context.Entry(fridgeItem).State = EntityState.Modified;
 
             try
