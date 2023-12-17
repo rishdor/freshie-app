@@ -62,7 +62,9 @@ namespace freshie_app
         {
             ClearExistingGrid();
 
+            ProductsCollectionView.ItemsSource = null;
             ProductsCollectionView.ItemsSource = Products;
+
             var grid = CreateGridForProducts(Products);
 
             ScrollView scrollView = new ScrollView { Content = grid };
@@ -82,7 +84,6 @@ namespace freshie_app
 
             return grid;
         }
-
 
         private void AddGridDefinitions(Grid grid, int columns, int rows)
         {
@@ -164,12 +165,11 @@ namespace freshie_app
                             if (_isShowingAllProducts)
                             {
                                 var response = await ApiClient.AddProduct(_user.UserId, product);
-                                if (response == "Product added successfully.") //check if this is the correct response
+                                if (response == "Product added successfully.")
                                 {
                                     var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
                                     allProducts.Remove(product);
-                                    ProductsCollectionView.ItemsSource = null;
-                                    ProductsCollectionView.ItemsSource = allProducts;
+                                    DisplayProducts(allProducts);
                                 }
                             }
                             else
@@ -197,12 +197,14 @@ namespace freshie_app
 
             void OnDoubleTapped(object sender, EventArgs args)
             {
+                var button = (Button)sender;
+                var product = (Product)button.BindingContext;
                 doubleTapped = true;
                 Task.Delay(200).ContinueWith(t =>
                 {
                     if (doubleTapped)
                     {
-                        button.Dispatcher.Dispatch(() =>
+                        button.Dispatcher.Dispatch(async () =>
                         {
                             if (_isShowingAllProducts)
                             {
@@ -210,7 +212,8 @@ namespace freshie_app
                             }
                             else
                             {
-                                //remove from the fridge items
+                                await ApiClient.DeleteProduct(_user.UserId, product);
+                                await LoadUserProducts();
                             }
                         });
                         doubleTapped = false;
