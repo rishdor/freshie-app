@@ -163,7 +163,14 @@ namespace freshie_app
                         {
                             if (_isShowingAllProducts)
                             {
-                                await ApiClient.AddProduct(_user.UserId, product);
+                                var response = await ApiClient.AddProduct(_user.UserId, product);
+                                if (response == "Product added successfully.") //check if this is the correct response
+                                {
+                                    var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
+                                    allProducts.Remove(product);
+                                    ProductsCollectionView.ItemsSource = null;
+                                    ProductsCollectionView.ItemsSource = allProducts;
+                                }
                             }
                             else
                             {
