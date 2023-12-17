@@ -174,10 +174,20 @@ namespace freshie_app
                             }
                             else
                             {
-                                var expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
+                                DateOnly? expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
                                 if (expirationDate != null)
                                 {
-                                    await DisplayAlert("Expiration date", $"Product expires on {expirationDate}", "OK");
+                                    string newExpirationDateString = await DisplayPromptAsync("Expiration date", $"Current expiration date is {expirationDate}", initialValue: expirationDate.ToString(), maxLength: 10, keyboard: Keyboard.Text);
+                                    if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
+                                    {
+                                        // add put request to modify fridge item
+                                        // add method to modify expiration date in ApiClient
+                                        // await ApiClient.UpdateExpirationDate(_user.UserId, product, newExpirationDate);
+                                    }
+                                    else
+                                    {
+                                        await DisplayAlert("Error", "Invalid date format", "OK");
+                                    }
                                 }
                                 else
                                 {
