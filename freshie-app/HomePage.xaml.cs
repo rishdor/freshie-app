@@ -187,7 +187,6 @@ namespace freshie_app
                             }
                         });
                     }
-                    //is this actually necessary?
                     else
                     {
                         ignoreNextTap = false;

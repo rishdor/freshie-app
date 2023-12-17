@@ -13,7 +13,7 @@ public partial class FridgeItem
 
     public DateOnly? ExpirationDate { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

@@ -58,7 +58,7 @@ namespace freshie_app.DTO
             }
             return userProducts;
         }
-        public static async Task<string> AddProduct(int id, Product product, DateTime? expirationDate = null)
+        public static async Task<string> AddProduct(int id, Product product, DateOnly? expirationDate = null)
         {
             var item = new { UserId = id, Product = product, ExpirationDate = expirationDate };
             var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
