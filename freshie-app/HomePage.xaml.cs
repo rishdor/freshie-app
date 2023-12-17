@@ -143,11 +143,13 @@ namespace freshie_app
             doubleTap.Tapped += OnDoubleTapped;
             button.GestureRecognizers.Add(doubleTap);
 
-            void OnSingleTapped(object sender, EventArgs args)
+            async void OnSingleTapped(object sender, EventArgs args)
             {
                 var button = (Button)sender;
-                var product = (Product)button.BindingContext;
-                Task.Delay(200).ContinueWith(t =>
+                string productName = (string)button.BindingContext;
+                var product = (await ApiClient.GetAllProducts()).FirstOrDefault(p => p.ProductName == productName);
+
+                _ = Task.Delay(200).ContinueWith(t =>
                 {
                     if (doubleTapped)
                     {
@@ -165,15 +167,15 @@ namespace freshie_app
                             else
                             {
                                 var expirationDate = ApiClient.GetExpirationDate(_user.UserId, product);
-                                if (expirationDate!=null)
+                                if (expirationDate != null)
                                 {
-                                    DisplayAlert("Expiration date", $"Product expires on{expirationDate}", "OK");
+                                    DisplayAlert("Expiration date", $"Product expires on {expirationDate}", "OK");
                                 }
                                 else
                                 {
                                     DisplayAlert("Expiration date", "Product doesn't have an expiration date", "OK");
                                 }
-                                
+
                             }
                         });
                     }

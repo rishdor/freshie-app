@@ -51,7 +51,7 @@ namespace freshie_app.DTO
         public static async Task<List<Product>> GetUserProducts(int userId)
         {
             List<Product> userProducts = null;
-            HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{userId}");
+            HttpResponseMessage response = await _client.GetAsync($"api/FridgeItems/products/{userId}");
             if (response.IsSuccessStatusCode)
             {
                 userProducts = await response.Content.ReadAsAsync<List<Product>>();
@@ -95,7 +95,6 @@ namespace freshie_app.DTO
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
         }
-        //TODO: add to api method to get actual fridge items without converting them to products or going through all the fridge items of all users
         public static async Task<DateOnly> GetExpirationDate(int id, Product product)
         {
             DateOnly? expirationDate = null;
@@ -103,11 +102,18 @@ namespace freshie_app.DTO
             if (response.IsSuccessStatusCode)
             {
                 var fridgeItems = await response.Content.ReadAsAsync<List<FridgeItem>>();
-                var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
-                expirationDate = item.ExpirationDate;
+                if (fridgeItems != null && product != null)
+                {
+                    var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
+                    if (item != null)
+                    {
+                        expirationDate = item.ExpirationDate;
+                    }
+                }
             }
             return (DateOnly)expirationDate;
         }
+
         //GROCERIES LIST
         public static async Task<List<Product>> GetUserGroceries(int userId)
         {
