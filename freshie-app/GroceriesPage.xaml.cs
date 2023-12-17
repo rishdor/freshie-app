@@ -71,5 +71,7 @@ public partial class GroceriesPage : ContentPage
             await LoadGroceries();
         }
     }
-
+    private void OnAddToGroceriesButtonClicked(object sender, EventArgs e)
+    {
+    }
 }

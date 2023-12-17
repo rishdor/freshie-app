@@ -36,7 +36,8 @@
                 Text="Change password" 
                 Margin="0,5,0,10"
                 BackgroundColor="{StaticResource Gray}"
-                TextColor="{StaticResource Primary}"/>
+                TextColor="{StaticResource Primary}"
+                Clicked="OnChangePasswordClicked"/>
         
     </VerticalStackLayout>
 </ContentPage>

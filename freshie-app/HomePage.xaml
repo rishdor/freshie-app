@@ -17,7 +17,8 @@
                     IsVisible="false"
                     HorizontalTextAlignment = "Center"
                     VerticalTextAlignment = "Center"
-                    FontSize="20"/>
+                    FontSize="20"
+                    BackgroundColor="#F7F2E7"/>
 
                 <CollectionView x:Name="ProductsCollectionView" 
                                 ItemsLayout="VerticalGrid, 3"
@@ -36,10 +37,8 @@
                                     VerticalOptions = "Center">
 
                                     <Button.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnSingleTapped" 
-                                                            NumberOfTapsRequired="1" />
-                                        <TapGestureRecognizer Tapped="OnDoubleTapped" 
-                                                            NumberOfTapsRequired="2" />
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" />
+                                        <TapGestureRecognizer NumberOfTapsRequired="2" />
                                     </Button.GestureRecognizers>
 
                                     <Button.Triggers>

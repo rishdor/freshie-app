@@ -11,9 +11,9 @@ public partial class FridgeItem
 
     public int UserId { get; set; }
 
-    public DateTime? ExpirationDate { get; set; }
+    public DateOnly? ExpirationDate { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public virtual Product Product { get; set; }
 
     public virtual User User { get; set; } = null!;
 }

@@ -9,13 +9,13 @@ public partial class Product
 
     public string ProductName { get; set; } = null!;
 
-    public byte[]? Icon { get; set; }
+    public byte[] Icon { get; set; }
 
     public int? CategoryId { get; set; }
 
     public int? ShelfId { get; set; }
 
-    public virtual Category? Category { get; set; }
+    public virtual Category Category { get; set; }
 
     public virtual ICollection<FridgeItem> FridgeItems { get; set; } = new List<FridgeItem>();
 
@@ -25,7 +25,7 @@ public partial class Product
 
     public virtual ICollection<ProductDiet> ProductDiets { get; set; } = new List<ProductDiet>();
 
-    public virtual Shelf? Shelf { get; set; }
+    public virtual Shelf Shelf { get; set; }
 }
 public class ProductComparer : IEqualityComparer<Product>
 {

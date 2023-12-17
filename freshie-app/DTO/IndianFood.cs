@@ -11,9 +11,9 @@ public partial class IndianFood
 
     public string TranslatedRecipeName { get; set; } = null!;
 
-    public string? Ingredients { get; set; }
+    public string Ingredients { get; set; }
 
-    public string? TranslatedIngredients { get; set; }
+    public string TranslatedIngredients { get; set; }
 
     public int PrepTimeInMins { get; set; }
 

@@ -8,12 +8,14 @@ namespace freshie_app
     public partial class HomePage : ContentPage
     {
         private User _user;
+        private bool _isShowingAllProducts;
 
         public HomePage(User user)
         {
             InitializeComponent();
             _user = user;
         }
+        
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -21,121 +23,244 @@ namespace freshie_app
         }
         private async Task LoadUserProducts()
         {
+            ClearExistingGrid();
 
-            Grid existingGrid = MainGrid.Children.OfType<Grid>().FirstOrDefault();
-            if (existingGrid != null)
+            var userProducts = await GetUserProducts();
+
+            if (userProducts == null)
             {
-                MainGrid.Children.Remove(existingGrid);
-            }
-
-
-            var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
-            ProductsCollectionView.ItemsSource = _userProducts;
-            if (_userProducts == null)
-            {
-                WelcomeLabel.IsVisible = true;
-                WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
-                WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
+                DisplayNoProductsMessage();
             }
             else
             {
+                DisplayProducts(userProducts);
+            }
+        }
 
-                var grid = new Grid { };
-                
-                int columns = 3;
-                int rows = (_userProducts.Count + columns - 1) / columns;
+        private void ClearExistingGrid()
+        {
+            ScrollView existingScrollView = MainGrid.Children.OfType<ScrollView>().FirstOrDefault();
+            if (existingScrollView != null)
+            {
+                MainGrid.Children.Remove(existingScrollView);
+            }
+        }
 
-                for (int i = 0; i < columns; i++)
+        private async Task<List<Product>> GetUserProducts()
+        {
+            return await ApiClient.GetUserProducts(_user.UserId);
+        }
+
+        private void DisplayNoProductsMessage()
+        {
+            WelcomeLabel.IsVisible = true;
+            WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
+        }
+
+        private void DisplayProducts(List<Product> Products)
+        {
+            ClearExistingGrid();
+
+            ProductsCollectionView.ItemsSource = null;
+            ProductsCollectionView.ItemsSource = Products;
+
+            var grid = CreateGridForProducts(Products);
+
+            ScrollView scrollView = new ScrollView { Content = grid };
+            Grid.SetRow(scrollView, 0);
+            MainGrid.Children.Add(scrollView);
+        }
+
+        private Grid CreateGridForProducts(List<Product> Products)
+        {
+            var grid = new Grid { };
+
+            int columns = 3;
+            int rows = (Products.Count + columns - 1) / columns;
+
+            AddGridDefinitions(grid, columns, rows);
+            AddProductButtonsToGrid(grid, Products, columns);
+
+            return grid;
+        }
+
+        private void AddGridDefinitions(Grid grid, int columns, int rows)
+        {
+            for (int i = 0; i < columns; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            }
+        }
+
+        private void AddProductButtonsToGrid(Grid grid, List<Product> userProducts, int columns)
+        {
+            for (int i = 0; i < userProducts.Count; i++)
+            {
+                var productButton = CreateProductButton(userProducts[i]);
+
+                int row = i / columns;
+                int column = i % columns;
+
+                Grid.SetRow(productButton, row);
+                Grid.SetColumn(productButton, column);
+
+                grid.Children.Add(productButton);
+            }
+        }
+        private Button CreateProductButton(Product product)
+        {
+            var productButton = new Button
+            {
+                FontSize = 20,
+                WidthRequest = 115,
+                HeightRequest = 115,
+                Margin = new Thickness(10, 5, 10, 5),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
+            };
+
+            productButton.BindingContext = product;
+            productButton.SetBinding(Button.TextProperty, "ProductName");
+
+            AddTapGesturesToButton(productButton);
+
+            return productButton;
+        }
+
+        private bool doubleTapped = false;
+        private bool ignoreNextTap = false;
+
+        private void AddTapGesturesToButton(Button button)
+        {
+            var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
+            singleTap.Tapped += OnSingleTapped;
+            button.GestureRecognizers.Add(singleTap);
+
+            var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
+            doubleTap.Tapped += OnDoubleTapped;
+            button.GestureRecognizers.Add(doubleTap);
+
+            void OnSingleTapped(object sender, EventArgs args)
+            {
+                var button = (Button)sender;
+                var product = (Product)button.BindingContext;
+
+                _ = Task.Delay(200).ContinueWith(t =>
                 {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                }
-
-                for (int i = 0; i < rows; i++)
-                {
-                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                }
-
-                for (int i = 0; i < _userProducts.Count; i++)
-                {
-                    bool doubleTapped = false;
-                    bool ignoreNextTap = false;
-
-                    var productButton = new Button
+                    if (doubleTapped)
                     {
-                        Text = _userProducts[i].ProductName,
-                        FontSize = 20,
-                        WidthRequest = 115,
-                        HeightRequest = 115,
-                        Margin = new Thickness(10, 5, 10, 5),
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center
-                    };
-
-                    var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
-                    singleTap.Tapped += OnSingleTapped;
-                    productButton.GestureRecognizers.Add(singleTap);
-
-                    var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
-                    doubleTap.Tapped += OnDoubleTapped;
-                    productButton.GestureRecognizers.Add(doubleTap);
-
-                    void OnSingleTapped(object sender, EventArgs args)
+                        doubleTapped = false;
+                        ignoreNextTap = true;
+                    }
+                    else if (!ignoreNextTap)
                     {
-                        Task.Delay(200).ContinueWith(t =>
+                        button.Dispatcher.Dispatch(async () =>
                         {
-                            if (doubleTapped)
+                            if (_isShowingAllProducts)
                             {
-                                doubleTapped = false;
-                                ignoreNextTap = true;
-                            }
-                            else if (!ignoreNextTap)
-                            {
-                                productButton.Dispatcher.Dispatch(() =>
+                                var response = await ApiClient.AddProduct(_user.UserId, product);
+                                if (response == "Product added successfully.")
                                 {
-                                    DisplayAlert("Single Tap", "Single tap detected", "OK");
-                                });
+                                    var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
+                                    allProducts.Remove(product);
+                                    DisplayProducts(allProducts);
+                                }
                             }
                             else
                             {
-                                ignoreNextTap = false;
-                            }
-                        });
-                    }
-
-                    void OnDoubleTapped(object sender, EventArgs args)
-                    {
-                        doubleTapped = true;
-                        Task.Delay(200).ContinueWith(t =>
-                        {
-                            if (doubleTapped)
-                            {
-                                productButton.Dispatcher.Dispatch(() =>
+                                DateOnly? expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
+                                if (expirationDate != null)
                                 {
-                                    DisplayAlert("Double Tap", "Double tap detected", "OK");
-                                });
-                                doubleTapped = false;
+                                    string newExpirationDateString = await DisplayPromptAsync("Expiration date", $"Current expiration date is {expirationDate}", initialValue: expirationDate.ToString(), maxLength: 10, keyboard: Keyboard.Text);
+                                    if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
+                                    {
+                                        // add put request to modify fridge item
+                                        // add method to modify expiration date in ApiClient
+                                        // await ApiClient.UpdateExpirationDate(_user.UserId, product, newExpirationDate);
+                                    }
+                                    else
+                                    {
+                                        await DisplayAlert("Error", "Invalid date format", "OK");
+                                    }
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Expiration date", "Product doesn't have an expiration date", "OK");
+                                }
+
                             }
                         });
                     }
+                    else
+                    {
+                        ignoreNextTap = false;
+                    }
+                });
+            }
 
-                    int row = i / columns;
-                    int column = i % columns;
-
-                    Grid.SetRow(productButton, row);
-                    Grid.SetColumn(productButton, column);
-
-                    grid.Children.Add(productButton);
-                }
-                ScrollView scrollView = new ScrollView { Content = grid };
-                Grid.SetRow(scrollView, 0);
-                MainGrid.Children.Add(scrollView);
+            void OnDoubleTapped(object sender, EventArgs args)
+            {
+                var button = (Button)sender;
+                var product = (Product)button.BindingContext;
+                doubleTapped = true;
+                Task.Delay(200).ContinueWith(t =>
+                {
+                    if (doubleTapped)
+                    {
+                        button.Dispatcher.Dispatch(async () =>
+                        {
+                            if (_isShowingAllProducts)
+                            {
+                                string expirationDateString = await DisplayPromptAsync("Expiration date", "Enter expiration date", "OK", "Cancel", "yyyy-mm-dd");
+                                if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
+                                {
+                                    await ApiClient.AddProduct(_user.UserId, product, expirationDate);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Error", "Invalid date format", "OK");
+                                }
+                            }
+                            else
+                            {
+                                await ApiClient.DeleteProduct(_user.UserId, product);
+                                await LoadUserProducts();
+                            }
+                        });
+                        doubleTapped = false;
+                    }
+                });
             }
 
         }
 
-        public void OnAddProductClicked(object sender, EventArgs e)
+        private async void OnAddProductClicked(object sender, EventArgs e)
         {
-            
+            _isShowingAllProducts = !_isShowingAllProducts;
+            AddProduct.Text = _isShowingAllProducts ? "Show inventory" : "Add new products";
+            if (_isShowingAllProducts)
+            {
+                var allProducts = await ApiClient.GetAllProducts();
+                var usersProdutct = await ApiClient.GetUserProducts(_user.UserId);
+                if (usersProdutct != null)
+                {
+                    var availableProducts = allProducts.Except(usersProdutct, new ProductComparer()).ToList();
+                    DisplayProducts(availableProducts);
+                }
+                else
+                {
+                    DisplayProducts(allProducts);
+                }
+            }
+            else
+            {
+                await LoadUserProducts();
+            }
         }
     }
 }

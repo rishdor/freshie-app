@@ -18,7 +18,7 @@ namespace freshie_app.DTO
         {
             _client = new HttpClient { BaseAddress = new Uri("https://freshiehub.azurewebsites.net/") };
         }
-        //REGISTATION
+        //REGISTRATION
         public static async Task<string> RegisterUser(User user)
         {
             HttpResponseMessage response = await _client.PostAsJsonAsync("api/User/register", user);
@@ -51,14 +51,14 @@ namespace freshie_app.DTO
         public static async Task<List<Product>> GetUserProducts(int userId)
         {
             List<Product> userProducts = null;
-            HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{userId}");
+            HttpResponseMessage response = await _client.GetAsync($"api/FridgeItems/products/{userId}");
             if (response.IsSuccessStatusCode)
             {
                 userProducts = await response.Content.ReadAsAsync<List<Product>>();
             }
             return userProducts;
         }
-        public static async Task<string> AddProduct(int id, Product product, DateTime? expirationDate = null)
+        public static async Task<string> AddProduct(int id, Product product, DateOnly? expirationDate = null)
         {
             var item = new { UserId = id, Product = product, ExpirationDate = expirationDate };
             var content = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
@@ -95,6 +95,25 @@ namespace freshie_app.DTO
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
         }
+        public static async Task<DateOnly?> GetExpirationDate(int id, Product product)
+        {
+            DateOnly? expirationDate = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var fridgeItems = await response.Content.ReadAsAsync<List<FridgeItem>>();
+                if (fridgeItems != null && product != null)
+                {
+                    var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
+                    if (item != null)
+                    {
+                        expirationDate = item.ExpirationDate;
+                    }
+                }
+            }
+            return expirationDate;
+        }
+
         //GROCERIES LIST
         public static async Task<List<Product>> GetUserGroceries(int userId)
         {
