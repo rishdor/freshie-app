@@ -76,34 +76,34 @@ namespace freshie_webAPI.Controllers
         }
         // PUT: api/FridgeItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutFridgeItem(int id, FridgeItem fridgeItem)
-        //{
-        //    if (id != fridgeItem.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut]
+        public async Task<IActionResult> PutFridgeItem(FridgeItem fridgeItem, DateOnly? newExpirationDate)
+        {
+            if (newExpirationDate.HasValue)
+            {
+                fridgeItem.ExpirationDate = newExpirationDate.Value;
+            }
 
-        //    _context.Entry(fridgeItem).State = EntityState.Modified;
+            _context.Entry(fridgeItem).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!FridgeItemExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FridgeItemExists(fridgeItem.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         // POST: api/FridgeItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
