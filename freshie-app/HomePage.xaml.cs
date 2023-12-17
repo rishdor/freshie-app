@@ -15,13 +15,12 @@ namespace freshie_app
             InitializeComponent();
             _user = user;
         }
-
+        
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             await LoadUserProducts();
         }
-
         private async Task LoadUserProducts()
         {
             ClearExistingGrid();
@@ -237,6 +236,7 @@ namespace freshie_app
                     }
                 });
             }
+
         }
 
         private async void OnAddProductClicked(object sender, EventArgs e)
