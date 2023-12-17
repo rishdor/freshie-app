@@ -207,7 +207,15 @@ namespace freshie_app
                         {
                             if (_isShowingAllProducts)
                             {
-                                // ask for expiration date
+                                string expirationDateString = await DisplayPromptAsync("Expiration date", "Enter expiration date", "OK", "Cancel", "yyyy-mm-dd");
+                                if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
+                                {
+                                    await ApiClient.AddProduct(_user.UserId, product, expirationDate);
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Error", "Invalid date format", "OK");
+                                }
                             }
                             else
                             {
