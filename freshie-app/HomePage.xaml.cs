@@ -30,7 +30,7 @@ namespace freshie_app
 
             if (userProducts == null)
             {
-                DisplayWelcomeMessage();
+                DisplayNoProductsMessage();
             }
             else
             {
@@ -52,7 +52,7 @@ namespace freshie_app
             return await ApiClient.GetUserProducts(_user.UserId);
         }
 
-        private void DisplayWelcomeMessage()
+        private void DisplayNoProductsMessage()
         {
             WelcomeLabel.IsVisible = true;
             WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
@@ -112,12 +112,10 @@ namespace freshie_app
                 grid.Children.Add(productButton);
             }
         }
-
         private Button CreateProductButton(Product product)
         {
             var productButton = new Button
             {
-                Text = product.ProductName,
                 FontSize = 20,
                 WidthRequest = 115,
                 HeightRequest = 115,
@@ -126,10 +124,14 @@ namespace freshie_app
                 VerticalOptions = LayoutOptions.Center
             };
 
+            productButton.BindingContext = product;
+            productButton.SetBinding(Button.TextProperty, "ProductName");
+
             AddTapGesturesToButton(productButton);
 
             return productButton;
         }
+
         private bool doubleTapped = false;
         private bool ignoreNextTap = false;
 
@@ -143,11 +145,10 @@ namespace freshie_app
             doubleTap.Tapped += OnDoubleTapped;
             button.GestureRecognizers.Add(doubleTap);
 
-            async void OnSingleTapped(object sender, EventArgs args)
+            void OnSingleTapped(object sender, EventArgs args)
             {
                 var button = (Button)sender;
-                string productName = (string)button.BindingContext;
-                var product = (await ApiClient.GetAllProducts()).FirstOrDefault(p => p.ProductName == productName);
+                var product = (Product)button.BindingContext;
 
                 _ = Task.Delay(200).ContinueWith(t =>
                 {
@@ -166,19 +167,20 @@ namespace freshie_app
                             }
                             else
                             {
-                                var expirationDate = ApiClient.GetExpirationDate(_user.UserId, product);
+                                var expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
                                 if (expirationDate != null)
                                 {
-                                    DisplayAlert("Expiration date", $"Product expires on {expirationDate}", "OK");
+                                    await DisplayAlert("Expiration date", $"Product expires on {expirationDate}", "OK");
                                 }
                                 else
                                 {
-                                    DisplayAlert("Expiration date", "Product doesn't have an expiration date", "OK");
+                                    await DisplayAlert("Expiration date", "Product doesn't have an expiration date", "OK");
                                 }
 
                             }
                         });
                     }
+                    //is this actually necessary?
                     else
                     {
                         ignoreNextTap = false;

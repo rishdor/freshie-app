@@ -95,7 +95,7 @@ namespace freshie_app.DTO
                 return $"Failed to delete product. Status code: {response.StatusCode}";
             }
         }
-        public static async Task<DateOnly> GetExpirationDate(int id, Product product)
+        public static async Task<DateOnly?> GetExpirationDate(int id, Product product)
         {
             DateOnly? expirationDate = null;
             HttpResponseMessage response = await _client.GetAsync($"api/fridgeitems/{id}");
@@ -111,7 +111,7 @@ namespace freshie_app.DTO
                     }
                 }
             }
-            return (DateOnly)expirationDate;
+            return expirationDate;
         }
 
         //GROCERIES LIST
