@@ -9,13 +9,11 @@ namespace freshie_app
     {
         private User _user;
         private bool _isShowingAllProducts;
-
         public HomePage(User user)
         {
             InitializeComponent();
             _user = user;
         }
-        
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -23,223 +21,101 @@ namespace freshie_app
         }
         private async Task LoadUserProducts()
         {
-            ClearExistingGrid();
-
-            var userProducts = await GetUserProducts();
-
-            if (userProducts == null)
+            var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
+            ProductsCollectionView.ItemsSource = _userProducts;
+            if (_userProducts == null)
             {
                 WelcomeLabel.IsVisible = true;
                 WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
+                WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
             }
             else
             {
-                DisplayProducts(userProducts);
+                ProductsCollectionView.IsVisible = true;
             }
         }
+        bool isSingleTap = true;
 
-        private void ClearExistingGrid()
+        public void OnSingleTapped(object sender, EventArgs e)
         {
-            ScrollView existingScrollView = MainGrid.Children.OfType<ScrollView>().FirstOrDefault();
-            if (existingScrollView != null)
+            isSingleTap = true;
+            var button = (Button)sender;
+            var product = (Product)button.BindingContext;
+
+            Application.Current.Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(200), async () =>
             {
-                MainGrid.Children.Remove(existingScrollView);
-            }
-        }
-
-        private async Task<List<Product>> GetUserProducts()
-        {
-            return await ApiClient.GetUserProducts(_user.UserId);
-        }
-
-        private void DisplayProducts(List<Product> Products)
-        {
-            ClearExistingGrid();
-
-            ProductsCollectionView.ItemsSource = null;
-            ProductsCollectionView.ItemsSource = Products;
-
-            var grid = CreateGridForProducts(Products);
-
-            ScrollView scrollView = new ScrollView { Content = grid };
-            Grid.SetRow(scrollView, 0);
-            MainGrid.Children.Add(scrollView);
-        }
-
-        private Grid CreateGridForProducts(List<Product> Products)
-        {
-            var grid = new Grid { };
-
-            int columns = 3;
-            int rows = (Products.Count + columns - 1) / columns;
-
-            AddGridDefinitions(grid, columns, rows);
-            AddProductButtonsToGrid(grid, Products, columns);
-
-            return grid;
-        }
-
-        private void AddGridDefinitions(Grid grid, int columns, int rows)
-        {
-            for (int i = 0; i < columns; i++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
-
-            for (int i = 0; i < rows; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-            }
-        }
-
-        private void AddProductButtonsToGrid(Grid grid, List<Product> userProducts, int columns)
-        {
-            for (int i = 0; i < userProducts.Count; i++)
-            {
-                var productButton = CreateProductButton(userProducts[i]);
-
-                int row = i / columns;
-                int column = i % columns;
-
-                Grid.SetRow(productButton, row);
-                Grid.SetColumn(productButton, column);
-
-                grid.Children.Add(productButton);
-            }
-        }
-
-        private Button CreateProductButton(Product product)
-        {
-            var productButton = new Button
-            {
-                FontSize = 20,
-                WidthRequest = 115,
-                HeightRequest = 115,
-                Margin = new Thickness(10, 5, 10, 5),
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
-            };
-
-            productButton.BindingContext = product;
-            productButton.SetBinding(Button.TextProperty, "ProductName");
-
-            AddTapGesturesToButton(productButton);
-
-            return productButton;
-        }
-
-        private bool doubleTapped = false;
-        private bool ignoreNextTap = false;
-
-        private void AddTapGesturesToButton(Button button)
-        {
-            var singleTap = new TapGestureRecognizer { NumberOfTapsRequired = 1 };
-            singleTap.Tapped += OnSingleTapped;
-            button.GestureRecognizers.Add(singleTap);
-
-            var doubleTap = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
-            doubleTap.Tapped += OnDoubleTapped;
-            button.GestureRecognizers.Add(doubleTap);
-
-            void OnSingleTapped(object sender, EventArgs args)
-            {
-                var button = (Button)sender;
-                var product = (Product)button.BindingContext;
-
-                _ = Task.Delay(200).ContinueWith(t =>
+                if (isSingleTap)
                 {
-                    if (doubleTapped)
+                    if (_isShowingAllProducts)
                     {
-                        doubleTapped = false;
-                        ignoreNextTap = true;
-                    }
-                    else if (!ignoreNextTap)
-                    {
-                        button.Dispatcher.Dispatch(async () =>
+                        var response = await ApiClient.AddProduct(_user.UserId, product);
+                        if (response == "Product added successfully.")
                         {
-                            if (_isShowingAllProducts)
-                            {
-                                var response = await ApiClient.AddProduct(_user.UserId, product);
-                                if (response == "Product added successfully.")
-                                {
-                                    var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
-                                    allProducts.Remove(product);
-                                    DisplayProducts(allProducts);
-                                }
-                            }
-                            else
-                            {
-                                DateOnly? expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
-                                string currentExpirationDate = expirationDate != null ? $"Current expiration date is {expirationDate}. Do you want to change it?" : "The item doesn't have an expiration date. Do you want to add it?";
-
-                                string newExpirationDateString = await DisplayPromptAsync("Expiration date", $"{currentExpirationDate}", "OK", "Cancel", "dd.mm.yyyy", maxLength: 10, keyboard: Keyboard.Text);
-
-                                if (newExpirationDateString != null)
-                                {
-                                    if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
-                                    {
-                                        List<FridgeItem> fridgeItems = await ApiClient.GetFridgeItems(_user.UserId);
-                                        var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
-                                        item.ExpirationDate = newExpirationDate;
-                                        await ApiClient.ChangeExpirationDate(item);
-                                    }
-                                    else
-                                    {
-                                        await DisplayAlert("Error", "Invalid date format", "OK");
-                                    }
-                                }
-                            }
-                        });
+                            var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
+                            allProducts.Remove(product);
+                            ProductsCollectionView.ItemsSource = null;
+                            ProductsCollectionView.ItemsSource = allProducts;
+                        }
                     }
                     else
                     {
-                        ignoreNextTap = false;
-                    }
-                });
-            }
+                        DateOnly? expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
+                        string currentExpirationDate = expirationDate != null ? $"Current expiration date is {expirationDate}. Do you want to change it?" : "The item doesn't have an expiration date. Do you want to add it?";
 
-            void OnDoubleTapped(object sender, EventArgs args)
-            {
-                var button = (Button)sender;
-                var product = (Product)button.BindingContext;
-                doubleTapped = true;
-                Task.Delay(200).ContinueWith(t =>
-                {
-                    if (doubleTapped)
-                    {
-                        button.Dispatcher.Dispatch(async () =>
+                        string newExpirationDateString = await DisplayPromptAsync("Expiration date", $"{currentExpirationDate}", "OK", "Cancel", "dd.mm.yyyy", maxLength: 10, keyboard: Keyboard.Text);
+
+                        if (newExpirationDateString != null)
                         {
-                            if (_isShowingAllProducts)
+                            if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
                             {
-                                string expirationDateString = await DisplayPromptAsync("Expiration date", "Enter expiration date", "OK", "Cancel", "dd.mm.yyyy");
-                                if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
-                                {
-                                    var response = await ApiClient.AddProduct(_user.UserId, product, expirationDate);
-                                    if (response == "Product added successfully.")
-                                    {
-                                        var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
-                                        allProducts.Remove(product);
-                                        DisplayProducts(allProducts);
-                                    }
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Error", "Invalid date format", "OK");
-                                }
+                                List<FridgeItem> fridgeItems = await ApiClient.GetFridgeItems(_user.UserId);
+                                var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
+                                item.ExpirationDate = newExpirationDate;
+                                await ApiClient.ChangeExpirationDate(item);
                             }
                             else
                             {
-                                await ApiClient.DeleteProduct(_user.UserId, product);
-                                await LoadUserProducts();
+                                await DisplayAlert("Error", "Invalid date format", "OK");
                             }
-                        });
-                        doubleTapped = false;
+                        }
                     }
-                });
-            }
+                }
 
+            });
         }
-
+        public async void OnDoubleTapped(object sender, EventArgs e)
+        {
+            isSingleTap = false;
+            var button = (Button)sender;
+            var product = (Product)button.BindingContext;
+            if (_isShowingAllProducts)
+            {
+                string expirationDateString = await DisplayPromptAsync("Expiration date", "Enter expiration date", "OK", "Cancel", "dd.mm.yyyy");
+                if (expirationDateString != null)
+                {
+                    if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
+                    {
+                        var response = await ApiClient.AddProduct(_user.UserId, product, expirationDate);
+                        if (response == "Product added successfully.")
+                        {
+                            var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
+                            allProducts.Remove(product);
+                            ProductsCollectionView.ItemsSource = null;
+                            ProductsCollectionView.ItemsSource = allProducts;
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Invalid date format", "OK");
+                    }
+                }
+            }
+            else
+            {
+                await ApiClient.DeleteProduct(_user.UserId, product);
+                await LoadUserProducts();
+            }
+        }
         private async void OnAddProductClicked(object sender, EventArgs e)
         {
             _isShowingAllProducts = !_isShowingAllProducts;
@@ -251,11 +127,11 @@ namespace freshie_app
                 if (usersProdutct != null)
                 {
                     var availableProducts = allProducts.Except(usersProdutct, new ProductComparer()).ToList();
-                    DisplayProducts(availableProducts);
+                    ProductsCollectionView.ItemsSource = availableProducts;
                 }
                 else
                 {
-                    DisplayProducts(allProducts);
+                    ProductsCollectionView.ItemsSource = allProducts;
                 }
             }
             else
