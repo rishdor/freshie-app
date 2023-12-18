@@ -21,5 +21,7 @@ public partial class Product
 
     //public virtual ICollection<GroceriesHistory> GroceriesHistories { get; set; } = new List<GroceriesHistory>();
 
+    //public virtual ICollection<GroceriesList> GroceriesLists { get; set; } = new List<GroceriesList>();
+
     //public virtual Shelf? Shelf { get; set; }
 }

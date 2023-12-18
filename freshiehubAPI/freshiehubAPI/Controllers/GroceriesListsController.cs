@@ -110,7 +110,7 @@ namespace freshie_webAPI.Controllers
         {
             if (_context.FridgeItems == null)
             {
-                return Problem("Entity set 'FreshieDbContext.FridgeItems'  is null.");
+                return Problem("Entity set is null.");
             }
             var existingItem = await _context.GroceriesLists.FirstOrDefaultAsync(i => i.UserId == model.UserId && i.ProductId == model.Product.ProductId);
             if (existingItem != null)

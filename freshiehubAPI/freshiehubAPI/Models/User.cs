@@ -18,4 +18,6 @@ public partial class User
     //public virtual ICollection<FridgeItem> FridgeItems { get; set; } = new List<FridgeItem>();
 
     //public virtual ICollection<GroceriesHistory> GroceriesHistories { get; set; } = new List<GroceriesHistory>();
+
+    //public virtual ICollection<GroceriesList> GroceriesLists { get; set; } = new List<GroceriesList>();
 }

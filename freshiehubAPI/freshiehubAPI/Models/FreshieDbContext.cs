@@ -123,15 +123,21 @@ public partial class FreshieDbContext : DbContext
 
         modelBuilder.Entity<GroceriesList>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("GroceriesList");
+            entity.HasKey(e => e.Id).HasName("PK__Grocerie__3213E83FA8C9DFEA");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("id");
+            entity.ToTable("GroceriesList");
+
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            //entity.HasOne(d => d.Product).WithMany(p => p.GroceriesLists)
+            //    .HasForeignKey(d => d.ProductId)
+            //    .HasConstraintName("FK__Groceries__produ__17036CC0");
+
+            //entity.HasOne(d => d.User).WithMany(p => p.GroceriesLists)
+            //    .HasForeignKey(d => d.UserId)
+            //    .HasConstraintName("FK__Groceries__user___17F790F9");
         });
 
         modelBuilder.Entity<Product>(entity =>

@@ -3,6 +3,6 @@
     public class AddGroceriesModel
     {
         public int UserId { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }
