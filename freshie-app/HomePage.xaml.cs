@@ -96,7 +96,7 @@ namespace freshie_app
                     if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
                     {
                         var response = await ApiClient.AddProduct(_user.UserId, product, expirationDate);
-                        if (response == "Product added successfully.")
+                        if (response == "The groceries item was added successfully.") //idk if its correct response
                         {
                             var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
                             allProducts.Remove(product);

@@ -77,7 +77,7 @@ public partial class GroceriesPage : ContentPage
             await LoadGroceries();
         }
     }
-    private async void OnAddProductButtonClicked(object sender, EventArgs e)
+    private async void OnAddProductClicked(object sender, EventArgs e)
     {
         _isShowingAllProducts = !_isShowingAllProducts;
         AddProduct.Text = _isShowingAllProducts ? "Show My Groceries" : "Show All Products";
