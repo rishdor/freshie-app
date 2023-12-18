@@ -113,6 +113,22 @@ namespace freshie_app.DTO
             }
             return expirationDate;
         }
+        public static async Task<List<FridgeItem>> GetFridgeItems(int userId)
+        {
+            List<FridgeItem> fridgeItems = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/FridgeItems/{userId}");
+            if (response.IsSuccessStatusCode)
+            {
+                fridgeItems = await response.Content.ReadAsAsync<List<FridgeItem>>();
+            }
+            return fridgeItems;
+        }
+        public static async Task ChangeExpirationDate(FridgeItem fridgeItem)
+        {
+            HttpResponseMessage response = await _client.PutAsJsonAsync(
+                $"api/FridgeItems", fridgeItem);
+            response.EnsureSuccessStatusCode();
+        }
 
         //GROCERIES LIST
         public static async Task<List<Product>> GetUserGroceries(int userId)
