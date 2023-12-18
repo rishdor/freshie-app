@@ -174,20 +174,23 @@ namespace freshie_app
                             else
                             {
                                 DateOnly? expirationDate = await ApiClient.GetExpirationDate(_user.UserId, product);
-                                string currentExpirationDate = expirationDate != null ? $"Current expiration date is {expirationDate}" : "The item doesn't have an expiration date";
+                                string currentExpirationDate = expirationDate != null ? $"Current expiration date is {expirationDate}. Do you want to change it?" : "The item doesn't have an expiration date. Do you want to add it?";
 
                                 string newExpirationDateString = await DisplayPromptAsync("Expiration date", $"{currentExpirationDate}", "OK", "Cancel", "dd.mm.yyyy", maxLength: 10, keyboard: Keyboard.Text);
 
-                                if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
+                                if (newExpirationDateString != null)
                                 {
-                                    List<FridgeItem> fridgeItems = await ApiClient.GetFridgeItems(_user.UserId);
-                                    var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
-                                    item.ExpirationDate = newExpirationDate;
-                                    await ApiClient.ChangeExpirationDate(item);
-                                }
-                                else
-                                {
-                                    await DisplayAlert("Error", "Invalid date format", "OK");
+                                    if (DateOnly.TryParse(newExpirationDateString, out DateOnly newExpirationDate))
+                                    {
+                                        List<FridgeItem> fridgeItems = await ApiClient.GetFridgeItems(_user.UserId);
+                                        var item = fridgeItems.FirstOrDefault(p => p.ProductId == product.ProductId);
+                                        item.ExpirationDate = newExpirationDate;
+                                        await ApiClient.ChangeExpirationDate(item);
+                                    }
+                                    else
+                                    {
+                                        await DisplayAlert("Error", "Invalid date format", "OK");
+                                    }
                                 }
                             }
                         });
