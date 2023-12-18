@@ -29,7 +29,8 @@ namespace freshie_app
 
             if (userProducts == null)
             {
-                DisplayNoProductsMessage();
+                WelcomeLabel.IsVisible = true;
+                WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
             }
             else
             {
@@ -49,12 +50,6 @@ namespace freshie_app
         private async Task<List<Product>> GetUserProducts()
         {
             return await ApiClient.GetUserProducts(_user.UserId);
-        }
-
-        private void DisplayNoProductsMessage()
-        {
-            WelcomeLabel.IsVisible = true;
-            WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
         }
 
         private void DisplayProducts(List<Product> Products)
@@ -112,6 +107,7 @@ namespace freshie_app
                 grid.Children.Add(productButton);
             }
         }
+
         private Button CreateProductButton(Product product)
         {
             var productButton = new Button

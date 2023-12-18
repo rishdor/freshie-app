@@ -9,47 +9,55 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        
+
         <ScrollView Grid.Row="0">
             <StackLayout>
                 <Label x:Name="WelcomeLabel" 
-                    TextColor="#F7F2E7"
-                    HorizontalTextAlignment = "Center"
-                    VerticalTextAlignment = "Center"
-                    FontSize="11"/>
-                
+                TextColor="#F7F2E7"
+                HorizontalTextAlignment = "Center"
+                VerticalTextAlignment = "Center"
+                FontSize="11"/>
                 <CollectionView x:Name="ProductsCollectionView" 
-                                ItemsLayout="VerticalGrid, 3">
+                            ItemsLayout="VerticalGrid, 3"
+                            IsVisible="false">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Spacing="2">
-                                <Button Text="{Binding ProductName}" 
-                                        Clicked="OnAddToGroceriesButtonClicked" 
-                                        FontSize="Micro"
-                                        LineBreakMode="WordWrap"
-                                        WidthRequest="110" 
-                                        HeightRequest="110">
-                                    
+                            <StackLayout>
+                                <Button  
+                                Text="{Binding ProductName}" 
+                                FontSize="Micro"
+                                LineBreakMode="WordWrap"
+                                WidthRequest="110" 
+                                HeightRequest="110"
+                                Margin="9,5"
+                                HorizontalOptions ="Center"
+                                VerticalOptions = "Center">
+
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" />
+                                        <TapGestureRecognizer NumberOfTapsRequired="2" />
+                                    </Button.GestureRecognizers>
+
                                     <Button.Triggers>
                                         <Trigger TargetType="Button" Property="IsPressed" Value="True">
                                             <Setter Property="BackgroundColor" Value="#80FFFFFF"/>
                                         </Trigger>
                                     </Button.Triggers>
                                 </Button>
-
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
         </ScrollView>
-        
-        <Button x:Name="ToggleViewButton" 
-                Text="Show All Products" 
-                Clicked="OnToggleViewButtonClicked"
-                Margin="30,5,30,30"
-                Grid.Row="1"/>
+
+        <Button x:Name="AddProduct" 
+        Text="Add product" 
+        FontSize="20"
+        Clicked="OnAddProductClicked" 
+        Margin="30,5,30,30"
+        Grid.Row="1"
+        HorizontalOptions="FillAndExpand"/>
     </Grid>
 </ContentPage>
 

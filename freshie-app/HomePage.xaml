@@ -18,7 +18,7 @@
                     HorizontalTextAlignment = "Center"
                     VerticalTextAlignment = "Center"
                     FontSize="20"
-                    BackgroundColor="#F7F2E7"/>
+                    BackgroundColor="#272B2A"/>
 
                 <CollectionView x:Name="ProductsCollectionView" 
                                 ItemsLayout="VerticalGrid, 3"
