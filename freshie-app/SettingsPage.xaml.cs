@@ -21,4 +21,13 @@ public partial class SettingsPage : ContentPage
         //add change password method(user_id, old password, new password)
         //implement this
     }
+	private async void ReturnToHomePage(object sender, EventArgs e)
+	{
+        Application.Current.MainPage = new AppShell(_user);
+        await Shell.Current.GoToAsync("//HomePage");
+    }
+	public void OnSaveClicked(object sender, EventArgs e)
+	{
+        
+    }
 }

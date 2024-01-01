@@ -46,6 +46,8 @@ namespace freshie_app
         {
             //await Navigation.PushAsync(new SettingsPage(_user));
             Application.Current.MainPage = new SettingsPage(_user);
+            //await Shell.Current.GoToAsync("//SettingsPage");
+
         }
     }
 }

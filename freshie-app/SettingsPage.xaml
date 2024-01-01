@@ -4,40 +4,70 @@
              x:Class="freshie_app.SettingsPage"
              Title="SettingsPage"
              Shell.TabBarIsVisible="False">
+
+    <Grid VerticalOptions="FillAndExpand" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ImageButton Clicked="ReturnToHomePage" 
+                    Grid.Row ="0"
+                    x:Name="return"
+                    BackgroundColor="Transparent" 
+                    Source="return.png" 
+                    HeightRequest="1" 
+                    WidthRequest="1" 
+                     Margin="10,5,0,0"
+                    HorizontalOptions="Start"
+                    IsVisible="true">
+        </ImageButton>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20">
+                <Label  Margin="0,20"/>
+
+                <Label x:Name="WelcomeLabel" 
+                        TextColor="#F7F2E7"
+                        HorizontalTextAlignment = "Center"
+                        VerticalTextAlignment = "Center"
+                        FontSize="20"
+                       Margin="0,0,0,40"/>
+
+                <Label  Text="Your name:"/>
+
+                <Entry x:Name="Name" 
+                        Placeholder="Name" 
+                        Text="{Binding Name}"
+                        Margin="0,5,0,10" />
+
+                <Label Text="Your e-mail:"/>
+
+                <Entry x:Name="Email" 
+                        Placeholder="E-mail" 
+                        Text="{Binding Email}"
+                        Margin="0,5,0,10" />
+
+                <Label Text="Change password:"/>
+
+                <Button x:Name="Password" 
+                        Text="Change password" 
+                        Margin="0,5,0,10"
+                        BackgroundColor="{StaticResource Gray}"
+                        TextColor="{StaticResource Primary}"
+                        Clicked="OnChangePasswordClicked"/>
+                
+                
+            </VerticalStackLayout>
             
-    
-    <VerticalStackLayout Padding="20">
-        <Label  Margin="0,20"/>
+        </ScrollView>
+        <Button Grid.Row="2" x:Name="SaveButton" 
+        Text="Save" 
+       Margin="20,20"
+        BackgroundColor="{StaticResource Gray}"
+        TextColor="{StaticResource Primary}"
+        Clicked="OnSaveClicked"/>
 
-        <Label x:Name="WelcomeLabel" 
-                TextColor="#F7F2E7"
-                HorizontalTextAlignment = "Center"
-                VerticalTextAlignment = "Center"
-                FontSize="20"
-               Margin="0,0,0,40"/>
-
-        <Label  Text="Your name:"/>
-        
-        <Entry x:Name="Name" 
-                Placeholder="Name" 
-                Text="{Binding Name}"
-                Margin="0,5,0,10" />
-        
-        <Label Text="Your e-mail:"/>
-        
-        <Entry x:Name="Email" 
-                Placeholder="E-mail" 
-                Text="{Binding Email}"
-                Margin="0,5,0,10" />
-        
-        <Label Text="Change password:"/>
-        
-        <Button x:Name="Password" 
-                Text="Change password" 
-                Margin="0,5,0,10"
-                BackgroundColor="{StaticResource Gray}"
-                TextColor="{StaticResource Primary}"
-                Clicked="OnChangePasswordClicked"/>
-        
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

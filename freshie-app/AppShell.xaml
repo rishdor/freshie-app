@@ -9,8 +9,9 @@
     <Shell.TitleView>
         <Grid ColumnDefinitions="*"
               RowDefinitions="*">
-            
-            <ImageButton Clicked="SettingsClicked" 
+
+            <ImageButton Clicked="SettingsClicked"
+                         x:Name="settings"
                          BackgroundColor="Transparent" 
                          Source="settings.png" 
                          HeightRequest="40" 
