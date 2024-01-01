@@ -5,13 +5,14 @@
 
     <Grid VerticalOptions="FillAndExpand" x:Name="MainGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-
-        <ScrollView Grid.Row="0">
+        
+        <ScrollView Grid.Row="1">
             <StackLayout>
+                <Label Text="Sort by expiration date" HorizontalOptions="End" Margin="10,3"/>
                 <Label x:Name="WelcomeLabel"
                     IsVisible="false"
                     HorizontalTextAlignment = "Center"
@@ -60,7 +61,7 @@
             FontSize="20"
             Clicked="OnAddProductClicked" 
             Margin="30,5,30,30"
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalOptions="FillAndExpand"/>
     </Grid>
 
