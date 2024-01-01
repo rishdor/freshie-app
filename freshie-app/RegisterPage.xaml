@@ -2,87 +2,105 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.RegisterPage">
-    
-    <ScrollView>
-        <VerticalStackLayout>
-            <Label 
+
+    <Grid VerticalOptions="FillAndExpand" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ImageButton Clicked="ReturnToLoginPage" 
+                Grid.Row ="0"
+                x:Name="return"
+                BackgroundColor="Transparent" 
+                Source="return.png" 
+                HeightRequest="1" 
+                WidthRequest="1" 
+                 Margin="10,5,0,0"
+                HorizontalOptions="Start"
+                IsVisible="true">
+        </ImageButton>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <Label 
                 Text="Your name:"
                 VerticalOptions="Center"
                 Margin="10,45,10,0"/>
-            
-            <Entry x:Name="Name" 
+
+                <Entry x:Name="Name" 
                     Placeholder="Name" 
                     Margin="10,5,10,5"/>
-            <Label 
+                <Label 
                 Text="Your e-mail:"
                 VerticalOptions="Center"
                 Margin="10,0,10,0"/>
-            
-            <Entry x:Name="Email" 
+
+                <Entry x:Name="Email" 
                 Placeholder="E-mail" 
                 Margin="10,5,10,5"/>
 
-            <Label 
+                <Label 
                 Text="Enter password:"
                 VerticalOptions="Center"
                 Margin="10,0,10,0"/>
 
-            <Entry x:Name="Password" 
+                <Entry x:Name="Password" 
                 Placeholder="Password" 
                 IsPassword="true"
                 Margin="10,5,10,5"/>
 
-            <Label 
+                <Label 
                  Text="Enter password again:"
                  VerticalOptions="Center"
                  Margin="10,0,10,0"/>
 
-            <Entry x:Name="Password2" 
+                <Entry x:Name="Password2" 
                 Placeholder="Password" 
                 IsPassword="true"
                 Margin="10,5,10,5"/>
-            
-            <HorizontalStackLayout Margin="10,5,10,5">
-                <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
-                <Label Text="I agree to Terms of Use." VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-            
-            <Label
+
+                <HorizontalStackLayout Margin="10,5,10,5">
+                    <CheckBox x:Name="PrivacyPolicy" IsChecked="false"/>
+                    <Label Text="I agree to Terms of Use." VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <Label
                 x:Name="PasswordCheck"
                 Text="Password must have:&#10;-at least 8 characters,&#10;-at least one capital letter,&#10;-at least one number"
                 VerticalOptions="Center"
                 Margin="10,0,10,0"
                 IsVisible="False"
                 TextColor="#AF7070"/>
-            <Label
+                <Label
                 x:Name="EmailCheckDB"
                 Text="-Account with this email already exists."
                 VerticalOptions="Center"
                 Margin="10,0,10,0"
                 IsVisible="False"
                 TextColor="#AF7070"/>
-            <Label
+                <Label
                 x:Name="EmailWrongFormat"
                 Text="-Email is in the wrong format."
                 VerticalOptions="Center"
                 Margin="10,0,10,0"
                 IsVisible="False"
                 TextColor="#AF7070"/>
-            <Label
+                <Label
                 x:Name="TermsOfUse"
                 Text="-Agree to Terms of Use."
                 VerticalOptions="Center"
                 Margin="10,0,10,0"
                 IsVisible="False"
                 TextColor="#AF7070"/>
-            <Label
+                <Label
                 x:Name="EmptyField"
                 Text="-Make sure you filled out all the information."
                 VerticalOptions="Center"
                 Margin="10,0,10,0"
                 IsVisible="False"
                 TextColor="#AF7070"/>
-            <Label
+                <Label
                 x:Name="UnmatchingPasswords"
                 Text="-Passwords don't match."
                 VerticalOptions="Center"
@@ -90,10 +108,11 @@
                 IsVisible="False"
                 TextColor="#AF7070"/>
 
-            <Button Text="Sign up" 
+                <Button Text="Sign up" 
                 Clicked="SignUpButtonClicked"
                 Margin="20,5"/>
-            
-        </VerticalStackLayout>
-    </ScrollView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

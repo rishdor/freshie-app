@@ -75,5 +75,9 @@ public partial class RegisterPage : ContentPage
             await DisplayAlert("Registration was unsuccessful", "Try again", "OK");
         }
     }
+    private void ReturnToLoginPage(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new MainPage();
+    }
 
 }
