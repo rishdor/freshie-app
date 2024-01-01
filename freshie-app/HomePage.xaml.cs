@@ -1,4 +1,5 @@
 using freshie_app.DTO;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Xml;
@@ -79,10 +80,12 @@ namespace freshie_app
                             }
                         }
                     }
+
                 }
 
             });
         }
+
         public async void OnDoubleTapped(object sender, EventArgs e)
         {
             isSingleTap = false;
@@ -137,6 +140,21 @@ namespace freshie_app
             else
             {
                 await LoadUserProducts();
+            }
+        }
+        private async void OnSortLabelTapped(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet("Sort by", "Cancel", null, "Name", "Expiration date");
+            if (action == "Name")
+            {
+                var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
+                //var _userProducts = await ApiClient.GetFridgeItems(_user.UserId);
+                ProductsCollectionView.ItemsSource = _userProducts.OrderBy(p => p.ProductName);
+            }
+            else if (action == "Expiration date")
+            {
+                var _userProducts = await ApiClient.GetFridgeItems(_user.UserId);
+                ProductsCollectionView.ItemsSource = _userProducts.OrderBy(p => p.ExpirationDate);
             }
         }
     }
