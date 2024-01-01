@@ -26,7 +26,7 @@ public partial class SettingsPage : ContentPage
         Application.Current.MainPage = new AppShell(_user);
         await Shell.Current.GoToAsync("//HomePage");
     }
-	public void OnSaveClicked(object sender, EventArgs e)
+	public void OnSavedClicked(object sender, EventArgs e)
 	{
         
     }
