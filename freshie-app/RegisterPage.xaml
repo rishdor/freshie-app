@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ImageButton Clicked="ReturnToLoginPage" 
+        <ImageButton Clicked="ReturnToMainPage" 
                 Grid.Row ="0"
                 x:Name="return"
                 BackgroundColor="Transparent" 
