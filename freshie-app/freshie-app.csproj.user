@@ -20,6 +20,9 @@
     <MauiXaml Update="AppShell.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="ChangePassword.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="GroceriesPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

@@ -47,6 +47,18 @@ namespace freshie_app.DTO
             }
             return user;
         }
+        //CHANGE USER INFO
+
+        public static async Task<HttpResponseMessage> ChangeUserDetails(int id, UserUpdateModel model)
+        {
+            var json = JsonConvert.SerializeObject(model);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var url = $"api/user/change-user-details/{id}";
+            var response = await _client.PutAsync(url, data);
+
+            return response;
+        }
         //FRIDGE ITEMS
         public static async Task<List<Product>> GetUserProducts(int userId)
         {

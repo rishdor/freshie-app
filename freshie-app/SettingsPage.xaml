@@ -34,21 +34,19 @@
                         FontSize="20"
                        Margin="0,0,0,10"/>
 
-                <Label  Text="Your name:"/>
+                <Label  Text="Your name:" TextColor="Black"/>
 
-                <Entry x:Name="Name" 
-                        Placeholder="Name" 
+                <Label x:Name="Name" 
                         Text="{Binding Name}"
-                        Margin="0,5,0,10" />
+                        Margin="0,5,0,10" 
+                        TextColor="Black"/>
 
-                <Label Text="Your e-mail:"/>
+                <Label Text="Your e-mail:" TextColor="Black"/>
 
-                <Entry x:Name="Email" 
-                        Placeholder="E-mail" 
+                <Label x:Name="Email"
                         Text="{Binding Email}"
-                        Margin="0,5,0,10" />
-
-                <Label Text="Change password:"/>
+                        Margin="0,5,0,10"
+                        TextColor="Black"/>
 
                 <Button x:Name="Password" 
                         Text="Change password" 
@@ -56,17 +54,11 @@
                         BackgroundColor="{StaticResource Gray}"
                         TextColor="{StaticResource Primary}"
                         Clicked="OnChangePasswordClicked"/>
-                
-                
+
+
             </VerticalStackLayout>
-            
+
         </ScrollView>
-        <Button Grid.Row="2" x:Name="SaveButton" 
-        Text="Save" 
-       Margin="20,20"
-        BackgroundColor="{StaticResource Gray}"
-        TextColor="{StaticResource Primary}"
-        Clicked="OnSavedClicked"/>
 
     </Grid>
 </ContentPage>
