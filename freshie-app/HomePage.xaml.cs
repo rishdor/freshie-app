@@ -144,7 +144,7 @@ namespace freshie_app
         }
         private async void OnSortLabelTapped(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet("Sort by", "Cancel", null, "Name", "Expiration date");
+            var action = await DisplayActionSheet("Sort by", "Cancel", null, "Name", "Expiration date", "Default");
             if (action == "Name")
             {
                 var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
@@ -153,6 +153,10 @@ namespace freshie_app
             else if (action == "Expiration date")
             {
                 ProductsCollectionView.ItemsSource = await ApiClient.SortByExpirationDate(_user.UserId);
+            }
+            else if (action == "Default")
+            {
+                ProductsCollectionView.ItemsSource = await ApiClient.GetUserProducts(_user.UserId);
             }
         }
     }
