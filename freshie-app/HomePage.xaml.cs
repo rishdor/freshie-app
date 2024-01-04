@@ -99,7 +99,7 @@ namespace freshie_app
                     if (DateOnly.TryParse(expirationDateString, out DateOnly expirationDate))
                     {
                         var response = await ApiClient.AddProduct(_user.UserId, product, expirationDate);
-                        if (response == "The groceries item was added successfully.") //idk if its correct response
+                        if (response == "The groceries item was added successfully.")
                         {
                             var allProducts = (List<Product>)ProductsCollectionView.ItemsSource;
                             allProducts.Remove(product);
@@ -148,13 +148,11 @@ namespace freshie_app
             if (action == "Name")
             {
                 var _userProducts = await ApiClient.GetUserProducts(_user.UserId);
-                //var _userProducts = await ApiClient.GetFridgeItems(_user.UserId);
                 ProductsCollectionView.ItemsSource = _userProducts.OrderBy(p => p.ProductName);
             }
             else if (action == "Expiration date")
             {
-                var _userProducts = await ApiClient.GetFridgeItems(_user.UserId);
-                ProductsCollectionView.ItemsSource = _userProducts.OrderBy(p => p.ExpirationDate);
+                ProductsCollectionView.ItemsSource = await ApiClient.SortByExpirationDate(_user.UserId);
             }
         }
     }

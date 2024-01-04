@@ -129,6 +129,25 @@ namespace freshie_app.DTO
                 $"api/FridgeItems", fridgeItem);
             response.EnsureSuccessStatusCode();
         }
+        public static async Task<List<Product>> SortByExpirationDate(int userId)
+        {
+            var userFridgeItems = await GetFridgeItems(userId);
+            var userProducts = await GetUserProducts(userId);
+
+            var productLookup = userProducts.ToDictionary(p => p.ProductId);
+            var sortedUserItems = userFridgeItems.OrderBy(p => p.ExpirationDate);
+            var sortedUserProducts = new List<Product>();
+
+            foreach (var item in sortedUserItems)
+            {
+                if (productLookup.TryGetValue((int)item.ProductId, out var product))
+                {
+                    sortedUserProducts.Add(product);
+                }
+            }
+
+            return sortedUserProducts;
+        }
 
         //GROCERIES LIST
         public static async Task<List<Product>> GetUserGroceries(int userId)

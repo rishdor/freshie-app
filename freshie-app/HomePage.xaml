@@ -12,7 +12,7 @@
         
         <ScrollView Grid.Row="1">
             <StackLayout>
-                <Label Text="Sort by..." HorizontalOptions="End" Margin="10,3">
+                <Label Text="Sort by..." HorizontalOptions="End" Margin="10,3" TextColor="Black">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnSortLabelTapped" NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
