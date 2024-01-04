@@ -18,7 +18,7 @@ namespace freshie_webAPI.Controllers
             _context = context;
         }
 
-        //DELETE THIS LATER:
+        //DELETE THIS LATER:zz
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -57,27 +57,29 @@ namespace freshie_webAPI.Controllers
 
         //FIX THIS SO THERE IS NO SENSITIVE DATA IN THE URL
         // PUT api/<UserController>/5
-        //[HttpPut]
-        //[Route("change-password/{id}/{old_password}/{new_password}")]
-        //public ActionResult ChangePassword(int id, string old_password, string new_password)
-        //{
-        //    Models.User user = _context.Users.FirstOrDefault(u => u.UserId == id);
-        //    if (user != null)
-        //    {
-        //        if (old_password == user.Password)
-        //        {
-        //            user.Password = new_password;
-        //            _context.Users.Update(user);
-        //            _context.SaveChanges();
+        [HttpPut]
+        [Route("change-user-details/{id}")]
+        public ActionResult ChangeUserDetails(int id, [FromBody] UserUpdateModel model)
+        {
+            User user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (user != null)
+            {
+                if (model.OldPassword == user.Password)
+                {
+                    user.Password = model.NewPassword;
+                    user.Email = model.Email;
+                    user.Name = model.Name;
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
 
-        //            return NoContent();
-        //        }
-        //        else
-        //            return BadRequest();
-        //    }
+                    return NoContent();
+                }
+                else
+                    return BadRequest();
+            }
 
-        //    return NotFound();
-        //}
+            return NotFound();
+        }
 
         // DELETE api/<UserController>/5
         //[HttpDelete("{id}")]
@@ -120,18 +122,6 @@ namespace freshie_webAPI.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
-
-        //[HttpGet("login")]
-        //public async Task<ActionResult<User>> LoginUser(string email, string password)
-        //{
-        //    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-        //    if (user == null || !VerifyPassword(password, user.Password, user.Salt))
-        //    {
-        //        return NotFound("Wrong email or password.");
-        //    }
-        //    return user;
-        //}
 
         [HttpPost("login")]
         public async Task<ActionResult<User>> LoginUser([FromBody] LoginModel loginModel)
