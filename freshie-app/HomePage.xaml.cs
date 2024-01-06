@@ -144,7 +144,7 @@ namespace freshie_app
         }
         private async void OnSortLabelTapped(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet("Sort by", "Cancel", null, "Name", "Expiration date", "Default");
+            var action = await DisplayActionSheet("Sort by...", "Cancel", null, "Default", "Expiration date", "Name");
             if (action == "Name")
             {
                 var _userProducts = await ApiClient.GetUserProducts(_user.UserId);

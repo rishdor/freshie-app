@@ -34,19 +34,21 @@
                         FontSize="20"
                        Margin="0,0,0,10"/>
 
-                <Label  Text="Your name:" TextColor="Black"/>
+                <Label Text="Your name:"/>
+                
+                <Frame CornerRadius="10"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
+                    <Label x:Name="Name" 
+                            Text="{Binding Name}"
+                            Margin="5,5,0,10"/>
+                </Frame>
 
-                <Label x:Name="Name" 
-                        Text="{Binding Name}"
-                        Margin="0,5,0,10" 
-                        TextColor="Black"/>
+                <Label Text="Your e-mail:"/>
 
-                <Label Text="Your e-mail:" TextColor="Black"/>
-
-                <Label x:Name="Email"
-                        Text="{Binding Email}"
-                        Margin="0,5,0,10"
-                        TextColor="Black"/>
+                <Frame CornerRadius="10"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
+                    <Label x:Name="Email" 
+                           Text="{Binding Email}"
+                           Margin="5,5,0,10"/>
+                </Frame>
 
                 <Button x:Name="Password" 
                         Text="Change password" 
@@ -57,6 +59,7 @@
 
 
             </VerticalStackLayout>
+            
 
         </ScrollView>
 
