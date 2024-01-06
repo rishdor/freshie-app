@@ -11,10 +11,9 @@ public partial class ChangePassword : ContentPage
         InitializeComponent();
         BindingContext = user;
     }
-    private async void ReturnToHomePage(object sender, EventArgs e)
+    private void ReturnToSettingsPage(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new AppShell(_user);
-        await Shell.Current.GoToAsync("//HomePage");
+        Application.Current.MainPage = new SettingsPage(_user);
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)

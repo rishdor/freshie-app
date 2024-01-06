@@ -36,7 +36,7 @@
 
                 <Label Text="Your name:"/>
                 
-                <Frame CornerRadius="10"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
+                <Frame CornerRadius="5"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
                     <Label x:Name="Name" 
                             Text="{Binding Name}"
                             Margin="5,5,0,10"/>
@@ -44,7 +44,7 @@
 
                 <Label Text="Your e-mail:"/>
 
-                <Frame CornerRadius="10"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
+                <Frame CornerRadius="5"  Padding="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
                     <Label x:Name="Email" 
                            Text="{Binding Email}"
                            Margin="5,5,0,10"/>
