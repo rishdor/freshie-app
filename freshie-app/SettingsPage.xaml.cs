@@ -18,11 +18,8 @@ public partial class SettingsPage : ContentPage
         Application.Current.MainPage = new AppShell(_user);
         await Shell.Current.GoToAsync("//HomePage");
     }
-    private async void OnChangePasswordClicked(object sender, EventArgs e)
+    private void OnChangePasswordClicked(object sender, EventArgs e)
     {
-		await Navigation.PushAsync(new ChangePassword(_user));
-		//Application.Current.MainPage = new AppShell(_user);
-		//await Shell.Current.GoToAsync("//ChangePassword");
-		//i have no idea whats going on here and how to navigate to the change password page
-	}
+        Application.Current.MainPage = new ChangePassword(_user);
+    }
 }
