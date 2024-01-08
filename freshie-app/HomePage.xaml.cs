@@ -29,6 +29,7 @@ namespace freshie_app
                 WelcomeLabel.IsVisible = true;
                 WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
                 WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
+                ProductsCollectionView.IsVisible = true;
             }
             else
             {
@@ -121,6 +122,8 @@ namespace freshie_app
         }
         private async void OnAddProductClicked(object sender, EventArgs e)
         {
+            WelcomeLabel.IsVisible = false;
+            ProductsCollectionView.IsVisible = true;
             _isShowingAllProducts = !_isShowingAllProducts;
             AddProduct.Text = _isShowingAllProducts ? "Show inventory" : "Add new products";
             if (_isShowingAllProducts)

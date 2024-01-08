@@ -80,6 +80,8 @@ public partial class GroceriesPage : ContentPage
     private async void OnAddProductClicked(object sender, EventArgs e)
     {
         _isShowingAllProducts = !_isShowingAllProducts;
+        WelcomeLabel.IsVisible = false;
+        ProductsCollectionView.IsVisible = true;
         AddProduct.Text = _isShowingAllProducts ? "Show My Groceries" : "Show All Products";
         if (_isShowingAllProducts)
         {
@@ -92,7 +94,7 @@ public partial class GroceriesPage : ContentPage
             }
             else
             {
-                ProductsCollectionView.ItemsSource = allProducts;
+                ProductsCollectionView.ItemsSource = allProducts.ToList();
             }
         }
         else
