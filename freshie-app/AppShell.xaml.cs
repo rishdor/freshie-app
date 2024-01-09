@@ -14,7 +14,7 @@ namespace freshie_app
 
             ShellContent recipiesPageContent = new ShellContent
             {
-                ContentTemplate = new DataTemplate(typeof(RecipiesPage)),
+                ContentTemplate = new DataTemplate(() => new RecipiesPage(user)),
                 Title = "Recipies",
                 Route = "RecipiesPage",
                 Icon = "plate.png"

@@ -3,10 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.RecipiesPage"
              Title="RecipiesPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="THIS IS RECIPIES PAGE"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView >
+        <VerticalStackLayout Padding="10">
+            <Label 
+                x:Name="WelcomeLabel"
+                Margin="0,0,0,10"
+                Text="Choose your prefiered cousine and/or diet, so recipies will show up!"
+                FontSize="20"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                HorizontalTextAlignment = "Center"
+                VerticalTextAlignment = "Center"
+                TextColor="{StaticResource Secondary}"/>
+            <!--<Label 
+                x:Name="ChooseCousine"
+                Text="Choose your cousine:"/>-->
+            <Picker 
+                x:Name="CousinePicker"
+                Title="Choose your cousine:"
+                TextColor="{StaticResource Secondary}"
+                FontSize="15"
+                Margin="5,5,5,10"/>
+            <!--<Label
+                x:Name="ChooseDiet"
+                Text="Choose your diet:"/>-->
+            <Picker 
+                x:Name="DietPicker"
+                Title="Choose your diet:"
+                TextColor="{StaticResource Secondary}"
+                FontSize="15"
+                Margin="5,5,5,10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
