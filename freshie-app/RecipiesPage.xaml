@@ -3,37 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="freshie_app.RecipiesPage"
              Title="RecipiesPage">
-    <ScrollView >
-        <VerticalStackLayout Padding="10">
-            <Label 
-                x:Name="WelcomeLabel"
-                Margin="0,0,0,10"
-                Text="Choose your prefiered cousine and/or diet, so recipies will show up!"
-                FontSize="20"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center"
-                HorizontalTextAlignment = "Center"
-                VerticalTextAlignment = "Center"
-                TextColor="{StaticResource Secondary}"/>
-            <!--<Label 
-                x:Name="ChooseCousine"
-                Text="Choose your cousine:"/>-->
-            <Picker 
-                x:Name="CousinePicker"
-                Title="Choose your cousine:"
-                TextColor="{StaticResource Secondary}"
-                FontSize="15"
-                Margin="5,5,5,10"/>
-            <!--<Label
-                x:Name="ChooseDiet"
-                Text="Choose your diet:"/>-->
-            <Picker 
-                x:Name="DietPicker"
-                Title="Choose your diet:"
-                TextColor="{StaticResource Secondary}"
-                FontSize="15"
-                Margin="5,5,5,10"/>
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label 
+            x:Name="WelcomeLabel"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,10"
+            Text="Choose your prefiered cousine and/or diet, so recipies will show up!"
+            FontSize="20"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            HorizontalTextAlignment = "Center"
+            VerticalTextAlignment = "Center"
+            TextColor="{StaticResource Secondary}"/>
+        <Picker 
+            x:Name="CousinePicker"
+            Grid.Row="1"
+            Grid.Column="0"
+            Title="Choose your cousine:"
+            TextColor="{StaticResource Secondary}"
+            FontSize="15"
+            Margin="5,5,5,10"/>
+        <Picker 
+            x:Name="DietPicker"
+            Grid.Row="1"
+            Grid.Column="1"
+            Title="Choose your diet:"
+            TextColor="{StaticResource Secondary}"
+            FontSize="15"
+            HorizontalOptions="End"
+            Margin="5,5,5,10"/>
+        <!--<CollectionView x:Name="RecipiesCollectionView" 
+                ItemsLayout="VerticalGrid, 3"
+                IsVisible="false">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Frame CornerRadius="5" BackgroundColor="{StaticResource Primary}" Margin="0,5,0,10">
+                            <StackLayout>
+                                <Label x:Name="Name" 
+                                        Text="{Binding Name}"
+                                        Margin="5,5,0,10"/>
+                                <Label x:Name="URL"
+                                       Text="Click here to get a recipe."/>
+                            </StackLayout>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSingleTapped" 
+                                            NumberOfTapsRequired="1" />
+                            </Frame.GestureRecognizers>
+
+                            <Frame.Triggers>
+                                <Trigger TargetType="Frame" Property="IsPressed" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#80FFFFFF"/>
+                                </Trigger>
+                            </Frame.Triggers>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+    </Grid>
 </ContentPage>

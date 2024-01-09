@@ -20,6 +20,10 @@ public partial class RecipiesPage : ContentPage
         var cousines = await ApiClient.GetAllProducts();
 		CousinePicker.ItemsSource = cousines.Select(p=> p.ProductName).ToList();
 		var diets = await ApiClient.GetUserProducts(_user.UserId);
-		DietPicker.ItemsSource = diets.Select(p => p.ProductName).ToList();
+		if (diets != null) 
+		{
+            DietPicker.ItemsSource = diets.Select(p => p.ProductName).ToList();
+        }
+		else { DietPicker.ItemsSource = null; }
     }
 }
