@@ -29,11 +29,13 @@ namespace freshie_app
                 WelcomeLabel.IsVisible = true;
                 WelcomeLabel.Text = $"Hello {_user.Name}!\nYou have no products in your fridge.\nWanna add some?";
                 WelcomeLabel.TextColor = Color.FromArgb("#F7F2E7");
-                ProductsCollectionView.IsVisible = true;
+                ProductsCollectionView.IsVisible = false;
+                SortLabel.IsVisible = false;
             }
             else
             {
                 ProductsCollectionView.IsVisible = true;
+                SortLabel.IsVisible = true;
             }
         }
         bool isSingleTap = true;
@@ -86,7 +88,7 @@ namespace freshie_app
 
             });
         }
-
+        
         public async void OnDoubleTapped(object sender, EventArgs e)
         {
             isSingleTap = false;
@@ -122,6 +124,7 @@ namespace freshie_app
         }
         private async void OnAddProductClicked(object sender, EventArgs e)
         {
+            SortLabel.IsVisible = false;
             WelcomeLabel.IsVisible = false;
             ProductsCollectionView.IsVisible = true;
             _isShowingAllProducts = !_isShowingAllProducts;
