@@ -64,9 +64,12 @@ namespace freshie_webAPI.Controllers
             User user = _context.Users.FirstOrDefault(u => u.UserId == id);
             if (user != null)
             {
-                if (model.OldPassword == user.Password)
+                if (VerifyPassword(model.OldPassword, user.Password, user.Salt))
                 {
-                    user.Password = model.NewPassword;
+                    string password = model.NewPassword;
+                    user.Password = HashPassword(model.NewPassword, out var salt);
+                    user.Salt = salt;
+
                     user.Email = model.Email;
                     user.Name = model.Name;
                     _context.Users.Update(user);
